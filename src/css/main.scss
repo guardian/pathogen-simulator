@@ -1,18 +1,17 @@
 @import "mq";
 @import "fonts";
 @import "palette";
+@import "scrolly";
+@import "interactive";
+@import "footer";
 
-// Uncomment for embeds
-//@import "embed";
-// Uncomment for full screen (including immersive article main media)
-//@import "fullscreen";
 
-.element-atom,
-.interactive-atom {
-    margin: 0 !important;
+#data-viz-1 {
+	width: 100%;
+	height: 100vh;
 }
 
-#microbiology {
+#data-viz-2 {
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 }
