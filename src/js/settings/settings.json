@@ -1,10 +1,14 @@
 {
 
-    "attack" : {
+    "pathogen" : {
 
-      "r0" : 2,
+      "r0" : 1.19698,
 
-      "fatality_rate" : 3.4,
+      "fatality_rate" : 1,
+
+      "initSusceptibleProportion" : 0.7,
+
+      "initAttackRate" : 0.6,
 
       "population" : 1000,
 

@@ -1,6 +1,6 @@
 import ScrollyTeller from "../modules/scrollyteller"
 
-export default (function viz() {
+export default (function rzero() {
 
 	console.log("Viz")
 

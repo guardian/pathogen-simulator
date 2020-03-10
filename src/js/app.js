@@ -1,4 +1,4 @@
-import settings from './settings/settings'
+import config from './settings/settings'
 import { Preflight } from './modules/preflight'
 
 //import ScrollyTeller from "../modules/scrollyteller"
@@ -6,8 +6,13 @@ import { Preflight } from './modules/preflight'
 import loadJson from '../components/load-json/'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from './modules/util'
 
-import viz from './modules/viz'
-import boom from './modules/boom'
+//import rzero from './modules/rzero'
+//import multiples from './modules/small-multiples'
+import pathogen from './modules/pathogen'
+
+var settings = new Preflight(config).getSettings()
+
+pathogen.init(settings)
 
 //import videoInview from "../modules/videoInview";
 //import imageInview from "../modules/imageInview";
@@ -22,7 +27,7 @@ import boom from './modules/boom'
 //smoothscroll.polyfill();
 
 /*
-var wrangle = new Preflight(settings).getSettings()
+
 
 console.log(wrangle)
 
