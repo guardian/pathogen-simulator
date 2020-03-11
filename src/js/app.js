@@ -6,8 +6,8 @@ import { Preflight } from './modules/preflight'
 import loadJson from '../components/load-json/'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from './modules/util'
 
-import viz from './modules/viz'
-import boom from './modules/boom'
+import rzero from './modules/rzero'
+
 
 //import videoInview from "../modules/videoInview";
 //import imageInview from "../modules/imageInview";
