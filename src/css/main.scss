@@ -4,6 +4,8 @@
 @import "scrolly";
 @import "interactive";
 @import "footer";
+@import "pathogen";
+@import "slider";
 
 
 #r-zero-animation {
@@ -16,7 +18,3 @@
 	height: 100vh;
 }
 
-#pathogen-simulator {
-	width: 100%;
-	height: 100vh;
-}

@@ -125,7 +125,7 @@ export class Preflight {
 
         var self = this
 
-        return { settings : self.settings }
+        return self.settings
 
     }
     

@@ -1,16 +1,21 @@
 import ScrollyTeller from "../modules/scrollyteller"
+import { Contagion } from "../modules/contagion"
 
-export default (function rzero() {
+export default {
 
-	console.log("Viz")
+	init: (config) => {
 
-	 const scrolly = new ScrollyTeller({
-            parent: document.querySelector("#scrolly-1"),
-            triggerTop: 1/3, // percentage from the top of the screen that the trigger should fire
-            triggerTopMobile: 0.75,
-            transparentUntilActive: true
-     });
+		const scrolly = new ScrollyTeller({
+			parent: document.querySelector("#scrolly-1"),
+			triggerTop: 1/3, // percentage from the top of the screen that the trigger should fire
+			triggerTopMobile: 0.75,
+			transparentUntilActive: true
+		});
 
-     scrolly.watchScroll();
+		var contagion = new Contagion(config, "r-zero-animation")
 
-})();
+	    scrolly.watchScroll();
+
+	}
+
+};
