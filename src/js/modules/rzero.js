@@ -1,5 +1,4 @@
 import ScrollyTeller from "../modules/scrollyteller"
-<<<<<<< HEAD
 import * as d3 from "d3"
 
 export default (function rzero(firstrun) {
@@ -149,4 +148,6 @@ export default (function rzero(firstrun) {
 
 	scrolly.watchScroll();
 
-};
+
+
+})()
