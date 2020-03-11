@@ -1,4 +1,4 @@
-import settings from './settings/settings'
+import config from './settings/settings'
 import { Preflight } from './modules/preflight'
 
 //import ScrollyTeller from "../modules/scrollyteller"
@@ -7,6 +7,13 @@ import loadJson from '../components/load-json/'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from './modules/util'
 
 import rzero from './modules/rzero'
+//import multiples from './modules/small-multiples'
+import pathogen from './modules/pathogen'
+
+var settings = new Preflight(config).getSettings()
+
+//rzero.init(settings.pathogen)
+pathogen.init(settings.pathogen)
 
 
 //import videoInview from "../modules/videoInview";
@@ -22,7 +29,7 @@ import rzero from './modules/rzero'
 //smoothscroll.polyfill();
 
 /*
-var wrangle = new Preflight(settings).getSettings()
+
 
 console.log(wrangle)
 

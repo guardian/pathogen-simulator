@@ -1,14 +1,18 @@
 {
 
-    "attack" : {
+    "pathogen" : {
 
-      "r0" : 2,
+      "r0" : 1.19698,
 
-      "fatality_rate" : 3.4,
+      "fatality_rate" : 1,
+
+      "susceptible" : 0.7,
 
       "population" : 1000,
 
       "infected" : 0,
+
+      "deaths" : 0,
 
       "steps" : {
 
@@ -17,14 +21,6 @@
         "term" : 1,
 
         "total" : 0
-
-      },
-
-      "database" : {
-
-        "infected" : 0,
-
-        "deaths" : 0
 
       }
 
