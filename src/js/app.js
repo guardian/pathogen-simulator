@@ -6,7 +6,7 @@ import { Preflight } from './modules/preflight'
 import loadJson from '../components/load-json/'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from './modules/util'
 
-//import rzero from './modules/rzero'
+import rzero from './modules/rzero'
 //import multiples from './modules/small-multiples'
 import pathogen from './modules/pathogen'
 
@@ -14,6 +14,7 @@ var settings = new Preflight(config).getSettings()
 
 //rzero.init(settings.pathogen)
 pathogen.init(settings.pathogen)
+
 
 //import videoInview from "../modules/videoInview";
 //import imageInview from "../modules/imageInview";
