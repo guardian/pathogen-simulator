@@ -94,6 +94,34 @@ export class Contagion {
 
         });
 
+
+        var population_slider = document.getElementsByClassName('filter_slider')[2];
+
+		noUiSlider.create(population_slider, {
+		    start: [self.settings.population],
+		    range: {
+		        'min': [1000],
+		        'max': [4000]
+		    }
+		});
+
+        population_slider.noUiSlider.on('slide', function( values, handle, unencoded, tap, positions ) {
+
+            self.settings.population = parseInt(values[0])
+
+            console.log(self.settings.population)
+
+            self.templatize()
+
+        });
+
+        population_slider.noUiSlider.on('end', function( values, handle, unencoded, tap, positions ) {
+
+        	self.trigger()
+
+        });
+
+
         this.init()
 
     }
