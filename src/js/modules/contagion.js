@@ -55,8 +55,6 @@ export class Contagion {
 
 		});
 
-		this.init() 
-
     }
 
     handle(id, values) {
@@ -134,8 +132,6 @@ export class Contagion {
 
 		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
 
-		//console.log(`Total number of steps: ${self.settings.steps.total}`)
-
 		self.settings.deaths = 0
 
 		self.settings.steps.current = 0
@@ -188,8 +184,6 @@ export class Contagion {
 
       	++self.settings.steps.current
 
-      	//console.log(`Current steps: ${self.settings.steps.current}`)
-
       	self.settings.steps.term = self.settings.steps.term * self.settings.r0
 
       	var tree = new kdTree(vulnerable, self.distance, ["x", "y"]);
@@ -208,10 +202,6 @@ export class Contagion {
 			}
 
 		}
-
-		//var infected = self.nodes.filter(item => item.status === 'infected')
-
-		//self.settings.infected = infected.length
 
 		this.templatize()
 
