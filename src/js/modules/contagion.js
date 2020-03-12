@@ -57,7 +57,6 @@ export class Contagion {
 
 		});
 
-
 		document.querySelectorAll('.case').forEach(function(cases) {
 
 			var info = cases.getAttribute('data-id');
@@ -65,6 +64,8 @@ export class Contagion {
 			cases.addEventListener('click',() => self.loadCase(info));
 
 		});
+
+		this.resizer()
 
 
     }
@@ -324,6 +325,35 @@ export class Contagion {
 		}
 
     }
+
+    resizer() {
+
+        var self = this
+
+        window.addEventListener("resize", function() {
+
+            clearTimeout(document.body.data)
+
+            document.body.data = setTimeout( function() { 
+
+			    self.width = self.div.clientWidth || self.div.getBoundingClientRect().width
+
+			    self.height = self.div.clientHeight || self.div.getBoundingClientRect().height
+
+			    self.context = self.canvas.getContext("2d")
+
+			    self.canvas.width = self.width
+			       
+			    self.canvas.height = self.height
+
+            	self.trigger()
+
+            }, 200);
+
+        });
+
+    }
+
 
     distance(a, b) {
 
