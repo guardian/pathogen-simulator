@@ -185,9 +185,9 @@ export class Contagion {
 
 	    this.simulation = d3.forceSimulation(self.nodes)
 	        .velocityDecay(0.2)
-	        .force("x", d3.forceX().strength(0.002))
-	        .force("y", d3.forceY().strength(0.002))
-	        .force("collide", d3.forceCollide().radius(function(d) { return d.r + 0.5; }).iterations(2))
+	        .force("x", d3.forceX().strength(0.02))
+	        .force("y", d3.forceY().strength(0.02))
+	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(2))
 	        .on("tick", self.ticked)
 
 		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
@@ -212,13 +212,23 @@ export class Contagion {
 
     }
 
+    getRadius(pop) {
+
+    	var radius = (pop > 3000) ? 4 :
+    		(pop > 2000) ? 5 :
+    		(pop > 1000) ? 6 : 7 ;
+
+    		return (this.width < 480) ? radius / 1.5 : radius ;
+
+    }
+
     getNodes() {
 
     	var self = this
 
 	    var nodes = d3.range(self.settings.population).map(function(i) {
 	      return {
-	        r: 7,
+	        r: self.getRadius(self.settings.population),
 	        status: "healthy",
 	        exposed: false
 	      };
