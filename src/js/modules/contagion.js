@@ -223,7 +223,7 @@ export class Contagion {
 
 	    var r2 = document.getElementById("r2"); 
 
-	    r2.innerHTML = `${self.settings.susceptible * 100}% of population`
+	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
 
 	    var r3 = document.getElementById("r3"); 
 
