@@ -77,11 +77,27 @@ export class Contagion {
 
 		self.settings.r0 = cases.r0
 
+		var r0slider = document.querySelectorAll('.filter_slider')[0]
+
+		r0slider.noUiSlider.set([cases.r0 * 10])
+
 		self.settings.fatality_rate = cases.fatality_rate
+
+		var fatality_rateslider = document.querySelectorAll('.filter_slider')[1]
+
+		fatality_rateslider.noUiSlider.set([cases.fatality_rate])
 
 		self.settings.susceptible = cases.susceptible
 
+		var susceptibleslider = document.querySelectorAll('.filter_slider')[2]
+
+		susceptibleslider.noUiSlider.set([...cases.score])
+
 		self.settings.population = cases.population
+
+		var populationslider = document.querySelectorAll('.filter_slider')[3]
+
+		populationslider.noUiSlider.set([cases.population])
 
 		this.trigger()
 
