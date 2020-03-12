@@ -2,7 +2,22 @@
 
 #pathogen-simulator {
 	width: 100%;
-	height: calc(100vh - 100px);
+	
+
+
+	@include mq($until: mobileLandscape) {
+		height: calc(100vh - 200px);
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		height: calc(100vh - 150px);
+	}
+
+	@include mq($from: tablet) {
+		height: calc(100vh - 100px);
+	}
+
+
 }
 
 
@@ -10,16 +25,22 @@
 .control-panel {
 
 	box-sizing: border-box;
-	padding: 20px;
 	
-	@include mq($until: tablet) {
-		width: 25%;
+
+	@include mq($until: mobileLandscape) {
+		width: 100%;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		width: 50%;
 		float: left;
+		padding: 10px;
 	}
 
 	@include mq($from: tablet) {
 		width: 25%;
 		float: left;
+		padding: 20px;
 	}
 }
 
@@ -30,21 +51,26 @@
 	background-color: white;
 	border: 1px solid black;
 	box-sizing: border-box;
+	padding: 20px;
 
-	@include mq($until: tablet) {
-
-	}
-
-	@include mq($from: tablet) {
-
-	}
 
 
 }
 
 .filter_slider {
+
+
+	@include mq($until: tablet) {
+	margin-top: 5px;
+	margin-bottom: 5px;
+	}
+
+	@include mq($from: tablet) {
 	margin-top: 10px;
 	margin-bottom: 10px;
+	}
+
+
 }
 
 #info {
