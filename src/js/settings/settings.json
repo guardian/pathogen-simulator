@@ -26,6 +26,45 @@
 
     },
 
+    "sliders" : [{
+      "type" : "r0",
+      "params" : {
+        "start": [20],
+        "range": {
+            "min": [0],
+            "max": [200]
+        }
+      }
+    },{
+      "type" : "fatalities",
+      "params" : {
+        "start": [1],
+        "range": {
+            "min": [0],
+            "max": [20]
+        }
+      }
+    },{
+      "type" : "suspectibilty",
+      "params" : {
+        "start": [15, 85],
+        "connect": true,
+        "range": {
+            "min": [0],
+            "max": [100]
+        }
+      }
+    },{
+      "type" : "population",
+      "params" : {
+        "start": [1000],
+        "range": {
+            "min": [500],
+            "max": [2000]
+        }
+      }
+    }],
+
     "social": {
 
         "title": "Pathogens",
