@@ -6,15 +6,15 @@
 
 
 	@include mq($until: mobileLandscape) {
-		height: calc(100vh - 200px);
+		height: calc(100vh - 300px);
 	}
 	
 	@include mq($from: mobileLandscape, $until: tablet) {
-		height: calc(100vh - 150px);
+		height: calc(100vh - 250px);
 	}
 
 	@include mq($from: tablet) {
-		height: calc(100vh - 100px);
+		height: calc(100vh - 200px);
 	}
 
 
@@ -76,14 +76,31 @@
 #info {
 	border: 1px solid black;
 	background-color: white;
-	padding: 20px;
+	padding: 10px;
 	position: absolute;
 	bottom: 20px;
 	left: 20px;
-	width: 200px;
+	width: 150px;
 	z-index: 999;
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size: 12px;
+}
+
+#cases {
+	border: 1px solid black;
+	background-color: white;
+	padding: 10px;
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 150px;
+	z-index: 999;
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 12px;
+}
+
+.case {
+	cursor: pointer;
 }
 
 .legend_container {

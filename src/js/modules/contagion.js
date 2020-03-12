@@ -7,13 +7,15 @@ import info from '../../templates/results.html'
 
 export class Contagion {
 
-    constructor(settings, id, sliders) {
+    constructor(settings, id, sliders, cases) {
 
     	var self = this
 
     	this.settings = settings
 
     	this.sliders = sliders
+
+    	this.cases = cases
 
     	this.simulation = null
 
@@ -54,6 +56,34 @@ export class Contagion {
 	        slider.noUiSlider.on('end', () => self.trigger());
 
 		});
+
+
+		document.querySelectorAll('.case').forEach(function(cases) {
+
+			var info = cases.getAttribute('data-id');
+
+			cases.addEventListener('click',() => self.loadCase(info));
+
+		});
+
+
+    }
+
+    loadCase(id) {
+
+    	var self = this
+
+    	var cases = self.cases[id]
+
+		self.settings.r0 = cases.r0
+
+		self.settings.fatality_rate = cases.fatality_rate
+
+		self.settings.susceptible = cases.susceptible
+
+		self.settings.population = cases.population
+
+		this.trigger()
 
     }
 

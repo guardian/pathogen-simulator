@@ -3,7 +3,7 @@ import { Contagion } from "../modules/contagion"
 
 export default {
 
-	init: (config, sliders) => {
+	init: (config, sliders, cases) => {
 
 		const scrolly = new ScrollyTeller({
 			parent: document.querySelector("#scrolly-2"),
@@ -12,7 +12,7 @@ export default {
 			transparentUntilActive: true
 		});
 
-		var contagion = new Contagion(config, "pathogen-simulator", sliders)
+		var contagion = new Contagion(config, "pathogen-simulator", sliders, cases)
 
 		scrolly.addTrigger({num: 1, do: () => {
 

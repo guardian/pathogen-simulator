@@ -26,6 +26,68 @@
 
     },
 
+    "cases" : [{
+
+      "r0" : 2,
+
+      "fatality_rate" : 3.4,
+
+      "susceptible" : 0.4,
+
+      "population" : 1000
+
+    },{
+
+      "r0" : 2,
+
+      "fatality_rate" : 3.4,
+
+      "susceptible" : 0.4,
+
+      "population" : 1000
+
+    },{
+
+      "r0" : 2,
+
+      "fatality_rate" : 3.4,
+
+      "susceptible" : 0.4,
+
+      "population" : 1000
+
+    },{
+
+      "r0" : 2,
+
+      "fatality_rate" : 3.4,
+
+      "susceptible" : 0.4,
+
+      "population" : 1000
+
+    },{
+
+      "r0" : 2,
+
+      "fatality_rate" : 3.4,
+
+      "susceptible" : 0.4,
+
+      "population" : 1000
+
+    },{
+
+      "r0" : 6,
+
+      "fatality_rate" : 6,
+
+      "susceptible" : 0.4,
+
+      "population" : 1000
+
+    }],
+
     "sliders" : [{
       "type" : "r0",
       "params" : {
