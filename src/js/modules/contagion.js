@@ -65,8 +65,21 @@ export class Contagion {
 
 		});
 
-		this.resizer()
+		var info = document.querySelector('#close')
 
+		info.addEventListener('click',() => {
+
+			document.querySelectorAll('.boom').forEach(function(element) {
+
+				element.classList.toggle("hide");
+
+				self.trigger()
+
+			});
+
+		});
+
+		this.resizer()
 
     }
 

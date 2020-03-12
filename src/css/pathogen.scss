@@ -1,7 +1,54 @@
 @import "mq";
 
+.mobile {
+
+	@include mq($until: mobileLandscape) {
+		width: 100%;
+		height: 40px;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		display: none;
+	}
+
+	@include mq($from: tablet) {
+		display: none;
+	}
+
+}
+
+#close {
+
+	z-index: 10;
+
+	@include mq($until: mobileLandscape) {
+		width: 40px;
+		height: 40px;
+		background-color: white;
+		border: 1px solid black;
+		border-radius: 50%;
+		cursor: pointer;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		background-image: url('<%= path %>/assets/info.svg');
+		background-size: cover;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		display: none;
+	}
+
+	@include mq($from: tablet) {
+		display: none;
+	}
+
+
+}
+
 #pathogen-simulator {
 	width: 100%;
+	z-index: 9;
 	
 	@include mq($until: mobileLandscape) {
 		height: 100vh;
@@ -19,12 +66,12 @@
 
 #pathogen-panel {
 
-	
 	width: 100%;
 	background-color: white;
 	border: 1px solid black;
 	box-sizing: border-box;
 	padding: 5px;
+	z-index: 9;
 
 	@include mq($until: mobileLandscape) {
 		position: absolute;
@@ -101,9 +148,9 @@
 	bottom: 20px;
 	left: 20px;
 	width: 150px;
-	z-index: 999;
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size: 12px;
+	z-index: 8;
 }
 
 #cases {
@@ -150,7 +197,7 @@
 
 }
 
-.control-panel:nth-of-type(3) .noUi-connects {
+.control-panel:nth-of-type(4) .noUi-connects {
 	background: linear-gradient(to left,#0000ff, #ff00ff);
 }
 
