@@ -1,5 +1,4 @@
 import ScrollyTeller from "../modules/scrollyteller"
-<<<<<<< HEAD
 import * as d3 from "d3"
 
 export default (function rzero(firstrun) {
@@ -56,57 +55,93 @@ export default (function rzero(firstrun) {
 		    return 1 + depth
 		}
 
+	var getLevel = function (obj, root) {
+		    var depth = 0;
+		    var found = false;
+
+		    console.log(obj, root)
+
+		    function search(current) {
+		    	console.log("current",current);
+
+		    	if (current === obj) {
+			    		console.log("found it! ", depth);
+			    		found = true
+			    		console.log(depth)
+			    		return depth
+			    	}
+
+		    	if (current.children) {
+		    		depth = 1 + depth;
+			    	current.forEach(function (d) {
+			    		if (d === obj) {
+			    			console.log("found it!!!");
+			    			found = true
+			    			return depth
+			    		}
+
+				        current.children.forEach(function (dd) {
+				        	var blah = search(dd);
+		    				return blah
+				    	})
+			    	})
+		    	}
+		    	
+		    }
+
+		    var blah = search(root);
+		    return blah
+		    
+		}	
+
+
 	var generations = 3;	
 
-	var recur = function (obj) {
+	var recur = function (obj, root, depth) {
+		// console.log(getDepth(obj))
+		// var depth = 0
+		// var level = getLevel(obj, root)
 		
-		var level = getDepth(data[0]) - getDepth(obj)
-		console.log(obj.name)
-		
-	    if (!obj.children && (level <= generations)) {
+		console.log("depth", 0)
+		console.log("obj", 0)
 
-	    	obj.children = makeNodes(data[0].r0, level)
-	    	obj.level = level
+	    if (!obj.children && (depth <= generations)) {
+
+	    	console.log("make children")
+	    	obj.children = makeNodes(root.r0, depth)
+	    	obj.level = depth
 	    	console.log(obj.level)
 
 	    	if (!obj.name) {
-	    		obj.name = "gen" + obj.level
+	    		obj.name = "gen" + depth
 	    	}
 	    	
 	    	if (obj.level <= generations) {
+	    		console.log("recur")
 	    		obj.children.forEach(function (child) {
 		    		if (!child.children) {
-		    			recur(child)
+		    			recur(child, root, depth + 1)
 		    		}
 	            
 	        	})
 	    	}
 
 	    }
+
+	    else {
+	    	console.log("yehhhh")
+	    }
 		    
 	}	
-
-	recur(data[0])
-	console.log(data[0])
+	// var level = getLevel(data[0], data[0])
+	recur(data[0], data[0], 0)
+	// console.log("level", level)
 
 	// data.forEach(function(d) {
-
-	
-	// 	var startNodes = generatePartial(d.r0);
-
-	// 	// Tag depth when generating the nodes!	USe depth counter
-
-		
-
-	// 	console.log(getDepth(d))
-
-		
-
-	// 	console.log(d)
-
-
+	// 	recur(d, d)
 	// })
 
+	console.log(data);
 
 	var width = document.querySelector("#r-zero-animation").getBoundingClientRect().width
 	var height = window.innerHeight;
@@ -149,4 +184,4 @@ export default (function rzero(firstrun) {
 
 	scrolly.watchScroll();
 
-};
+});
