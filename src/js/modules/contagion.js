@@ -13,6 +13,8 @@ export class Contagion {
 
     	this.settings = settings
 
+    	this.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
+
     	this.sliders = sliders
 
     	this.cases = cases
@@ -123,13 +125,15 @@ export class Contagion {
 
 		switch(id) {
 		  case 0:
-		   self.settings.r0 = parseInt(values[0]) / 10
+		   self.settings.r0 = (values[0] / 10).toFixed(1);
+		   self.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
 		    break;
 		  case 1:
 		    self.settings.fatality_rate = parseInt(values[0])
 		    break;
 		  case 2:
             self.settings.susceptible = ( parseInt(values[1]) - parseInt(values[0]) ) / 100
+            self.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
 		    break;
 		  case 3:
 		    self.settings.population = parseInt(values[0])
@@ -285,7 +289,7 @@ export class Contagion {
 
     	var self = this
 
-	    r0.innerHTML = self.settings.r0
+	    r0.innerHTML = `${self.settings.r0}, R<sub>e</sub>: ${self.settings.re}`
 
 	    var r1 = document.getElementById("r1"); 
 
@@ -301,7 +305,7 @@ export class Contagion {
 
 	    var target = document.getElementById("info"); 
 
-	    var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
+	    var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
 
 	    target.innerHTML = html
 
