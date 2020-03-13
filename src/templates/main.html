@@ -91,19 +91,87 @@
         <div class="scroll-wrapper">
             <div class="scroll-inner">
 
+                <div id="close"></div>
+
+                <div id="pathogen-panel" class="boom hide">
+
+                    <div class="mobile"></div>
+
+                    <div class="control-panel">
+                        
+                        <strong>R<sub>0</sub>: <span id=r0></span></strong>
+                    
+                        <div class="filter_slider"></div>
+
+                        <div class="legend_container">
+                            R<sub>0</sub> is a mathematical term that indicates how contagious an infectious disease is. It’s also referred to as the reproduction number.
+                        </div>
+
+                    </div>
+
+                    <div class="control-panel">
+
+                        <strong>Fatality rate: <span id=r1></span></strong>
+                
+                        <div class="filter_slider"></div>
+
+                        <div class="legend_container">
+                            <em>Fatality rate</em> is the percentage of deaths caused by a disease compared to the total number of people with the disease.
+                        </div>
+
+                    </div>
+
+                    <div class="control-panel">
+
+                        <strong>Suspectibilty: <span id=r2></span></strong>
+                
+                        <div class="filter_slider"></div>
+
+                        <div class="legend_container">
+                            
+                            <ul class="legend">
+                                <li><span class="quarantine"></span> Effective quarantine</li>
+                                <li><span class="suspectible"></span> Suspectible</li>
+                                <li><span class="distancing"></span> Effective social distancing</li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                    <div class="control-panel">
+
+                        <strong>Population: <span id=r3></span></strong>
+                
+                        <div class="filter_slider"></div>
+
+                    </div>
+
+                </div>
+
                 <div id="pathogen-simulator"></div>
 
-                <div id="pathogen-panel">
+                <div id="info"></div>
 
-                    <strong>R<sub>0</sub></strong>
-                
-                    <div class="filter_slider"></div>
+                <div id="cases" class="boom hide">
 
-                    <strong></strong>
-                
-                    <div class="filter_slider"></div>
+                    <strong>Case studies (covid 19)</strong>
+                    
+                    <div class="case" data-id="0">Diamond Princess</div>
 
-                    <div id="info"></div>
+                    <div class="case" data-id="1">Wuhan</div>
+
+                    <div class="case" data-id="2">Korean cluster (Patient 31)</div>
+
+                    <strong>Other diseases</strong>
+
+                    <div class="case" data-id="3">Measles</div>
+
+                    <div class="case" data-id="4">Ebola</div>
+
+                    <strong>Pandemics in the movies</strong>
+
+                    <div class="case" data-id="5">Contagion</div>
 
                 </div>
 

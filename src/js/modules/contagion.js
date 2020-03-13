@@ -7,11 +7,15 @@ import info from '../../templates/results.html'
 
 export class Contagion {
 
-    constructor(settings, id) {
+    constructor(settings, id, sliders, cases) {
 
     	var self = this
 
     	this.settings = settings
+
+    	this.sliders = sliders
+
+    	this.cases = cases
 
     	this.simulation = null
 
@@ -43,58 +47,97 @@ export class Contagion {
 
         var self = this
 
-        var r0_slider = document.getElementsByClassName('filter_slider')[0];
+		document.querySelectorAll('.filter_slider').forEach(function(slider, index) {
 
-		noUiSlider.create(r0_slider, {
-		    start: [self.settings.r0 * 10],
-		    range: {
-		        'min': [0],
-		        'max': [200]
-		    }
+			noUiSlider.create(slider, self.sliders[index].params);
+
+	        slider.noUiSlider.on('slide', (values) => self.handle(index, values));
+
+	        slider.noUiSlider.on('end', () => self.trigger());
+
 		});
 
-        r0_slider.noUiSlider.on('slide', function( values, handle, unencoded, tap, positions ) {
+		document.querySelectorAll('.case').forEach(function(cases) {
 
-            self.settings.r0 = parseInt(values[0]) / 10
+			var info = cases.getAttribute('data-id');
 
-            self.templatize()
+			cases.addEventListener('click',() => self.loadCase(info));
 
-        });
+		});
 
-        r0_slider.noUiSlider.on('end', function( values, handle, unencoded, tap, positions ) {
+		var info = document.querySelector('#close')
 
-        	self.trigger()
+		info.addEventListener('click',() => {
 
-        });
+			document.querySelectorAll('.boom').forEach(function(element) {
 
-        var immunity_slider = document.getElementsByClassName('filter_slider')[1];
+				element.classList.toggle("hide");
 
-			noUiSlider.create(immunity_slider, {
-			    start: [15, 85],
-			    connect: true,
-			    range: {
-			        'min': 0,
-			        'max': 100
-			    }
+				self.trigger()
+
 			});
 
-        immunity_slider.noUiSlider.on('slide', function( values, handle, unencoded, tap, positions ) {
+		});
 
-        	var diff = ( parseInt(values[1]) - parseInt(values[0]) ) / 100
+		this.resizer()
 
-            self.settings.susceptible = diff
+    }
 
-            self.templatize()
+    loadCase(id) {
 
-        });
+    	var self = this
 
-        immunity_slider.noUiSlider.on('end', function( values, handle, unencoded, tap, positions ) {
+    	var cases = self.cases[id]
 
-        	self.trigger()
+		self.settings.r0 = cases.r0
 
-        });
+		var r0slider = document.querySelectorAll('.filter_slider')[0]
 
-        this.init()
+		r0slider.noUiSlider.set([cases.r0 * 10])
+
+		self.settings.fatality_rate = cases.fatality_rate
+
+		var fatality_rateslider = document.querySelectorAll('.filter_slider')[1]
+
+		fatality_rateslider.noUiSlider.set([cases.fatality_rate])
+
+		self.settings.susceptible = cases.susceptible
+
+		var susceptibleslider = document.querySelectorAll('.filter_slider')[2]
+
+		susceptibleslider.noUiSlider.set([...cases.score])
+
+		self.settings.population = cases.population
+
+		var populationslider = document.querySelectorAll('.filter_slider')[3]
+
+		populationslider.noUiSlider.set([cases.population])
+
+		this.trigger()
+
+    }
+
+    handle(id, values) {
+
+    	var self = this
+
+		switch(id) {
+		  case 0:
+		   self.settings.r0 = parseInt(values[0]) / 10
+		    break;
+		  case 1:
+		    self.settings.fatality_rate = parseInt(values[0])
+		    break;
+		  case 2:
+            self.settings.susceptible = ( parseInt(values[1]) - parseInt(values[0]) ) / 100
+		    break;
+		  case 3:
+		    self.settings.population = parseInt(values[0])
+		    break;
+		  default:
+		}
+
+		self.templatize()
 
     }
 
@@ -142,14 +185,12 @@ export class Contagion {
 
 	    this.simulation = d3.forceSimulation(self.nodes)
 	        .velocityDecay(0.2)
-	        .force("x", d3.forceX().strength(0.002))
-	        .force("y", d3.forceY().strength(0.002))
-	        .force("collide", d3.forceCollide().radius(function(d) { return d.r + 0.5; }).iterations(2))
+	        .force("x", d3.forceX().strength(0.02))
+	        .force("y", d3.forceY().strength(0.02))
+	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(2))
 	        .on("tick", self.ticked)
 
 		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
-
-		console.log(`Total number of steps: ${self.settings.steps.total}`)
 
 		self.settings.deaths = 0
 
@@ -171,13 +212,23 @@ export class Contagion {
 
     }
 
+    getRadius(pop) {
+
+    	var radius = (pop > 3000) ? 4 :
+    		(pop > 2000) ? 5 :
+    		(pop > 1000) ? 6 : 7 ;
+
+    		return (this.width < 480) ? radius / 1.5 : radius ;
+
+    }
+
     getNodes() {
 
     	var self = this
 
 	    var nodes = d3.range(self.settings.population).map(function(i) {
 	      return {
-	        r: 7,
+	        r: self.getRadius(self.settings.population),
 	        status: "healthy",
 	        exposed: false
 	      };
@@ -203,8 +254,6 @@ export class Contagion {
 
       	++self.settings.steps.current
 
-      	console.log(`Current steps: ${self.settings.steps.current}`)
-
       	self.settings.steps.term = self.settings.steps.term * self.settings.r0
 
       	var tree = new kdTree(vulnerable, self.distance, ["x", "y"]);
@@ -213,15 +262,16 @@ export class Contagion {
 
 		for (var i = 0; i < nearest.length; i++) {
 
-			nearest[i][0].status = 'infected'
+			if (self.settings.infected < self.settings.population * self.settings.susceptible) {
 
-			nearest[i][0].exposed = true
+				nearest[i][0].status = 'infected'
+
+				nearest[i][0].exposed = true
+
+				++self.settings.infected
+			}
 
 		}
-
-		var infected = self.nodes.filter(item => item.status === 'infected')
-
-		self.settings.infected = infected.length
 
 		this.templatize()
 
@@ -235,9 +285,23 @@ export class Contagion {
 
     	var self = this
 
+	    r0.innerHTML = self.settings.r0
+
+	    var r1 = document.getElementById("r1"); 
+
+	    r1.innerHTML = `${self.settings.fatality_rate}%`
+
+	    var r2 = document.getElementById("r2"); 
+
+	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
+
+	    var r3 = document.getElementById("r3"); 
+
+	    r3.innerHTML = self.settings.population
+
 	    var target = document.getElementById("info"); 
 
-	    var html = mustache(info, { population : 1000, r0 : self.settings.r0, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
+	    var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
 
 	    target.innerHTML = html
 
@@ -247,7 +311,7 @@ export class Contagion {
 
     	var self = this
 
-		self.settings.deaths = Math.floor(self.settings.population / 100 * self.settings.fatality_rate)
+		self.settings.deaths = Math.floor( ( self.settings.population / 100 *  self.settings.susceptible) * self.settings.fatality_rate ) 
 
 		var deathlist = self.nodes.filter(item => item.status === "infected")
 
@@ -269,9 +333,11 @@ export class Contagion {
 
     	var exposed = self.nodes.filter(item => item.exposed)
 
-    	console.log(exposed.length)
+    	//console.log(exposed.length)
 
-		if (self.settings.steps.current < self.settings.steps.total) {
+    	console.log(`Infected: ${exposed.length}, Ceiling: ${self.settings.population * self.settings.susceptible}, Population: ${self.settings.population}`)
+
+		if (exposed.length < self.settings.population * self.settings.susceptible) {
 
 			setTimeout(function(){ self.calculate(); }, 1000);
 
@@ -282,6 +348,35 @@ export class Contagion {
 		}
 
     }
+
+    resizer() {
+
+        var self = this
+
+        window.addEventListener("resize", function() {
+
+            clearTimeout(document.body.data)
+
+            document.body.data = setTimeout( function() { 
+
+			    self.width = self.div.clientWidth || self.div.getBoundingClientRect().width
+
+			    self.height = self.div.clientHeight || self.div.getBoundingClientRect().height
+
+			    self.context = self.canvas.getContext("2d")
+
+			    self.canvas.width = self.width
+			       
+			    self.canvas.height = self.height
+
+            	self.trigger()
+
+            }, 200);
+
+        });
+
+    }
+
 
     distance(a, b) {
 

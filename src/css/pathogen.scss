@@ -1,20 +1,211 @@
+@import "mq";
+
+.mobile {
+
+	@include mq($until: mobileLandscape) {
+		width: 100%;
+		height: 40px;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		display: none;
+	}
+
+	@include mq($from: tablet) {
+		display: none;
+	}
+
+}
+
+#close {
+
+	z-index: 10;
+
+	@include mq($until: mobileLandscape) {
+		width: 40px;
+		height: 40px;
+		background-color: white;
+		border: 1px solid black;
+		border-radius: 50%;
+		cursor: pointer;
+		position: absolute;
+		top: 20px;
+		right: 20px;
+		background-image: url('<%= path %>/assets/info.svg');
+		background-size: cover;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		display: none;
+	}
+
+	@include mq($from: tablet) {
+		display: none;
+	}
+
+
+}
+
 #pathogen-simulator {
 	width: 100%;
-	height: 100vh;
+	z-index: 9;
+	
+	@include mq($until: mobileLandscape) {
+		height: 100vh;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		height: calc(100vh - 250px);
+	}
+
+	@include mq($from: tablet) {
+		height: calc(100vh - 200px);
+	}
+
 }
 
 #pathogen-panel {
-	position: absolute;
-	top: 20px;
-	left: 20px;
-	width: 400px;
+
+	width: 100%;
 	background-color: white;
 	border: 1px solid black;
 	box-sizing: border-box;
-	padding: 20px;
+	padding: 5px;
+	z-index: 9;
+
+	@include mq($until: mobileLandscape) {
+		position: absolute;
+		top: 0px;
+		height: 100vh;
+		
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		display: inline-block;
+	}
+
+	@include mq($from: tablet) {
+		display: inline-block;
+	}
+
 }
 
+.hide {
+	@include mq($until: mobileLandscape) {
+		display: none
+	}
+}
+
+
+.control-panel {
+
+	box-sizing: border-box;
+
+	@include mq($until: mobileLandscape) {
+		width: 100%;
+		display: inline-block;
+		padding-left: 20px;
+		padding-right: 20px;
+		padding-top: 5px;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		width: 50%;
+		float: left;
+		padding: 10px;
+	}
+
+	@include mq($from: tablet) {
+		width: 25%;
+		float: left;
+		padding: 10px;
+	}
+}
+
+
+
 .filter_slider {
+
+
+	@include mq($until: tablet) {
 	margin-top: 10px;
 	margin-bottom: 10px;
+	}
+
+	@include mq($from: tablet) {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	}
+
+
 }
+
+#info {
+	border: 1px solid black;
+	background-color: white;
+	padding: 10px;
+	position: absolute;
+	bottom: 20px;
+	left: 20px;
+	width: 150px;
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 12px;
+	z-index: 8;
+}
+
+#cases {
+	border: 1px solid black;
+	background-color: white;
+	padding: 10px;
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	width: 150px;
+	z-index: 999;
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 12px;
+}
+
+.case {
+	cursor: pointer;
+}
+
+.legend_container {
+	width: 100%;
+	
+	
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 12px;
+	color: darkgrey;
+
+	@include mq($until: mobileLandscape) {
+		margin-bottom: 5px;
+		margin-top: 15px;
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		height: 40px;
+	}
+
+	@include mq($from: tablet) {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		height: 40px;
+	}
+
+}
+
+.control-panel:nth-of-type(4) .noUi-connects {
+	background: linear-gradient(to left,#0000ff, #ff00ff);
+}
+
+/* basic positioning */
+.legend { list-style: none; }
+.legend li { float: left; margin-right: 10px; }
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+/* your colors */
+.legend .quarantine { background-color: #ff00ff; }
+.legend .suspectible { background-color: red; }
+.legend .distancing { background-color: #0000ff; }

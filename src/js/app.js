@@ -13,7 +13,9 @@ import pathogen from './modules/pathogen'
 var settings = new Preflight(config).getSettings()
 
 rzero()
-// pathogen.init(settings.pathogen)
+
+pathogen.init(settings.pathogen, settings.sliders, settings.cases)
+
 
 
 //import videoInview from "../modules/videoInview";
