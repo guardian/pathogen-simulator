@@ -88,13 +88,13 @@
 
     },{
 
-      "r0" : 6,
+      "r0" : 4,
 
-      "fatality_rate" : 6,
+      "fatality_rate" : 30,
 
-      "susceptible" : 0.4,
+      "susceptible" : 0.08,
 
-      "score" : [40, 80],
+      "score" : [40, 48],
 
       "population" : 1000
 
