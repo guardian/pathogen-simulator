@@ -6,15 +6,15 @@ import { Preflight } from './modules/preflight'
 import loadJson from '../components/load-json/'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from './modules/util'
 
-import rzero from './modules/rzero'
+import rzero from './modules/r-naught'
 //import multiples from './modules/small-multiples'
 import pathogen from './modules/pathogen'
 
 var settings = new Preflight(config).getSettings()
 
-rzero()
-
 pathogen.init(settings.pathogen, settings.sliders, settings.cases)
+
+rzero.init()
 
 
 
