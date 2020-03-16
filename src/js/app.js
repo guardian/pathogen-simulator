@@ -6,7 +6,7 @@ import { Preflight } from './modules/preflight'
 import loadJson from '../components/load-json/'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from './modules/util'
 
-import rzero from './modules/r-naught'
+import rzero from './modules/rzero'
 //import multiples from './modules/small-multiples'
 import pathogen from './modules/pathogen'
 

@@ -14,7 +14,7 @@ export default {
 
 		scrolly.addTrigger({num: 1, do: () => {
 
-		    var virus = new repo(2.3, 3, "covid-19") // Reproductive number, cycles, canvas id
+		    var virus = new repo(2.3, 5, "covid-19") // Reproductive number, cycles, canvas id
 
 		}});
 
