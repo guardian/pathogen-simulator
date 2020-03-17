@@ -307,9 +307,11 @@ export class Contagion {
 
 		self.settings.deaths = Math.floor( ( self.settings.population / 100 *  self.settings.susceptible) * self.settings.fatality_rate ) 
 
-		var deathlist = self.nodes.filter(item => item.status === "infected")
+		var deathlist = self.nodes.filter(item => item.status != "healthy")
 
 		var departed = deathlist.splice(0, self.settings.deaths)
+
+		console.log(`Total deaths: ${self.settings.deaths}`)
 
 		for (var i = 0; i < self.settings.deaths; i++) {
 
