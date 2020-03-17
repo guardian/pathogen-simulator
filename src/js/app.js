@@ -10,9 +10,13 @@ import rzero from './modules/rzero'
 //import multiples from './modules/small-multiples'
 import pathogen from './modules/pathogen'
 
+import multiples from './modules/multiples'
+
 var settings = new Preflight(config).getSettings()
 
 pathogen.init(settings.pathogen, settings.sliders, settings.cases)
+
+multiples.init()
 
 rzero.init()
 

@@ -107,13 +107,7 @@ export class Contagion {
 
 		var susceptibleslider = document.querySelectorAll('.filter_slider')[2]
 
-		susceptibleslider.noUiSlider.set([...cases.score])
-
-		self.settings.population = cases.population
-
-		var populationslider = document.querySelectorAll('.filter_slider')[3]
-
-		populationslider.noUiSlider.set([cases.population])
+		susceptibleslider.noUiSlider.set([cases.susceptible * 100])
 
 		this.trigger()
 
@@ -132,7 +126,7 @@ export class Contagion {
 		    self.settings.fatality_rate = parseInt(values[0])
 		    break;
 		  case 2:
-            self.settings.susceptible = ( parseInt(values[1]) - parseInt(values[0]) ) / 100
+           	self.settings.susceptible = parseInt(values[0]) / 100
             self.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
 		    break;
 		  case 3:
@@ -188,10 +182,10 @@ export class Contagion {
 		}
 
 	    this.simulation = d3.forceSimulation(self.nodes)
-	        .velocityDecay(0.2)
-	        .force("x", d3.forceX().strength(0.02))
-	        .force("y", d3.forceY().strength(0.02))
-	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(2))
+	        .velocityDecay(0.4)
+	        .force("x", d3.forceX().strength(0.0004))
+	        .force("y", d3.forceY().strength(0.0004))
+	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(4))
 	        .on("tick", self.ticked)
 
 		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
@@ -299,15 +293,11 @@ export class Contagion {
 
 	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
 
-	    var r3 = document.getElementById("r3"); 
+		var target = document.getElementById("info"); 
 
-	    r3.innerHTML = self.settings.population
+		var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
 
-	    var target = document.getElementById("info"); 
-
-	    var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
-
-	    target.innerHTML = html
+		target.innerHTML = html
 
     }
 
@@ -339,13 +329,15 @@ export class Contagion {
 
     	//console.log(exposed.length)
 
-    	console.log(`Infected: ${exposed.length}, Ceiling: ${self.settings.population * self.settings.susceptible}, Population: ${self.settings.population}`)
+    	// console.log(`Infected: ${exposed.length}, Ceiling: ${self.settings.population * self.settings.susceptible}, Population: ${self.settings.population}`)
 
 		if (exposed.length < self.settings.population * self.settings.susceptible) {
 
 			setTimeout(function(){ self.calculate(); }, 1000);
 
 		} else {
+
+			console.log("The end")
 
 			self.finale()
 

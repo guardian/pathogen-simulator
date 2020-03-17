@@ -121,20 +121,10 @@
     },{
       "type" : "suspectibilty",
       "params" : {
-        "start": [15, 85],
-        "connect": true,
+        "start": [40],
         "range": {
             "min": [0],
             "max": [100]
-        }
-      }
-    },{
-      "type" : "population",
-      "params" : {
-        "start": [1000],
-        "range": {
-            "min": [500],
-            "max": [4000]
         }
       }
     }],

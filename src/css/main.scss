@@ -8,13 +8,72 @@
 @import "slider";
 
 
-#r-zero-animation {
+#chart-animation {
 	width: 100%;
 	height: 100vh;
+}
+
+#radial-chart {
+	margin: auto;
 }
 
 #r-zero-small-multiples {
 	width: 100%;
-	height: 100vh;
+	display: inline-block;
+	width: 100%;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	z-index: 99;
 }
 
+
+
+.virology {
+	position: relative;
+	float: left;
+	height: 0px;
+
+	@include mq($until: mobileLandscape) {
+		width: 100%;
+		padding-bottom: 100%;
+	}
+
+	@include mq($from: mobileLandscape, $until: tablet) {
+		width: 50%;
+		padding-bottom: 50%;
+	}
+
+	@include mq($from: tablet) {
+		width: 25%;
+		padding-bottom: 25%;
+	}
+
+	box-sizing: border-box;
+	background-color: white;
+
+	svg {
+		display: inline-block;
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		height: 100%; 
+		width: 100%; 
+	}
+
+	h4 {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		box-sizing: border-box;
+		text-align: center;
+	}
+
+}
+
+.svg-content {
+	display: inline-block;
+	position: absolute;
+	top: 0;
+	left: 0;
+}

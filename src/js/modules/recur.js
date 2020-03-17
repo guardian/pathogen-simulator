@@ -26,7 +26,7 @@ export default class Recur {
 
 				var base = Math.floor(r0)
 
-				var remainder = parseInt((r0 + "").split(".")[1])
+				var remainder = parseInt((r0 + "").split(".")[1]) / 10
 
 				var addition = 0
 

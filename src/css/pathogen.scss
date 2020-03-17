@@ -116,7 +116,7 @@
 	}
 
 	@include mq($from: tablet) {
-		width: 25%;
+		width: 33.3%;
 		float: left;
 		padding: 10px;
 	}
@@ -198,7 +198,7 @@
 }
 
 .control-panel:nth-of-type(4) .noUi-connects {
-	background: linear-gradient(to left,#0000ff, #ff00ff);
+	/* background: linear-gradient(to left,#0000ff, #ff00ff); */
 }
 
 /* basic positioning */

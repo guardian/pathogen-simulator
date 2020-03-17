@@ -2,7 +2,7 @@ import * as d3 from "d3"
 
 export default class Radial {
 
-    constructor(json, id) {
+    constructor(json, id, unit, rings=3) {
 
 		var self = this
 
@@ -10,19 +10,27 @@ export default class Radial {
 
 		this.id = id
 
+		this.timeout = null
+
+		this.counter = 0
+
+		this.unit = unit
+
+		this.rings = rings
+
     }
 
     create(unit) {
 
     	var self = this
 
-    	var width = unit
+    	var width = this.unit 
 
-		var height = unit
+		var height = this.unit 
 
-		var radius = unit / 2.5
+		var radius = this.unit  / 2.5
 
-		var counter = 0
+		
 
 		var tree = d3.tree()
 		  .size([2 * Math.PI, radius])
@@ -38,7 +46,7 @@ export default class Radial {
 
 			return links.filter( (item) => {
 
-				if (item.source.depth < counter) {
+				if (item.source.depth < self.counter) {
 
 					return item
 
@@ -46,7 +54,14 @@ export default class Radial {
 			})
 		}
 
-		const svg = d3.select(`#${self.id}`).append("svg").attr("width", width).attr("height", width)
+		const svg = d3.select(`#${self.id}`)
+			.append("svg")
+			.attr("width", width)
+			.attr("height", height)
+			.attr("preserveAspectRatio", "xMinYMin meet")
+			.attr("viewBox", `0 0 ${width} ${height}`)
+			.classed("svg-content", true);
+
 
 		svg.append("g")
 			.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
@@ -69,8 +84,8 @@ export default class Radial {
 			.attr("class", "testing")
 			.style("display", "none")
 			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-			.attr("fill", d => d.children ? "#555" : "#999")
-			.attr("r", 2.5);
+			.attr("fill", d => d.children ? "red" : "red")
+			.attr("r", 5);
 
 		svg.append("g")
 		.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
@@ -88,60 +103,37 @@ export default class Radial {
 			translate(${d.y},0) 
 			rotate(${d.x >= Math.PI ? 180 : 0})
 			`)
-			.attr("dy", "0.31em")
-			.attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
-			.attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
-			.text( (d,i) => i+1)
-			.clone(true).lower()
-			.attr("stroke", "white");
+			//.attr("dy", "0.31em")
+			//.attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
+			//.attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
+			//.text( (d,i) => i+1)
+			//.clone(true).lower()
+			//.attr("stroke", "white");
 
-		svg.append("g")
-			.append("circle")
-			.attr("cx", width / 2)
-			.attr("cy", width / 2)
-			.attr("r", (width / 2) / 2.5)
-			.attr("stroke", "#555")
-			.attr("stroke-opacity", 0.4)
-			.attr("stroke-width", 1.5)
-			.attr("fill", "none")
-			.style("stroke-dasharray", ("3, 3"))
+		// Add the ever decreasing circles
 
-		svg.append("g")
-			.append("circle")
-			.attr("cx", width / 2)
-			.attr("cy", width / 2)
-			.attr("r", (width / 2) / 5)
-			.attr("stroke", "#555")
-			.attr("stroke-opacity", 0.4)
-			.attr("stroke-width", 1.5)
-			.attr("fill", "none")
-			.style("stroke-dasharray", ("3, 3"))
+		var rad = radius
 
-		svg.append("g")
-			.append("circle")
-			.attr("cx", width / 2)
-			.attr("cy", width / 2)
-			.attr("r", (width / 2) / 1.67)
-			.attr("stroke", "#555")
-			.attr("stroke-opacity", 0.4)
-			.attr("stroke-width", 1.5)
-			.attr("fill", "none")
-			.style("stroke-dasharray", ("3, 3"))
+		for (var i = 0; i < this.rings; i++) {
 
-		svg.append("g")
-			.append("circle")
-			.attr("cx", width / 2)
-			.attr("cy", width / 2)
-			.attr("r", (width / 2) / 1.25)
-			.attr("stroke", "#555")
-			.attr("stroke-opacity", 0.4)
-			.attr("stroke-width", 1.5)
-			.attr("fill", "none")
-			.style("stroke-dasharray", ("3, 3"))
+			svg.append("g")
+				.append("circle")
+				.attr("cx", width / 2)
+				.attr("cy", width / 2)
+				.attr("r", rad)
+				.attr("stroke", "#555")
+				.attr("stroke-opacity", 0.4)
+				.attr("stroke-width", 1.5)
+				.attr("fill", "none")
+				.style("stroke-dasharray", ("3, 3"))
+
+				rad = rad - (radius / this.rings)
+
+		}
 
 		function render() {
 
-		    d3.selectAll("path").remove()
+		    d3.select(`#${self.id}`).selectAll("path").remove()
 
 			svg.append("g")
 			.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
@@ -156,8 +148,8 @@ export default class Radial {
 			.angle(d => d.x)
 			.radius(d => d.y));
 
-		    d3.selectAll(".testing").style("display", d => {
-		      return (d.depth > counter) ? "none" : "block" ;
+		    d3.select(`#${self.id}`).selectAll(".testing").style("display", d => {
+		      return (d.depth > self.counter) ? "none" : "block" ;
 		    })
 
 		    next()
@@ -183,17 +175,38 @@ export default class Radial {
 
 		function next() {
 
-		  if (counter < 5) {
-		    setTimeout(function(){ 
-		      render();
-		      ++counter
-		    }, 1000);
+		  if (self.counter < 5) {
+		    self.timeout = setTimeout(function() { render(); ++self.counter }, 1000);
 		  }
 
 		}
 
 		render()
 
+
+    }
+
+    update(json) {
+
+    	var self = this
+
+    	console.log(json)
+
+    	if (this.timeout!=null) {
+
+    		clearTimeout(this.timeout);
+
+    		this.timeout=null
+
+    	}
+
+    	this.json = json
+
+    	this.counter = 0
+
+    	d3.select(`#${self.id}`).select(`svg`).remove();
+
+    	this.create(this.unit)
 
     }
 }
