@@ -14,6 +14,8 @@ export default {
 
 		var contagion = new Contagion(config, "pathogen-simulator", sliders, cases)
 
+		contagion.init()
+
 		scrolly.addTrigger({num: 1, do: () => {
 
 		    contagion.trigger()

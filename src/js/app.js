@@ -2,16 +2,16 @@ import loadJson from '../components/load-json/'
 import { $, $$, round, numberWithCommas, wait, getDimensions } from './modules/util'
 
 import rzero from './modules/rzero'
-import pathogen from './modules/pathogen'
 import multiples from './modules/multiples'
+import pathogen from './modules/pathogen'
 
 import config from './settings/settings'
 import { Preflight } from './modules/preflight'
 
 var settings = new Preflight(config).getSettings()
 
-pathogen.init(settings.pathogen, settings.sliders, settings.cases)
+rzero.init()
 
 multiples.init()
 
-rzero.init()
+pathogen.init(settings.pathogen, settings.sliders, settings.cases)

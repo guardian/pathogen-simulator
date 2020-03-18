@@ -39,6 +39,8 @@ export class Contagion {
 
 	    this.div.appendChild(this.canvas)
 
+	    this.novel = false
+
 	    this.distance = (a, b) => Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2);
 
 	    this.compile()
@@ -55,7 +57,7 @@ export class Contagion {
 
 	        slider.noUiSlider.on('slide', (values) => self.handle(index, values));
 
-	        slider.noUiSlider.on('end', () => self.trigger());
+	        slider.noUiSlider.on('change', () => self.trigger());
 
 		});
 
@@ -186,7 +188,8 @@ export class Contagion {
 	        .force("x", d3.forceX().strength(0.0004))
 	        .force("y", d3.forceY().strength(0.0004))
 	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(4))
-	        .on("tick", self.ticked)
+	        this.simulation.on("tick", self.ticked)
+
 
 		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
 
@@ -198,15 +201,23 @@ export class Contagion {
 
 		self.settings.infected = 1
 
-		var origin = Math.floor(Math.random() * self.settings.population) + 1  
+		if (this.novel) {
 
-		self.nodes[origin].status = "infected"
+			var origin = Math.floor(Math.random() * self.settings.population) + 1  
 
-		self.nodes[origin].exposed = true
+			self.nodes[origin].status = "infected"
 
-		self.settings.current = self.nodes[origin]
+			self.nodes[origin].exposed = true
 
-		this.next()
+			self.settings.current = self.nodes[origin]
+
+			self.settings.steps.total
+
+			this.next()
+
+		}
+
+        this.novel = true
 
     }
 
@@ -311,8 +322,6 @@ export class Contagion {
 
 		var departed = deathlist.splice(0, self.settings.deaths)
 
-		console.log(`Total deaths: ${self.settings.deaths}`)
-
 		for (var i = 0; i < self.settings.deaths; i++) {
 
 			departed[i].status = "dead"
@@ -329,17 +338,11 @@ export class Contagion {
 
     	var exposed = self.nodes.filter(item => item.exposed)
 
-    	//console.log(exposed.length)
-
-    	// console.log(`Infected: ${exposed.length}, Ceiling: ${self.settings.population * self.settings.susceptible}, Population: ${self.settings.population}`)
-
 		if (exposed.length < self.settings.population * self.settings.susceptible) {
 
 			setTimeout(function(){ self.calculate(); }, 1000);
 
 		} else {
-
-			console.log("The end")
 
 			self.finale()
 
