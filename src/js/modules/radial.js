@@ -30,8 +30,6 @@ export default class Radial {
 
 		var radius = this.unit  / 2.5
 
-		
-
 		var tree = d3.tree()
 		  .size([2 * Math.PI, radius])
 		  .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
@@ -103,12 +101,6 @@ export default class Radial {
 			translate(${d.y},0) 
 			rotate(${d.x >= Math.PI ? 180 : 0})
 			`)
-			//.attr("dy", "0.31em")
-			//.attr("x", d => d.x < Math.PI === !d.children ? 6 : -6)
-			//.attr("text-anchor", d => d.x < Math.PI === !d.children ? "start" : "end")
-			//.text( (d,i) => i+1)
-			//.clone(true).lower()
-			//.attr("stroke", "white");
 
 		// Add the ever decreasing circles
 
