@@ -183,11 +183,21 @@ export class Contagion {
 
 		}
 
+		var width = document.documentElement.clientWidth
+
+		var strength = (width < 480) ? 0.005 : 0.0004 ;
+
+		var velocityDecay = (width < 480) ? 0.25 : 0.4 ;
+
+		var iterations = (width < 480) ? 2.5 : 4 ;
+
+
+
 	    this.simulation = d3.forceSimulation(self.nodes)
-	        .velocityDecay(0.4)
-	        .force("x", d3.forceX().strength(0.0004))
-	        .force("y", d3.forceY().strength(0.0004))
-	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(4))
+	        .velocityDecay(velocityDecay)
+	        .force("x", d3.forceX().strength(strength))
+	        .force("y", d3.forceY().strength(strength))
+	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(iterations))
 	        this.simulation.on("tick", self.ticked)
 
 
@@ -221,13 +231,15 @@ export class Contagion {
 
     }
 
-    getRadius(pop) {
+    getRadius() {
 
-    	var radius = (pop > 3000) ? 4 :
-    		(pop > 2000) ? 5 :
-    		(pop > 1000) ? 6 : 7 ;
+    	var width = document.documentElement.clientWidth
 
-    		return (this.width < 480) ? radius / 1.5 : radius ;
+    	var radius = (width < 480) ? 2 : 5 ;
+
+    	console.log(`Width: ${width}, rad: ${radius}`)
+
+    	return radius
 
     }
 
@@ -237,7 +249,7 @@ export class Contagion {
 
 	    var nodes = d3.range(self.settings.population).map(function(i) {
 	      return {
-	        r: self.getRadius(self.settings.population),
+	        r: self.getRadius(),
 	        status: "healthy",
 	        exposed: false
 	      };
