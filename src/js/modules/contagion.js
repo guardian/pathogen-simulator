@@ -185,13 +185,17 @@ export class Contagion {
 
 		var width = document.documentElement.clientWidth
 
-		var strength = (width < 480) ? 0.005 : 0.0004 ;
+    	var strength = (width < 480) ? 0.005 :
+			    	(width < 900) ? 0.003 :
+			    	(width < 1600) ? 0.004 : 0.0004 ;
 
-		var velocityDecay = (width < 480) ? 0.25 : 0.4 ;
+    	var velocityDecay = (width < 480) ? 0.25 :
+			    	(width < 900) ? 0.3 :
+			    	(width < 1600) ? 0.35 : 0.4 ;
 
-		var iterations = (width < 480) ? 2.5 : 4 ;
-
-
+    	var iterations = (width < 480) ? 2.5 :
+			    	(width < 900) ? 3 :
+			    	(width < 1600) ? 3.5 : 4 ;
 
 	    this.simulation = d3.forceSimulation(self.nodes)
 	        .velocityDecay(velocityDecay)
@@ -235,7 +239,9 @@ export class Contagion {
 
     	var width = document.documentElement.clientWidth
 
-    	var radius = (width < 480) ? 2 : 5 ;
+    	var radius = (width < 480) ? 2 :
+			    	(width < 900) ? 3 :
+			    	(width < 1300) ? 4 : 5 ;
 
     	console.log(`Width: ${width}, rad: ${radius}`)
 

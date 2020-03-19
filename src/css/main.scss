@@ -24,7 +24,6 @@
     top:50%;
     bottom:50%;
     
-
 		@include mq($until: mobileLandscape) {
 			transform:translate(0%, -50%);
 		}
