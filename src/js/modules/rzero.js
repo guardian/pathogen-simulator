@@ -10,9 +10,9 @@ export default {
 
 		var covid  = new Recur(2, "Covid-19 (Diamond Princess)", 2).json()
 
-		var measles  = new Recur(9, "Measles", 2).json()
+		//var measles  = new Recur(9, "Measles", 2).json()
 
-		var sars  = new Recur(2.8, "SARS", 2).json()
+		// var sars  = new Recur(2.8, "SARS", 2).json()
 
 		var element = d3.select('.scroll-text').node();
 
@@ -37,13 +37,13 @@ export default {
 
 		scrolly.addTrigger({num: 2, do: () => {
 
-		    radial.update(measles)
+		    //radial.update(measles)
 
 		}});
 
 		scrolly.addTrigger({num: 3, do: () => {
 
-		    radial.update(sars)
+		    //radial.update(sars)
 
 		}});
 
