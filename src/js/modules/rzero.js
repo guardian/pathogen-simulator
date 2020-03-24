@@ -1,18 +1,14 @@
 import ScrollyTeller from "../modules/scrollyteller"
 import * as d3 from "d3"
 import Recur from '../modules/recur'
-import Radial from '../modules/radial'
+import Covid from '../modules/covid'
 import screensizer from "../modules/screensizer"; 
 
 export default {
 
 	init: () => {
 
-		var covid  = new Recur(2, "Covid-19 (Diamond Princess)", 2).json()
-
-		//var measles  = new Recur(9, "Measles", 2).json()
-
-		// var sars  = new Recur(2.8, "SARS", 2).json()
+		var virus  = new Recur(2.6, "Covid-19 (Diamond Princess)", 2).json()
 
 		var element = d3.select('.scroll-text').node();
 
@@ -20,7 +16,9 @@ export default {
 
 		document.getElementById("radial-chart").style.width = `${unit}px`;
 
-		var radial  = new Radial(covid, "radial-chart", unit)
+		var covid  = new Covid(virus, "radial-chart", unit)
+
+		covid.create(0)
 
 		const scrolly = new ScrollyTeller({
 			parent: document.querySelector("#scrolly-1"),
@@ -31,19 +29,25 @@ export default {
 
 		scrolly.addTrigger({num: 1, do: () => {
 
-		    radial.update(covid)
+			covid.create(0)
 
 		}});
 
 		scrolly.addTrigger({num: 2, do: () => {
 
-		    //radial.update(measles)
+			covid.create(1)
 
 		}});
 
 		scrolly.addTrigger({num: 3, do: () => {
 
-		    //radial.update(sars)
+			covid.create(2)
+
+		}});
+
+		scrolly.addTrigger({num: 4, do: () => {
+
+			covid.create(3)
 
 		}});
 
