@@ -20,7 +20,7 @@ export default {
 
 			console.log("Trigger 1 - one infection")
 
-			reduction.loadCase(0, 0, 0, false)
+			reduction.loadCase(0, 0, 0, false, false)
 
 
 		}});
@@ -29,7 +29,7 @@ export default {
 
 			console.log("Trigger 2 - 100% susceptible")
 
-		    reduction.loadCase(3, 1, 1) // r0, fatality_rate, susceptible
+		    reduction.loadCase(3, 1, 0, true, false) // r0, fatality_rate, susceptible
 
 		}});
 

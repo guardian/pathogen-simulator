@@ -42,11 +42,13 @@ export class Reduction {
 	    this.resizer()
     }
 
-    loadCase(r0, fatality_rate, susceptible, spread=true) {
+    loadCase(r0, fatality_rate, susceptible, spread=true, shuffle=true) {
 
     	var self = this
 
     	self.spread = spread
+
+    	self.shuffle = shuffle
 
 		self.settings.r0 = r0
 
@@ -83,7 +85,7 @@ export class Reduction {
 
 	    }
 
-		if (self.spread) {
+		if (self.shuffle) {
 
 			self.nodes = shuffle(self.nodes)
 
@@ -158,13 +160,13 @@ export class Reduction {
 
 		self.settings.infected = 1
 
-		var origin = Math.floor(Math.random() * self.settings.population) + 1  
+		// var origin = Math.floor(Math.random() * self.settings.population) + 1  
 
-		self.nodes[origin].status = "infected"
+		self.nodes[0].status = "infected"
 
-		self.nodes[origin].exposed = true
+		self.nodes[0].exposed = true
 
-		self.settings.current = self.nodes[origin]
+		self.settings.current = self.nodes[0]
 
 		self.settings.steps.total
 
