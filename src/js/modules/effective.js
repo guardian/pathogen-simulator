@@ -20,7 +20,7 @@ export default {
 
 			console.log("Trigger 1 - one infection")
 
-			reduction.loadCase(3, 1, 1, false)
+			reduction.loadCase(0, 0, 0, false)
 
 
 		}});
