@@ -48,7 +48,10 @@ export var intro = {
 
       "fatality" : 0.1
 
-    },{
+    }]
+
+/*
+{
 
       "disease" : "Influenza (Spanish flu)",
 
@@ -96,8 +99,8 @@ export var intro = {
 
       "fatality" : 15
 
-    }]
-
+    }
+*/
 
     var velocity = 2
 
@@ -257,7 +260,7 @@ export var intro = {
         return force
     }
 
-    setTimeout(function(){ intro.force.stop(); }, 3000);
+   // setTimeout(function(){ intro.force.stop(); }, 3000);
 
     function ticked() {
 

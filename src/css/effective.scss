@@ -1,0 +1,33 @@
+@import "mq";
+
+#effective-simulator {
+	width: 100%;
+	z-index: 9;
+	height: 100vh;
+}
+
+#effective-panel {
+
+	width: 100%;
+	background-color: white;
+	border: 1px solid black;
+	box-sizing: border-box;
+	padding: 5px;
+	z-index: 9;
+
+	@include mq($until: mobileLandscape) {
+		position: absolute;
+		top: 0px;
+		height: 100vh;
+		
+	}
+	
+	@include mq($from: mobileLandscape, $until: tablet) {
+		display: inline-block;
+	}
+
+	@include mq($from: tablet) {
+		display: inline-block;
+	}
+
+}
