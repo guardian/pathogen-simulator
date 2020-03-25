@@ -1,5 +1,31 @@
 {
 
+    "effective" : {
+
+      "r0" : 2.28,
+
+      "fatality_rate" : 1,
+
+      "susceptible" : 0.4,
+
+      "population" : 1000,
+
+      "infected" : 0,
+
+      "deaths" : 0,
+
+      "steps" : {
+
+        "current" : 0,
+
+        "term" : 1,
+
+        "total" : 0
+
+      }
+
+    },
+
     "pathogen" : {
 
       "r0" : 2.28,

@@ -21,7 +21,7 @@ rzero.init()
 
 multiples.init()
 
-effective.init(settings.pathogen)
+effective.init(settings.effective)
 
 pathogen.init(settings.pathogen, settings.sliders, settings.cases)
 

@@ -61,20 +61,16 @@
 
 .scroll-text__div {
     max-width: 620px;
+    box-sizing: border-box;
+    padding: 20px;
     width: 100%;
-    @include mq(desktop) {
-        width: 620px;
-    }
-    margin-left: 0px;
+    margin: auto;
     background-color: #fff;
     border: 2px solid #000;
     box-shadow: 4px 4px 0 0 #767676;
-    padding: 6px 10px 0px;
     @include fs-headline(5);
     font-size: 20px;
     line-height: 26px;
-    padding-top: 4px;
-    padding-bottom: 0px;
 
     span {
         display: inline-block;
@@ -88,6 +84,10 @@
     height: 100vh;
     position: relative;
     z-index: 100;
+
+    @include mq($until: tablet) {
+       padding: 20px;
+    }
 
     .transparent-until-active & {
         opacity: 0.25;
