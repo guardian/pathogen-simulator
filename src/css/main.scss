@@ -73,24 +73,39 @@ body {
 }
 
 
+
 .virology {
 	position: relative;
 	float: left;
 	height: 0px;
 
+
+
 	@include mq($until: mobileLandscape) {
 		width: 100%;
 		padding-bottom: 100%;
+
+		border-bottom: 1px solid lightgrey;
 	}
 
 	@include mq($from: mobileLandscape, $until: tablet) {
 		width: 50%;
 		padding-bottom: 50%;
+
+		&:nth-child(1),&:nth-child(2),&:nth-child(3),&:nth-child(4),&:nth-child(5),&:nth-child(6) {
+		 border-bottom: 1px solid lightgrey;
+		}
+
 	}
 
 	@include mq($from: tablet) {
 		width: 25%;
 		padding-bottom: 25%;
+
+		&:nth-child(1),&:nth-child(2),&:nth-child(3),&:nth-child(4) {
+			border-bottom: 1px solid lightgrey;
+		}
+
 	}
 
 	box-sizing: border-box;
@@ -117,6 +132,35 @@ body {
 	}
 
 }
+
+.radial-total {
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 12px;
+	fill: red;
+	font-weight: 600;
+}
+
+.radial-info {
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 12px;
+	fill: black;
+	font-weight: 600;
+}
+
+.radial-total-big {
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 16px;
+	fill: red;
+	font-weight: 600;
+}
+
+.radial-info-big {
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 16px;
+	fill: black;
+	font-weight: 600;
+}
+
 
 #radial-chart .svg-content {
 

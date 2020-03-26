@@ -18,6 +18,8 @@ export default class Covid {
 
 		this.rings = rings
 
+		console.log(this.json.infected)
+
     }
 
     create(counter) {
@@ -127,8 +129,23 @@ export default class Covid {
 		}
 
 	    d3.select(`#${self.id}`).selectAll(".testing").style("display", d => {
+
 	      return (d.depth > self.counter) ? "none" : "block" ;
+
 	    })
+
+		svg.append("text")
+			.attr("class", "radial-info-big")
+			.attr("x", width / 2)
+			.attr("y", 30)
+			.text(`${self.json.name}, R naught = ${self.json.r0}`)
+			.style("text-anchor","middle");
+
+		var total = svg.append("text")
+			.attr("class", "radial-total-big")
+			.attr("x", width / 2)
+			.attr("y", height - 30)
+			.style("text-anchor","middle");
 
 
 		function render() {
@@ -152,6 +169,17 @@ export default class Covid {
 		      return (d.depth > self.counter) ? "none" : "block" ;
 		    })
 
+		    if (self.counter === 3) {
+
+				total.text(`Total infected: ${self.json.total}`)
+
+		    } else {
+
+		    	total.text(``)
+
+		    }
+
+
 		    next()
 
 		}
@@ -163,8 +191,6 @@ export default class Covid {
 		  	++self.counter
 		  	
 		    render(); 
-
-		    
 
 		  }
 

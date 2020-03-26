@@ -8,7 +8,7 @@ export default {
 
 	init: () => {
 
-		var virus  = new Recur(2.6, "Covid-19 (Diamond Princess)", 2).json()
+		var virus  = new Recur(2.6, "Covid-19", 2).json()
 
 		var element = d3.select('.scroll-text').node();
 

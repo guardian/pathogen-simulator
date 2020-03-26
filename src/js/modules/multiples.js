@@ -86,7 +86,7 @@ export default {
 
 	        elem.id = id
 
-	        elem.innerHTML = `<h4>${microbiology[index].disease}</h4>`
+	        //elem.innerHTML = `<h4>${microbiology[index].disease}</h4>`
 
 			var virus  = new Recur(microbiology[index].r0, microbiology[index].disease, 2).json()
 

@@ -14,7 +14,7 @@ export default class Recur {
 
 		this.data = { "name": virus, "r0": r0 }
 
-	    this.infected = d3.range((generations + 1)).map( (i) => {
+	    this.infected = d3.range((generations + 2)).map( (i) => {
 			return {
 				"phase" : i + 1,
 				"infected" : 0
@@ -167,6 +167,10 @@ export default class Recur {
 
 					})
 				}
+			} else {
+
+				self.infected[depth].infected = self.infected[depth].infected + 1
+
 			}
 		} 
 

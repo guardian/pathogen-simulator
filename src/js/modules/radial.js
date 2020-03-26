@@ -106,6 +106,8 @@ export default class Radial {
 
 		var rad = radius
 
+		var labels = [3,2,1]
+
 		for (var i = 0; i < this.rings; i++) {
 
 			svg.append("g")
@@ -119,9 +121,34 @@ export default class Radial {
 				.attr("fill", "none")
 				.style("stroke-dasharray", ("3, 3"))
 
+			svg.append("text")
+				.attr("x", width / 2)
+				.attr("y", (width / 2) + (rad - 5))
+				.text(`${labels[i]}`)
+				.attr("font-family", "sans-serif")
+				.attr("font-size", "12px")
+				.attr("fill", "black")
+				.style("text-anchor","middle");
+
 				rad = rad - (radius / this.rings)
 
 		}
+
+		svg.append("text")
+			.attr("class", "radial-info")
+			.attr("x", width / 2)
+			.attr("y", 15)
+			.text(`${self.json.name}, R naught = ${self.json.r0}`)
+			.style("text-anchor","middle");
+
+		svg.append("text")
+			.attr("class", "radial-total")
+			.attr("x", width / 2)
+			.attr("y", height - 7)
+			.text(`Total infected: ${self.json.total}`)
+			.style("text-anchor","middle");
+
+
 
 		function render() {
 
