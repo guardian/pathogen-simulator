@@ -18,33 +18,32 @@ export default {
 
 		scrolly.addTrigger({num: 1, do: () => {
 
-			reduction.loadCase(0, 0, 0, false, false)
-
+			reduction.loadCase(0, 0, 0, false, true, "Single infection")
 
 		}});
 
 		scrolly.addTrigger({num: 2, do: () => {
 
-		    reduction.loadCase(3, 0, 1, true, false) // r0, fatality_rate, susceptible
+		    reduction.loadCase(3, 0, 1, true, false, "Infect 100%")
 
 		}});
 
 
 		scrolly.addTrigger({num: 3, do: () => {
 
-			reduction.loadCase(3, 0, 0.5) // r0, fatality_rate, susceptible
+			reduction.loadCase(3, 0, 0.5, true, true, "Partial infection")
 
 		}});
 
 		scrolly.addTrigger({num: 4, do: () => {
 
-		    reduction.loadCase(1.1, 0, 0.2) // r0, fatality_rate, susceptible
+		    reduction.loadCase(1.1, 0, 0.2, true, true, "R naught below one")
 
 		}});
 
 		scrolly.addTrigger({num: 5, do: () => {
 
-		    reduction.loadCase(1.5, 50, 0.1) // r0, fatality_rate, susceptible
+		    reduction.loadCase(1.5, 50, 0.1, true, true, "Ebola")
 
 		}});
 

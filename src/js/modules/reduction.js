@@ -42,7 +42,7 @@ export class Reduction {
 	    this.resizer()
     }
 
-    loadCase(r0, fatality_rate, susceptible, spread=true, shuffle=true) {
+    loadCase(r0, fatality_rate, susceptible, spread, shuffle, id) {
 
     	var self = this
 
@@ -56,6 +56,8 @@ export class Reduction {
 
 		self.settings.susceptible = susceptible
 
+		console.log(`Trigger: ${id}, R0: ${r0}, Fatality rate: ${fatality_rate}, susceptiblity: ${susceptible}, Spread: ${spread}, Shuffle: ${shuffle}`)
+
 		this.trigger()
 
     }
@@ -64,34 +66,41 @@ export class Reduction {
 
     	var self = this
 
-    	//this.nodes = this.getNodes()
-
     	if (this.simulation!=null) {
 
     		this.simulation.stop()
 
     	}
 
-    	self.nodes.filter(item => {
+    	var nodes = self.nodes
 
-			item.status = "healthy"
+    	this.updateNodes(nodes).then( data => {
 
-			item.exposed = false    	
-		})
+    		self.nodes = data
 
-	    for (var i = 0; i < self.nodes.length; i++) {
+    		self.propagate() 
 
-	    	self.nodes[i].susceptible = (i < self.settings.population * self.settings.susceptible) ? true : false ;
+    	})
 
-	    }
+    }
 
-		if (self.shuffle) {
+    async updateNodes(nodes) {
 
-			self.nodes = shuffle(self.nodes)
+    	var self = this
 
-		}
+		await nodes.forEach(function(node, index) {
 
-    	this.propagate() 
+			node.status = "healthy"
+
+			node.exposed = false 
+
+			node.susceptible = (index < self.settings.population * self.settings.susceptible) ? true : false ;
+
+		});
+
+		var updated = await (self.shuffle) ? shuffle(nodes) : nodes ;
+
+		return updated
 
     }
 
@@ -141,8 +150,6 @@ export class Reduction {
 	        .force("y", d3.forceY().strength(strength))
 	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(iterations))
 	        .on("tick", self.ticked)
-
-	    //this.propagate()
 
     }
 
