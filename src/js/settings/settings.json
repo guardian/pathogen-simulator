@@ -68,7 +68,7 @@
 
       "r0" : 2,
 
-      "fatality_rate" : 3.4,
+      "fatality_rate" : 2.3,
 
       "susceptible" : 0.4,
 
@@ -80,7 +80,7 @@
 
       "r0" : 2,
 
-      "fatality_rate" : 3.4,
+      "fatality_rate" : 1.2,
 
       "susceptible" : 0.4,
 
