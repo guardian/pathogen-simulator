@@ -1,3 +1,5 @@
+import * as d3 from "d3"
+
 export default class Recur {
 
     constructor(r0, virus, generations=3) {
@@ -11,6 +13,13 @@ export default class Recur {
 		this.generations = generations
 
 		this.data = { "name": virus, "r0": r0 }
+
+	    this.infected = d3.range((generations + 1)).map( (i) => {
+			return {
+				"phase" : i + 1,
+				"infected" : 0
+			}
+	    });
 
 		this.create()
 
@@ -55,7 +64,7 @@ export default class Recur {
 
 				temp.push({
 
-					"name": "node_" + level + "_" + i
+					"name": "node_" + level + "_" + i,
 
 				})
 			}
@@ -136,6 +145,10 @@ export default class Recur {
 			
 				obj.level = depth
 
+				obj.infected = true
+
+				self.infected[depth].infected = self.infected[depth].infected + 1
+
 				if (!obj.name) {
 
 					obj.name = "gen" + depth
@@ -162,6 +175,12 @@ export default class Recur {
     }
 
     json() {
+
+		var total = this.infected.reduce( (accumulator, cases) => accumulator + cases.infected, 0);
+
+		this.data.total = total
+
+    	this.data.infected = this.infected
 
     	return this.data
 

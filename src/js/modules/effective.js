@@ -29,7 +29,7 @@ export default {
 
 			console.log("Trigger 2 - 100% susceptible")
 
-		    reduction.loadCase(3, 1, 0, true, false) // r0, fatality_rate, susceptible
+		    reduction.loadCase(3, 0, 1, true, false) // r0, fatality_rate, susceptible
 
 		}});
 
@@ -38,7 +38,7 @@ export default {
 
 			console.log("Trigger 3 - 50% susceptible")
 
-			reduction.loadCase(3, 1, 0.5) // r0, fatality_rate, susceptible
+			reduction.loadCase(3, 0, 0.5) // r0, fatality_rate, susceptible
 
 		}});
 
@@ -46,7 +46,7 @@ export default {
 
 			console.log("Trigger 4 - R-naught below 1")
 
-		    reduction.loadCase(1.1, 1, 0.2) // r0, fatality_rate, susceptible
+		    reduction.loadCase(1.1, 0, 0.2) // r0, fatality_rate, susceptible
 
 		}});
 
