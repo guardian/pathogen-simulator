@@ -84,8 +84,6 @@ export class repo {
 
       var obj = { level : level, count : count, ids : ids, offset : offset, nodes : nodes }
 
-      //console.log(nodes)
-
       this.database.push(obj)
 
     }

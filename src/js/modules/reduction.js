@@ -174,8 +174,6 @@ export class Reduction {
 
 		if (self.spread) {
 
-			console.log("Spread the virus")
-
 			this.next()
 
 		}
@@ -189,8 +187,6 @@ export class Reduction {
     	var radius = (width < 480) ? 2 :
 			    	(width < 900) ? 3 :
 			    	(width < 1300) ? 4 : 5 ;
-
-    	console.log(`Width: ${width}, rad: ${radius}`)
 
     	return radius
 

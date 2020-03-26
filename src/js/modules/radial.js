@@ -209,8 +209,6 @@ export default class Radial {
 
     	var self = this
 
-    	console.log(json)
-
     	if (this.timeout!=null) {
 
     		clearTimeout(this.timeout);

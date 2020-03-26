@@ -73,20 +73,13 @@ export default {
 
 		}]
 
-		console.log("Yo we are in the house")
-
-
 	    document.querySelectorAll('.virology').forEach((elem, index) => {
-
-	    	console.log("Loop loop")
 
 	        var unit = elem.clientWidth || elem.offsetWidth
 
 	        var id = `virology_${index}`;
 
 	        elem.id = id
-
-	        //elem.innerHTML = `<h4>${microbiology[index].disease}</h4>`
 
 			var virus  = new Recur(microbiology[index].r0, microbiology[index].disease, 2).json()
 
@@ -95,27 +88,6 @@ export default {
 			radial.update(virus)
 
 	    });
-
-
-
-		/*
-
-		const scrolly = new ScrollyTeller({
-			parent: document.querySelector("#scrolly-1"),
-			triggerTop: 1/3, // percentage from the top of the screen that the trigger should fire
-			triggerTopMobile: 0.75,
-			transparentUntilActive: true
-	     });
-
-		scrolly.addTrigger({num: 1, do: () => {
-
-		    radial.update(covid)
-
-		}});
-
-		scrolly.watchScroll();
-
-		*/
 
 	}
 

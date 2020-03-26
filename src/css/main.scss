@@ -172,3 +172,17 @@ body {
 	left: 0;
 	*/
 }
+
+#mini {
+
+	.line {
+	    fill: none;
+	    stroke: red;
+	    stroke-width: 3;
+	}
+
+	svg {
+		overflow: hidden;
+	}
+	  
+}

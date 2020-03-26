@@ -18,8 +18,6 @@ export default class Covid {
 
 		this.rings = rings
 
-		console.log(this.json.infected)
-
     }
 
     create(counter) {

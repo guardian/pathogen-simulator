@@ -41,6 +41,8 @@ export class Contagion {
 
 	    this.novel = false
 
+	    this.steps = []
+
 	    this.distance = (a, b) => Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2);
 
 	    this.compile()
@@ -204,8 +206,31 @@ export class Contagion {
 	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(iterations))
 	        this.simulation.on("tick", self.ticked)
 
+	       // console.log(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
+
+	    self.settings.steps.precise = self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible)
 
 		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
+
+		var array = [1]
+
+		var current = 1
+
+		for (var i = 0; i < self.settings.steps.total; i++) {
+
+			array.push(current * self.settings.r0)
+
+			current = current * self.settings.r0
+
+		}
+
+	    this.dataset = array.map(function(i) {
+	      return {
+	        y: i
+	      };
+	    });
+
+		var total = array.reduce( (accumulator, cases) => accumulator + cases, 0);
 
 		self.settings.deaths = 0
 
@@ -242,8 +267,6 @@ export class Contagion {
     	var radius = (width < 480) ? 2 :
 			    	(width < 900) ? 3 :
 			    	(width < 1300) ? 4 : 5 ;
-
-    	console.log(`Width: ${width}, rad: ${radius}`)
 
     	return radius
 
@@ -328,6 +351,76 @@ export class Contagion {
 
 		target.innerHTML = html
 
+		this.chart()
+
+    }
+
+    chart() {
+
+    	var self = this
+
+		var margin = {top: 1, right: 1, bottom: 5, left: 1}
+		  , width = 150 - margin.left - margin.right // Use the window's width 
+		  , height = 100 - margin.top - margin.bottom; // Use the window's height
+
+		var xScale = d3.scaleLinear()
+		    .domain([0, self.settings.steps.total])
+		    .range([0, width]);
+
+		var interesection = xScale(self.settings.steps.precise)
+
+		var yScale = d3.scaleLinear()
+		    .domain([0, self.settings.population * self.settings.susceptible])
+		    .range([height, 0]);
+
+		var line = d3.line()
+		    .x(function(d, i) { return xScale(i); })
+		    .y(function(d) { return yScale(d.y); })
+		    .curve(d3.curveMonotoneX)
+
+		var svg = d3.select("#mini").append("svg")
+					.attr("width", width + margin.left + margin.right)
+					.attr("height", height + margin.top + margin.bottom)
+					.append("g")
+					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+					/*
+		  svg.append("line")
+		      .attr("x1", 0)
+		      .attr("y1", height)
+		      .attr("x2", width)
+		      .attr("y2", height)
+		      .attr("stroke-width", 1)
+		      .attr("stroke", "black");*/
+
+		svg.append("g")
+			.attr("class", "x axis")
+			.attr("transform", "translate(0," + height + ")")
+			.call(d3.axisBottom(xScale).ticks(self.settings.steps.total))
+
+
+		svg.append("line")
+			.attr("x1", interesection)
+			.attr("y1", 0)
+			.attr("x2", interesection)
+			.attr("y2", height)
+			.attr("stroke-width", 1)
+			.attr("stroke", "lightgrey")
+			.attr("stroke-dasharray", "2 2")
+
+		  svg.append("line")
+		      .attr("x1", 0)
+		      .attr("y1", 0)
+		      .attr("x2", 0)
+		      .attr("y2", height)
+		      .attr("stroke-width", 1)
+		      .attr("stroke", "black");
+
+ 
+			svg.append("path")
+			    .datum(self.dataset)
+			    .attr("class", "line")
+			    .attr("d", line);
+
     }
 
     finale() {
@@ -395,7 +488,6 @@ export class Contagion {
         });
 
     }
-
 
     distance(a, b) {
 
