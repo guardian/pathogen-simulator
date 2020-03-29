@@ -95,7 +95,14 @@
 }
 
 .header-wrapper .interactive-wrapper {
-	padding-top: 30vh;
+
+	@include mq($until: tablet) {
+		padding-top: 20vh;
+	}
+
+	@include mq($from: tablet) {
+		padding-top: 30vh;
+	}
 }
 
 .interactive-wrapper--main {

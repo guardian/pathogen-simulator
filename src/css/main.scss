@@ -45,6 +45,9 @@ body {
 
 #radial-chart {
 	margin: auto;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 #r-zero-small-multiples {
@@ -149,14 +152,14 @@ body {
 
 .radial-total-big {
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	fill: red;
 	font-weight: 600;
 }
 
 .radial-info-big {
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	font-size: 16px;
+	font-size: 14px;
 	fill: black;
 	font-weight: 600;
 }

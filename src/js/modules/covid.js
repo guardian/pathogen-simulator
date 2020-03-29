@@ -150,7 +150,7 @@ export default class Covid {
 		var total = svg.append("text")
 			.attr("class", "radial-total-big")
 			.attr("x", width / 2)
-			.attr("y", height - 30)
+			.attr("y", height - 20)
 			.style("text-anchor","middle");
 
 
