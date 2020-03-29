@@ -169,6 +169,8 @@ export default class Recur {
 				}
 			} else {
 
+				obj.infected = true
+
 				self.infected[depth].infected = self.infected[depth].infected + 1
 
 			}

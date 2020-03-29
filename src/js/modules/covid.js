@@ -20,9 +20,15 @@ export default class Covid {
 
     }
 
-    create(counter) {
+    create(counter, json=null) {
 
     	var self = this
+
+    	if (json!=null) {
+
+    		this.json = json
+
+    	}
 
     	this.counter = 0
 
@@ -85,7 +91,9 @@ export default class Covid {
 			.attr("class", "testing")
 			.style("display", "none")
 			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-			.attr("fill", d => d.children ? "red" : "red")
+			.attr("fill", d => {
+				return (d.data.infected) ? "red" : "lightgrey"
+			})
 			.attr("r", 5);
 
 		svg.append("g")
@@ -195,6 +203,46 @@ export default class Covid {
 		}
 
 		render()
+
+    }
+
+    isolate(data) {
+
+    	var counter = 0
+
+		var recur = function (obj) {
+
+			obj.infected = false
+
+			obj.children.forEach(function (child) {
+
+				counter++
+
+				if (child.children) {
+
+					child.infected = false
+
+					recur(child)
+
+				} else {
+
+					child.infected = false
+
+				}
+
+			})
+
+		} 
+
+		recur(data.children[1])
+
+		var previous = data.total
+
+		var updated = previous - counter - 1
+
+		data.total = `${updated} instead of ${previous}` 
+
+		return data
 
     }
 

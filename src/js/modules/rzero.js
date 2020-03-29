@@ -10,6 +10,8 @@ export default {
 
 		var virus  = new Recur(2.6, "Covid-19", 2).json()
 
+		var isolate = JSON.parse(JSON.stringify(virus))
+
 		var element = d3.select('.scroll-text').node();
 
 		var unit = screensizer()
@@ -18,7 +20,9 @@ export default {
 
 		var covid  = new Covid(virus, "radial-chart", unit)
 
-		covid.create(0)
+		var isolated = covid.isolate(isolate)
+
+		covid.create(0, virus)
 
 		const scrolly = new ScrollyTeller({
 			parent: document.querySelector("#scrolly-1"),
@@ -29,25 +33,31 @@ export default {
 
 		scrolly.addTrigger({num: 1, do: () => {
 
-			covid.create(0)
+			covid.create(0, virus)
 
 		}});
 
 		scrolly.addTrigger({num: 2, do: () => {
 
-			covid.create(1)
+			covid.create(1, virus)
 
 		}});
 
 		scrolly.addTrigger({num: 3, do: () => {
 
-			covid.create(2)
+			covid.create(2, virus)
 
 		}});
 
 		scrolly.addTrigger({num: 4, do: () => {
 
-			covid.create(3)
+			covid.create(3, virus)
+
+		}});
+
+		scrolly.addTrigger({num: 5, do: () => {
+
+			covid.create(3, isolated)
 
 		}});
 
