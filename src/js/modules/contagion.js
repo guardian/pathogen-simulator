@@ -359,6 +359,8 @@ export class Contagion {
 
     	var self = this
 
+    	console.log(self.settings.steps)
+
 		var margin = {top: 1, right: 1, bottom: 5, left: 1}
 		  , width = 150 - margin.left - margin.right // Use the window's width 
 		  , height = 100 - margin.top - margin.bottom; // Use the window's height
@@ -368,6 +370,8 @@ export class Contagion {
 		    .range([0, width]);
 
 		var interesection = xScale(self.settings.steps.precise)
+
+		var current = xScale(self.settings.steps.current)
 
 		var yScale = d3.scaleLinear()
 		    .domain([0, self.settings.population * self.settings.susceptible])
@@ -406,6 +410,16 @@ export class Contagion {
 			.attr("stroke-width", 1)
 			.attr("stroke", "lightgrey")
 			.attr("stroke-dasharray", "2 2")
+
+		svg.append("line")
+			.attr("x1", current)
+			.attr("y1", 0)
+			.attr("x2", current)
+			.attr("y2", height)
+			.attr("stroke-width", 1)
+			.attr("stroke", "red")
+			.attr("stroke-dasharray", "2 2")
+
 
 		  svg.append("line")
 		      .attr("x1", 0)
@@ -447,9 +461,11 @@ export class Contagion {
 
     	var self = this
 
-    	var exposed = self.nodes.filter(item => item.exposed)
+    	var exposed = self.nodes.filter(item => item.status === "infected" || item.status === "dead")
 
-		if (exposed.length < self.settings.population * self.settings.susceptible) {
+    	console.log(`Infected: ${exposed.length}, Risk: ${self.settings.population * self.settings.susceptible}`)
+
+		if (exposed.length < (self.settings.population * self.settings.susceptible)) {
 
 			setTimeout(function(){ self.calculate(); }, 1000);
 
@@ -497,13 +513,13 @@ export class Contagion {
 
     getStatus(status) {
 
-      return (status==="dead") ? "black" : (status==="infected") ? "red" : "yellow"
+		return (status==="dead") ? "black" : (status==="infected") ? "red" : "yellow"
       
     }
 
     getBaseLog(r, total) {
 
-      return Math.log(total) / Math.log(r);
+		return Math.log(total) / Math.log(r);
 
     }
 
