@@ -186,7 +186,11 @@ export default class Recur {
 
 		this.data.total = total
 
-    	this.data.infected = this.infected
+    	this.data.info = this.infected
+
+    	this.data.infected = true
+
+    	console.log(this.data)
 
     	return this.data
 

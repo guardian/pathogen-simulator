@@ -81,8 +81,7 @@ body {
 	position: relative;
 	float: left;
 	height: 0px;
-
-
+	margin-bottom: 10px;
 
 	@include mq($until: mobileLandscape) {
 		width: 100%;
@@ -135,6 +134,8 @@ body {
 	}
 
 }
+
+
 
 .radial-total {
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;

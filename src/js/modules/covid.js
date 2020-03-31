@@ -38,7 +38,7 @@ export default class Covid {
 
 		var height = this.unit 
 
-		var radius = this.unit  / 2.5
+		var radius = this.unit  / 2.6
 
 		var tree = d3.tree()
 		  .size([2 * Math.PI, radius])
@@ -92,7 +92,14 @@ export default class Covid {
 			.style("display", "none")
 			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
 			.attr("fill", d => {
-				return (d.data.infected) ? "red" : "lightgrey"
+
+				if (d.data.infected==="isolated") {
+					console.log("isolated")
+					//isoball((width / 2) + d.x * 180 / Math.PI - 90, (width / 2) + d.y, 20)
+				}
+				
+				return (d.data.infected === true) ? "red" :
+					(d.data.infected === false) ? "lightgrey" : "blue"
 			})
 			.attr("r", 5);
 
@@ -153,6 +160,21 @@ export default class Covid {
 			.attr("y", height - 20)
 			.style("text-anchor","middle");
 
+		function isoball(x,y,r) {
+
+			svg.append("g")
+				.append("circle")
+				.attr("cx", x)
+				.attr("cy", y)
+				.attr("r", r)
+				.attr("stroke", "#555")
+				.attr("stroke-opacity", 0.4)
+				.attr("stroke-width", 1.5)
+				.attr("fill", "none")
+				.style("stroke-dasharray", ("3, 3"))
+
+
+		}
 
 		function render() {
 
@@ -235,6 +257,8 @@ export default class Covid {
 		} 
 
 		recur(data.children[1])
+
+		data.children[1].infected = 'isolated'
 
 		var previous = data.total
 

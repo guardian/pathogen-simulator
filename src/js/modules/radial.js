@@ -28,7 +28,7 @@ export default class Radial {
 
 		var height = this.unit 
 
-		var radius = this.unit  / 2.5
+		var radius = this.unit  / 2.9
 
 		var tree = d3.tree()
 		  .size([2 * Math.PI, radius])
@@ -144,7 +144,7 @@ export default class Radial {
 		svg.append("text")
 			.attr("class", "radial-total")
 			.attr("x", width / 2)
-			.attr("y", height - 7)
+			.attr("y", height - 15)
 			.text(`Total infected: ${self.json.total}`)
 			.style("text-anchor","middle");
 
