@@ -1,5 +1,6 @@
 import shuffle from "../modules/shuffle"
 import mustache from "../modules/mustache"
+import cumulative from "../modules/cumulative"
 import * as d3 from "d3"
 import { kdTree } from "kd-tree-javascript"
 import noUiSlider from 'nouislider'
@@ -206,31 +207,9 @@ export class Contagion {
 	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(iterations))
 	        this.simulation.on("tick", self.ticked)
 
-	       // console.log(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
-
 	    self.settings.steps.precise = self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible)
 
 		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
-
-		var array = [1]
-
-		var current = 1
-
-		for (var i = 0; i < self.settings.steps.total; i++) {
-
-			array.push(current * self.settings.r0)
-
-			current = current * self.settings.r0
-
-		}
-
-	    this.dataset = array.map(function(i) {
-	      return {
-	        y: i
-	      };
-	    });
-
-		var total = array.reduce( (accumulator, cases) => accumulator + cases, 0);
 
 		self.settings.deaths = 0
 
@@ -239,6 +218,8 @@ export class Contagion {
 		self.settings.steps.term = 1
 
 		self.settings.infected = 1
+
+		self.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible, self.settings.steps.total)
 
 		if (this.novel) {
 
@@ -249,8 +230,6 @@ export class Contagion {
 			self.nodes[origin].exposed = true
 
 			self.settings.current = self.nodes[origin]
-
-			self.settings.steps.total
 
 			this.next()
 
@@ -359,23 +338,23 @@ export class Contagion {
 
     	var self = this
 
-    	console.log(self.settings.steps)
-
-		var margin = {top: 1, right: 1, bottom: 5, left: 1}
+		var margin = {top: 5, right: 5, bottom: 35, left: 5}
 		  , width = 150 - margin.left - margin.right // Use the window's width 
-		  , height = 100 - margin.top - margin.bottom; // Use the window's height
+		  , height = 125 - margin.top - margin.bottom; // Use the window's height
 
 		var xScale = d3.scaleLinear()
-		    .domain([0, self.settings.steps.total])
+		    .domain([0, self.settings.cumulative.total]) //console.log(self.settings.cumulative)
 		    .range([0, width]);
 
-		var interesection = xScale(self.settings.steps.precise)
+		var interesectionX = xScale(self.settings.cumulative.precise)
 
 		var current = xScale(self.settings.steps.current)
 
 		var yScale = d3.scaleLinear()
 		    .domain([0, self.settings.population * self.settings.susceptible])
 		    .range([height, 0]);
+
+		var interesectionY = yScale(self.settings.population * self.settings.susceptible)
 
 		var line = d3.line()
 		    .x(function(d, i) { return xScale(i); })
@@ -387,29 +366,31 @@ export class Contagion {
 					.attr("height", height + margin.top + margin.bottom)
 					.append("g")
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-					/*
-		  svg.append("line")
-		      .attr("x1", 0)
-		      .attr("y1", height)
-		      .attr("x2", width)
-		      .attr("y2", height)
-		      .attr("stroke-width", 1)
-		      .attr("stroke", "black");*/
 
 		svg.append("g")
-			.attr("class", "x axis")
+			.attr("class", "x-axis")
 			.attr("transform", "translate(0," + height + ")")
-			.call(d3.axisBottom(xScale).ticks(self.settings.steps.total))
+			.call(d3.axisBottom(xScale).ticks(self.settings.cumulative.total))
 
 
 		svg.append("line")
-			.attr("x1", interesection)
+			.attr("x1", interesectionX)
 			.attr("y1", 0)
-			.attr("x2", interesection)
+			.attr("x2", interesectionX)
 			.attr("y2", height)
 			.attr("stroke-width", 1)
 			.attr("stroke", "lightgrey")
 			.attr("stroke-dasharray", "2 2")
+
+		svg.append("line")
+			.attr("x1", 0)
+			.attr("y1", interesectionY)
+			.attr("x2", width)
+			.attr("y2", interesectionY)
+			.attr("stroke-width", 1)
+			.attr("stroke", "lightgrey")
+			.attr("stroke-dasharray", "2 2")
+
 
 		svg.append("line")
 			.attr("x1", current)
@@ -431,9 +412,18 @@ export class Contagion {
 
  
 			svg.append("path")
-			    .datum(self.dataset)
+			    .datum(self.settings.cumulative.data)
 			    .attr("class", "line")
 			    .attr("d", line);
+
+			svg.append("text")   
+				.attr("class", "phase")          
+				.attr("transform",
+				    "translate(" + (width/2) + " ," + 
+				                   (height + margin.top + 25) + ")")
+				.style("text-anchor", "middle")
+				.text("Phases");
+
 
     }
 
@@ -463,7 +453,7 @@ export class Contagion {
 
     	var exposed = self.nodes.filter(item => item.status === "infected" || item.status === "dead")
 
-    	console.log(`Infected: ${exposed.length}, Risk: ${self.settings.population * self.settings.susceptible}`)
+    	// console.log(`Infected: ${exposed.length}, Risk: ${self.settings.population * self.settings.susceptible}`)
 
 		if (exposed.length < (self.settings.population * self.settings.susceptible)) {
 

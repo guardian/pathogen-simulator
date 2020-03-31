@@ -190,8 +190,6 @@ export default class Recur {
 
     	this.data.infected = true
 
-    	console.log(this.data)
-
     	return this.data
 
     }
