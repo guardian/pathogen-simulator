@@ -44,6 +44,8 @@ export class Contagion {
 
 	    this.steps = []
 
+	    this.timeout = null
+
 	    this.distance = (a, b) => Math.pow(a.x - b.x, 2) +  Math.pow(a.y - b.y, 2);
 
 	    this.compile()
@@ -125,14 +127,12 @@ export class Contagion {
 		switch(id) {
 		  case 0:
 		   self.settings.r0 = (values[0] / 10).toFixed(1);
-		   self.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
 		    break;
 		  case 1:
 		    self.settings.fatality_rate = parseInt(values[0])
 		    break;
 		  case 2:
            	self.settings.susceptible = parseInt(values[0]) / 100
-            self.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
 		    break;
 		  case 3:
 		    self.settings.population = parseInt(values[0])
@@ -140,15 +140,11 @@ export class Contagion {
 		  default:
 		}
 
-		self.templatize()
+		if (this.timeout!=null) {
 
-    }
+			this.timeout=null
 
-    trigger() {
-
-    	var self = this
-
-    	this.nodes = this.getNodes()
+		}
 
     	if (this.simulation!=null) {
 
@@ -156,7 +152,49 @@ export class Contagion {
 
     	}
 
-    	this.init() 
+		self.templatize(false)
+
+    }
+
+    trigger() {
+
+    	var self = this
+
+    	if (this.simulation!=null) {
+
+    		this.simulation.stop()
+
+    	}
+
+    	var nodes = self.nodes
+
+    	this.updateNodes(nodes).then( data => {
+
+    		self.nodes = data
+
+    		self.propagate() 
+
+    	})
+
+    }
+
+    async updateNodes(nodes) {
+
+    	var self = this
+
+		await nodes.forEach(function(node, index) {
+
+			node.status = "healthy"
+
+			node.exposed = false 
+
+			node.susceptible = (index < self.settings.population * self.settings.susceptible) ? true : false ;
+
+		});
+
+		var atomized = await shuffle(nodes)
+
+		return atomized
 
     }
 
@@ -200,44 +238,69 @@ export class Contagion {
 			    	(width < 900) ? 3 :
 			    	(width < 1600) ? 3.5 : 4 ;
 
+
 	    this.simulation = d3.forceSimulation(self.nodes)
 	        .velocityDecay(velocityDecay)
 	        .force("x", d3.forceX().strength(strength))
 	        .force("y", d3.forceY().strength(strength))
 	        .force("collide", d3.forceCollide().radius(function(d) { return d.r; }).iterations(iterations))
-	        this.simulation.on("tick", self.ticked)
 
-	    self.settings.steps.precise = self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible)
 
-		self.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
+    	var nodes = self.nodes
 
-		self.settings.deaths = 0
+    	this.updateNodes(nodes).then( data => {
 
-		self.settings.steps.current = 0
+    		self.nodes = data
 
-		self.settings.steps.term = 1
+    		self.simulation.on("tick", self.ticked)
 
-		self.settings.infected = 1
+    	})
 
-		self.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible, self.settings.steps.total)
+    	var r0 = document.getElementById("r0"); 
 
-		if (this.novel) {
+	    r0.innerHTML = `${self.settings.r0}, R<sub>e</sub>: ${self.settings.re}`
 
-			var origin = Math.floor(Math.random() * self.settings.population) + 1  
+	    var r1 = document.getElementById("r1"); 
 
-			self.nodes[origin].status = "infected"
+	    r1.innerHTML = `${self.settings.fatality_rate}%`
 
-			self.nodes[origin].exposed = true
+	    var r2 = document.getElementById("r2"); 
 
-			self.settings.current = self.nodes[origin]
-
-			this.next()
-
-		}
-
-        this.novel = true
+	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
 
     }
+
+    propagate() {
+
+		var self = this
+
+		this.settings.steps.precise = self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible)
+
+		this.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
+
+		this.settings.deaths = 0
+
+		this.settings.steps.current = 0
+
+		this.settings.steps.term = 1
+
+		this.settings.infected = 1
+
+		this.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible, self.settings.steps.total)
+
+		var origin = Math.floor(Math.random() * self.settings.population) + 1  
+
+		this.nodes[origin].status = "infected"
+
+		this.nodes[origin].exposed = true
+
+		this.settings.current = self.nodes[origin]
+
+		this.next()
+
+
+    }
+
 
     getRadius() {
 
@@ -269,7 +332,7 @@ export class Contagion {
 
 	    }
 
-	    return shuffle(nodes)
+	    return nodes
 
     }
 
@@ -310,9 +373,13 @@ export class Contagion {
 
     }
 
-    templatize() {
+    templatize(chart=true) {
 
     	var self = this
+
+    	this.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
+
+    	var r0 = document.getElementById("r0"); 
 
 	    r0.innerHTML = `${self.settings.r0}, R<sub>e</sub>: ${self.settings.re}`
 
@@ -330,7 +397,11 @@ export class Contagion {
 
 		target.innerHTML = html
 
-		this.chart()
+		if (chart) {
+
+			this.chart()
+
+		}
 
     }
 
@@ -457,7 +528,7 @@ export class Contagion {
 
 		if (exposed.length < (self.settings.population * self.settings.susceptible)) {
 
-			setTimeout(function(){ self.calculate(); }, 1000);
+			self.timeout = setTimeout(function(){ self.calculate(); }, 1000);
 
 		} else {
 

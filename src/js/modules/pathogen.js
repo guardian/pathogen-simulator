@@ -18,7 +18,7 @@ export default {
 
 		scrolly.addTrigger({num: 1, do: () => {
 
-		    contagion.trigger()
+		   //contagion.randomize()
 
 		}});
 

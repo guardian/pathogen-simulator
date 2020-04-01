@@ -250,37 +250,9 @@ export class Reduction {
 
 		}
 
-		//this.templatize()
-
       	this.simulation.restart()
 
       	this.next()
-
-    }
-
-    templatize() {
-
-    	/*
-
-    	var self = this
-
-	    r0.innerHTML = `${self.settings.r0}, R<sub>e</sub>: ${self.settings.re}`
-
-	    var r1 = document.getElementById("r1"); 
-
-	    r1.innerHTML = `${self.settings.fatality_rate}%`
-
-	    var r2 = document.getElementById("r2"); 
-
-	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
-
-		var target = document.getElementById("info"); 
-
-		var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
-
-		target.innerHTML = html
-
-		*/
 
     }
 
@@ -299,8 +271,6 @@ export class Reduction {
 			departed[i].status = "dead"
 
 		}
-
-		//this.templatize()
 
     }
 
