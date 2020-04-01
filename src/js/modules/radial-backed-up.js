@@ -20,7 +20,7 @@ export default class Radial {
 
     }
 
-    create() {
+    create(unit) {
 
     	var self = this
 
@@ -38,7 +38,19 @@ export default class Radial {
 
 		const root = tree(shiz);
 
-		var links = root.links()
+		var temp = function() {
+
+			var links = root.links()
+
+			return links.filter( (item) => {
+
+				if (item.source.depth < self.counter) {
+
+					return item
+
+				}
+			})
+		}
 
 		const svg = d3.select(`#${self.id}`)
 			.append("svg")
@@ -56,7 +68,7 @@ export default class Radial {
 			.attr("stroke-opacity", 0.4)
 			.attr("stroke-width", 1.5)
 			.selectAll("path")
-				.data(links)
+				.data(temp)
 				.join("path")
 					.attr("d", d3.linkRadial()
 					.angle(d => d.x)
@@ -68,9 +80,9 @@ export default class Radial {
 			.data(root.descendants())
 			.join("circle")
 			.attr("class", "testing")
-			.style("display", "block")
+			.style("display", "none")
 			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-			.attr("fill", "red")
+			.attr("fill", d => d.children ? "red" : "red")
 			.attr("r", 5);
 
 		svg.append("g")
@@ -83,7 +95,7 @@ export default class Radial {
 			.data(root.descendants())
 			.join("text")
 			.attr("class", "testing")
-			.style("display", "block")
+			.style("display", "none")
 			.attr("transform", d => `
 			rotate(${d.x * 180 / Math.PI - 90}) 
 			translate(${d.y},0) 
@@ -137,6 +149,11 @@ export default class Radial {
 			.style("text-anchor","middle");
 
 
+
+		function render() {
+
+		    d3.select(`#${self.id}`).selectAll("path").remove()
+
 			svg.append("g")
 			.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
 			.attr("fill", "none")
@@ -144,12 +161,22 @@ export default class Radial {
 			.attr("stroke-opacity", 0.4)
 			.attr("stroke-width", 1.5)
 			.selectAll("path")
-			.data(links)
+			.data(temp)
 			.join("path")
 			.attr("d", d3.linkRadial()
 			.angle(d => d.x)
 			.radius(d => d.y));
 
+		    d3.select(`#${self.id}`).selectAll(".testing").style("display", d => {
+		      return (d.depth > self.counter) ? "none" : "block" ;
+		    })
+
+		    next()
+
+		}
+
+		function update(){
+
 			svg.append("g")
 			.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
 			.attr("fill", "none")
@@ -157,13 +184,46 @@ export default class Radial {
 			.attr("stroke-opacity", 0.4)
 			.attr("stroke-width", 1.5)
 			.selectAll("path")
-				.data(links)
+				.data(temp)
 				.join("path")
 					.attr("d", d3.linkRadial()
 					.angle(d => d.x)
 					.radius(d => d.y));
 
+		}
+
+		function next() {
+
+		  if (self.counter < 5) {
+		    self.timeout = setTimeout(function() { render(); ++self.counter }, 1000);
+		  }
+
+		}
+
+		render()
+
 
     }
 
+    update(json) {
+
+    	var self = this
+
+    	if (this.timeout!=null) {
+
+    		clearTimeout(this.timeout);
+
+    		this.timeout=null
+
+    	}
+
+    	this.json = json
+
+    	this.counter = 0
+
+    	d3.select(`#${self.id}`).select(`svg`).remove();
+
+    	this.create(this.unit)
+
+    }
 }

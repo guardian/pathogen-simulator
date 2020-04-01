@@ -1,5 +1,4 @@
-import ScrollyTeller from "../modules/scrollyteller"
-import * as d3 from "d3"
+
 import Recur from '../modules/recur'
 import Radial from '../modules/radial'
 
@@ -85,7 +84,7 @@ export default {
 
 			var radial  = new Radial(virus, id, unit)
 
-			radial.update(virus)
+			radial.create()
 
 	    });
 
