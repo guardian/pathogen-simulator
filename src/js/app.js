@@ -1,5 +1,5 @@
 import rzero from './modules/rzero'
-import multiples from './modules/multiples'
+//import multiples from './modules/multiples'
 import effective from './modules/effective'
 import pathogen from './modules/pathogen'
 
@@ -58,9 +58,10 @@ function handle(load) {
 	  case 'rzero':
 	   rzero.init()
 	    break;
+	    /*
 	  case 'multiples':
 	    multiples.init()
-	    break;
+	    break; */
 	  case 'effective':
        	effective.init(settings.effective)
 	    break;
