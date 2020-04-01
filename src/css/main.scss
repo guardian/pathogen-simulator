@@ -135,6 +135,23 @@ body {
 
 }
 
+.context {
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	box-sizing: border-box;
+	padding: 10px;
+	background-color: #00D0BC;
+	color: black;
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size: 11px;
+	line-height: 12px;
+}
+
+#info .note {
+	font-size: 10px;
+	line-height: 10px;
+}
 
 
 .radial-total {

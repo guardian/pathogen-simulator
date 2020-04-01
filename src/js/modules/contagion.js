@@ -393,7 +393,7 @@ export class Contagion {
 
 		var target = document.getElementById("info"); 
 
-		var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths  })
+		var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative :self.settings.cumulative.precise.toFixed(2), totality : self.settings.population * self.settings.susceptible  })
 
 		target.innerHTML = html
 
