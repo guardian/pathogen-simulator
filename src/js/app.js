@@ -15,7 +15,13 @@ import shareable from "./modules/shareable";
 
 var settings = new Preflight(config).getSettings()
 
-intro.initialize();
+console.log(settings.isMobile)
+
+if (!settings.isMobile) {
+
+	intro.initialize();
+
+}
 
 rzero.init()
 

@@ -2,35 +2,33 @@
 @import "fonts";
 @import "palette";
 @import "scrolly";
+@import "header";
 @import "interactive";
 @import "footer";
 @import "effective";
 @import "pathogen";
 @import "slider";
-
+@import "social";
+@import "multiples";
 
 body {
 	background-color: white;
 }
 
-.editorial-wrapper {
-	width: 100%;
-	
+.interactive-wrapper {
+	position: relative;
 	margin: auto;
 	box-sizing: border-box;
-
-	@include mq($until: tablet) {
-		width: 100%;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-
-	@include mq($from: tablet) {
-		max-width: 640px;
-	}
-
-
+	width: 100%;
 }
+
+.interactive-wrapper p, .interactive-wrapper .headline-wrapper, .interactive-wrapper h2, .interactive-wrapper .int-byline, .scroll-text  {
+	width: 100%;
+}
+
+
+
+
 
 #chart-animation {
 	width: 100%;
@@ -50,108 +48,17 @@ body {
 	transform: translateY(-50%);
 }
 
-#r-zero-small-multiples {
-	width: 100%;
-	display: inline-block;
-	width: 100%;
-	margin-top: 40px;
-	margin-bottom: 40px;
-	z-index: 99;
-}
-
-#intro_header {
-	width: 100%;
-	height: 100vh;
-	background: rgb(2,0,36);
-	background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(113,9,121,1) 41%, rgba(0,212,255,1) 100%);
-	position: absolute;
-	top: 0px;
-	left: 0px;
-}
-
-.header-wrapper .interactive-wrapper {
-	position: relative;
-	top: 0px;
-	left: 0px;
-}
 
 
 
-.virology {
-	position: relative;
-	float: left;
-	height: 0px;
-	margin-bottom: 10px;
 
-	@include mq($until: mobileLandscape) {
-		width: 100%;
-		padding-bottom: 100%;
 
-		border-bottom: 1px solid lightgrey;
-	}
 
-	@include mq($from: mobileLandscape, $until: tablet) {
-		width: 50%;
-		padding-bottom: 50%;
 
-		&:nth-child(1),&:nth-child(2),&:nth-child(3),&:nth-child(4),&:nth-child(5),&:nth-child(6) {
-		 border-bottom: 1px solid lightgrey;
-		}
 
-	}
 
-	@include mq($from: tablet) {
-		width: 25%;
-		padding-bottom: 25%;
 
-		&:nth-child(1),&:nth-child(2),&:nth-child(3),&:nth-child(4) {
-			border-bottom: 1px solid lightgrey;
-		}
 
-	}
-
-	box-sizing: border-box;
-	background-color: white;
-
-	svg {
-		display: inline-block;
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		height: 100%; 
-		width: 100%; 
-	}
-
-	h4 {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		width: 100%;
-		box-sizing: border-box;
-		text-align: center;
-		margin-top: 0px;
-		font-size: 14px;
-	}
-
-}
-
-.context {
-	width: 100%;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	box-sizing: border-box;
-	padding: 10px;
-	background-color: #00D0BC;
-	color: black;
-	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-	font-size: 11px;
-	line-height: 12px;
-}
-
-#info .note {
-	font-size: 10px;
-	line-height: 10px;
-}
 
 
 .radial-total {
@@ -183,20 +90,7 @@ body {
 }
 
 
-#radial-chart .svg-content {
 
-	/*
-	margin-top: calc(50% - 741 / 2);
-	display: inline-block;
-	position: absolute;
-	top: 0;
-	left: 0;
-	*/
-}
-
-#saulbass {
-	opacity: 0.3;
-}
 
 #mini {
 

@@ -1,0 +1,142 @@
+@import "mq";
+
+.interactive-wrapper {
+
+	.header-wrapper {
+		height: 100vh;
+		position: relative;
+		width: 100%;	
+	}
+
+	.headline-wrapper {
+		font-size: 24px;
+		line-height: 28px;
+		font-family: "Guardian Headline", "Guardian Egyptian Web", "Guardian Headline Full", Georgia, serif;
+		font-weight: 900;
+		padding-left: 10px;
+		max-width: 480px!important;
+		width: auto;
+
+		@include mq($until: tablet) {
+			padding: 10px;
+		}
+
+		@include mq($from: tablet) {
+			margin-left: 160px;
+			padding: 0;
+		}
+
+	}
+	
+	#intro_header {
+		width: 100%;
+		height: 100vh;
+		background: rgb(2,0,36);
+		background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(113,9,121,1) 41%, rgba(0,212,255,1) 100%);
+		position: absolute;
+		top: 0px;
+		left: 0px;
+
+		#saulbass {
+			opacity: 0.3;
+		}
+		
+	}
+
+/*
+	.header-wrapper .interactive-wrapper {
+		position: relative;
+		top: 0px;
+		left: 0px;
+	}
+	*/
+
+	h1 {
+		color: #fff;
+		display: inline;
+		background: linear-gradient(#121212, #121212) no-repeat;
+		box-shadow: 6px 0 0 #121212, -12px 0 0 #121212;
+
+		@include mq($until: mobileLandscape) {
+			font-size: 40px;
+			line-height: 50px;
+		}
+
+		@include mq($from: mobileLandscape, $until: tablet) {
+			font-size: 48px;
+			line-height: 60px;
+		}
+
+		@include mq($from: tablet) {
+			font-size: 48px;
+			line-height: 60px;
+		}
+	}
+
+	.int-tag {
+		font-size: 18px;
+		line-height: 24px;
+		font-family: "Guardian Headline", "Guardian Egyptian Web", "Guardian Headline Full", Georgia, serif;
+		font-weight: 900;
+		color: #fff;
+		background-color: #c70000;
+		display: inline-block;
+		padding: 2px 5px 5px;
+		transform: translateY(2px);
+	}
+
+	.standfirst {
+		font-family: "Guardian Headline", "Guardian Egyptian Web", "Guardian Headline Full", Georgia, serif;
+		font-weight: normal;
+		font-size: 20px;
+		font-weight: 300;
+		font-style: italic;
+
+		line-height: 26px;
+		display: block;
+		color: #000;
+
+		
+		@include mq($until: tablet) {
+
+		}
+
+		@include mq($from: tablet) {
+			margin-left: 160px;
+			max-width: 480px!important;
+		}
+	}
+
+	.standfirst span {
+		display: inline;
+		background: linear-gradient(#fff, #fff) no-repeat;
+		box-shadow: 5px 0 0 #fff, -10px 0 0 #fff;
+
+		@include mq($until: tablet) {
+			padding-bottom: .1em;
+		}
+
+		@include mq($from: tablet) {
+			padding-bottom: .1em;
+		}
+
+	}
+
+	.interactive-header-wrapper {
+
+		position: relative;
+		top: 0px;
+		left: 0px;
+
+
+		@include mq($until: tablet) {
+			padding-top: 20vh;
+		}
+
+		@include mq($from: tablet) {
+			padding-top: 30vh;
+		}
+	}
+
+}
+
