@@ -11,8 +11,22 @@
 @import "social";
 @import "multiples";
 
-body {
-	background-color: white;
+html,
+body,
+.element-atom,
+.interactive-atom {
+	width: 100%;
+	max-width: 100%;
+    height: 100%;
+    background-color: white;
+}
+
+.element-atom,
+.interactive-atom {
+    margin: 0 !important;
+    a {
+		color: #c70000;
+	}
 }
 
 .interactive-wrapper {
@@ -25,10 +39,6 @@ body {
 .interactive-wrapper p, .interactive-wrapper .headline-wrapper, .interactive-wrapper h2, .interactive-wrapper .int-byline, .scroll-text  {
 	width: 100%;
 }
-
-
-
-
 
 #chart-animation {
 	width: 100%;

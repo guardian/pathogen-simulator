@@ -104,3 +104,26 @@
         }
     }
 }
+
+.isApp {
+    .scroll-text__inner {
+        box-sizing: border-box;
+        height: 100vh;
+        position: relative;
+        z-index: 100;
+
+        @include mq($until: tablet) {
+           padding: 20px;
+        }
+
+        .transparent-until-active & {
+            opacity: 1;
+        }
+
+        &:first-of-type {
+            .transparent-until-active & {
+                opacity: 1;
+            }
+        }
+    }
+}

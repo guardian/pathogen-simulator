@@ -52,7 +52,7 @@ class ScrollyTeller {
                             if(j <= i) {
                                 el.style.opacity = "1";
                             } else {
-                                el.style.opacity = "0.25";
+                                el.style.opacity = "1"; // 0.25
                             }
                         });
                     }
