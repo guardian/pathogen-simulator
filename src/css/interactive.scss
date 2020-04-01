@@ -33,8 +33,13 @@
 	display: inline;
 	background: linear-gradient(#121212, #121212) no-repeat;
 	box-shadow: 6px 0 0 #121212, -12px 0 0 #121212;
-	
-	@include mq($until: tablet) {
+
+	@include mq($until: mobileLandscape) {
+		font-size: 40px;
+		line-height: 50px;
+	}
+
+	@include mq($from: mobileLandscape, $until: tablet) {
 		font-size: 48px;
 		line-height: 60px;
 	}
