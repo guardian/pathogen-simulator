@@ -32,6 +32,12 @@ export class Contagion {
 
 	    this.height = this.div.clientHeight || this.div.getBoundingClientRect().height
 
+	    if (this.width < 500) {
+
+	    	this.height = this.width * 1.2
+
+	    }
+
 	    this.context = this.canvas.getContext("2d")
 
 	    this.canvas.width = this.width
