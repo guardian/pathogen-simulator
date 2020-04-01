@@ -1,4 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" preserveAspectRatio="xMinYMin meet" viewBox="0 0 300 300" class="svg-content"><g transform="translate(150,150)" fill="none" stroke="#555" stroke-opacity="0.4" stroke-width="1.5"><path d="M0,0C1.0557299992649598e-15,17.24137931034483,1.0557299992649598e-15,17.24137931034483,2.1114599985299196e-15,34.48275862068966"></path><path d="M2.1114599985299196e-15,34.48275862068966C3.1671899977948795e-15,51.72413793103449,3.1671899977948795e-15,51.72413793103449,4.222919997059839e-15,68.96551724137932"></path><path d="M4.222919997059839e-15,68.96551724137932C5.2786499963247995e-15,86.20689655172416,5.2786499963247995e-15,86.20689655172416,6.334379995589759e-15,103.44827586206898"></path></g><g transform="translate(150,150)"><circle class="testing" style="display: block;" transform="rotate(90) translate(0,0)" fill="red" r="5"></circle><circle class="testing" style="display: block;" transform="rotate(90) translate(34.48275862068966,0)" fill="red" r="5"></circle><circle class="testing" style="display: block;" transform="rotate(90) translate(68.96551724137932,0)" fill="red" r="5"></circle><circle class="testing" style="display: block;" transform="rotate(90) translate(103.44827586206898,0)" fill="red" r="5"></circle></g><g transform="translate(150,150)" font-family="sans-serif" font-size="10" stroke-linejoin="round" stroke-width="3"><text class="testing" style="display: block;" transform="
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" preserveAspectRatio="xMinYMin meet" viewBox="0 0 300 300" class="svg-content">
+<style type="text/css">
+	.radial-total {
+		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-size: 12px;
+		fill: red;
+		font-weight: 600;
+	}
+
+	.radial-info {
+		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-size: 12px;
+		fill: black;
+		font-weight: 600;
+	}
+</style>
+<g transform="translate(150,150)" fill="none" stroke="#555" stroke-opacity="0.4" stroke-width="1.5"><path d="M0,0C1.0557299992649598e-15,17.24137931034483,1.0557299992649598e-15,17.24137931034483,2.1114599985299196e-15,34.48275862068966"></path><path d="M2.1114599985299196e-15,34.48275862068966C3.1671899977948795e-15,51.72413793103449,3.1671899977948795e-15,51.72413793103449,4.222919997059839e-15,68.96551724137932"></path><path d="M4.222919997059839e-15,68.96551724137932C5.2786499963247995e-15,86.20689655172416,5.2786499963247995e-15,86.20689655172416,6.334379995589759e-15,103.44827586206898"></path></g><g transform="translate(150,150)"><circle class="testing" style="display: block;" transform="rotate(90) translate(0,0)" fill="red" r="5"></circle><circle class="testing" style="display: block;" transform="rotate(90) translate(34.48275862068966,0)" fill="red" r="5"></circle><circle class="testing" style="display: block;" transform="rotate(90) translate(68.96551724137932,0)" fill="red" r="5"></circle><circle class="testing" style="display: block;" transform="rotate(90) translate(103.44827586206898,0)" fill="red" r="5"></circle></g><g transform="translate(150,150)" font-family="sans-serif" font-size="10" stroke-linejoin="round" stroke-width="3"><text class="testing" style="display: block;" transform="
 			rotate(90) 
 			translate(0,0) 
 			rotate(180)
