@@ -59,16 +59,7 @@ module.exports = class Radial {
 					.angle(d => d.x)
 					.radius(d => d.y));
 
-		svg.append("g")
-		.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
-		.selectAll("circle")
-			.data(root.descendants())
-			.join("circle")
-			.attr("class", "testing")
-			.style("display", "block")
-			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-			.attr("fill", "red")
-			.attr("r", 5);
+		
 
 		svg.append("g")
 		.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
@@ -106,14 +97,14 @@ module.exports = class Radial {
 				.attr("fill", "none")
 				.style("stroke-dasharray", ("3, 3"))
 
-			svg.append("text")
-				.attr("x", width / 2)
-				.attr("y", (width / 2) + (rad - 5))
-				.text(`${labels[i]}`)
-				.attr("font-family", "sans-serif")
-				.attr("font-size", "12px")
-				.attr("fill", "black")
-				.style("text-anchor","middle");
+			// svg.append("text")
+			// 	.attr("x", width / 2)
+			// 	.attr("y", (width / 2) + (rad - 5))
+			// 	.text(`${labels[i]}`)
+			// 	.attr("font-family", "sans-serif")
+			// 	.attr("font-size", "12px")
+			// 	.attr("fill", "black")
+			// 	.style("text-anchor","middle");
 
 				rad = rad - (radius / this.rings)
 
@@ -158,6 +149,17 @@ module.exports = class Radial {
 					.attr("d", d3.linkRadial()
 					.angle(d => d.x)
 					.radius(d => d.y));
+
+		svg.append("g")
+		.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
+		.selectAll("circle")
+			.data(root.descendants())
+			.join("circle")
+			.attr("class", "testing")
+			.style("display", "block")
+			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
+			.attr("fill", "red")
+			.attr("r", 5);			
 
 		return await d3n.svgString()
 

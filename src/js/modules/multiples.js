@@ -8,17 +8,17 @@ export default {
 
 		var microbiology = [{
 
-			"disease" : "Influenza (bird flu)",
+			"disease" : "Covid-19 (low)",
 
-			"r0" : 1,
+			"r0" : 2,
 
-			"fatality" : 60
+			"fatality" : 0.1
 
 		},{
 
-			"disease" : "Influenza (seasonal flu)",
+			"disease" : "Covid-19 (high)",
 
-			"r0" : 2.5,
+			"r0" : 3,
 
 			"fatality" : 0.1
 
@@ -26,47 +26,47 @@ export default {
 
 			"disease" : "Influenza (Spanish flu)",
 
-			"r0" : 3,
+			"r0" : 1.8,
 
 			"fatality" : 2.5
 
 		},{
 
-			"disease" : "Influenza (swine flu)",
+			"disease" : "Ebola (high)",
 
-			"r0" : 1.5,
+			"r0" : 2,
 
 			"fatality" : 0.2
+
+		},{
+
+			"disease" : "SARS",
+
+			"r0" : 3,
+
+			"fatality" : 9.6
+
+		},{
+
+			"disease" : "Smallpox (high)",
+
+			"r0" : 6,
+
+			"fatality" : 1
+
+		},{
+
+			"disease" : "Chicken pox",
+
+			"r0" : 10,
+
+			"fatality" : 9.6
 
 		},{
 
 			"disease" : "Measles",
 
 			"r0" : 15,
-
-			"fatality" : 0.3
-
-		},{
-
-			"disease" : "Mumps",
-
-			"r0" : 13,
-
-			"fatality" : 1
-
-		},{
-
-			"disease" : "SARS",
-
-			"r0" : 2.4,
-
-			"fatality" : 9.6
-
-		},{
-
-			"disease" : "Smallpox",
-
-			"r0" : 6,
 
 			"fatality" : 15
 

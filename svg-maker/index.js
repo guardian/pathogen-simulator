@@ -6,93 +6,77 @@ var app = {
 
 	init: (index) => {
 
-		var microbiology = [{
+				var microbiology = [{
 
-			"id" : "microbe-1",
+			"disease" : "Covid-19 (low)",
 
-			"disease" : "Influenza (bird flu)",
-
-			"r0" : 1,
-
-			"fatality" : 60
-
-		},{
-
-			"id" : "microbe-2",
-
-			"disease" : "Influenza (seasonal flu)",
-
-			"r0" : 2.5,
+			"r0" : 2,
 
 			"fatality" : 0.1
 
 		},{
 
-			"id" : "microbe-3",
+			"disease" : "Covid-19 (high)",
+
+			"r0" : 3,
+
+			"fatality" : 0.1
+
+		},{
 
 			"disease" : "Influenza (Spanish flu)",
 
-			"r0" : 3,
+			"r0" : 1.8,
 
 			"fatality" : 2.5
 
 		},{
 
-			"id" : "microbe-4",
+			"disease" : "Ebola (high)",
 
-			"disease" : "Influenza (swine flu)",
-
-			"r0" : 1.5,
+			"r0" : 2,
 
 			"fatality" : 0.2
 
 		},{
 
-			"id" : "microbe-5",
-
-			"disease" : "Measles",
-
-			"r0" : 15,
-
-			"fatality" : 0.3
-
-		},{
-
-			"id" : "microbe-6",
-
-			"disease" : "Mumps",
-
-			"r0" : 13,
-
-			"fatality" : 1
-
-		},{
-
-			"id" : "microbe-7",
-
 			"disease" : "SARS",
 
-			"r0" : 2.4,
+			"r0" : 3,
 
 			"fatality" : 9.6
 
 		},{
 
-			"id" : "microbe-8",
-
-			"disease" : "Smallpox",
+			"disease" : "Smallpox (high)",
 
 			"r0" : 6,
+
+			"fatality" : 1
+
+		},{
+
+			"disease" : "Chicken pox",
+
+			"r0" : 10,
+
+			"fatality" : 9.6
+
+		},{
+
+			"disease" : "Measles",
+
+			"r0" : 15,
 
 			"fatality" : 15
 
 		}]
 
-		app.wrangle(microbiology[index])
+		app.wrangle(microbiology[index], index)
 
 	},
 
-	wrangle: async (microbiology) => {
+	wrangle: async (microbiology, index) => {
 
 		let virus  = new Recur(microbiology.r0, microbiology.disease, 2).json()
 
@@ -100,8 +84,7 @@ var app = {
 
 		let svg = await radial.create(virus)
 
-		app.writer(svg, microbiology.id)
-
+		app.writer(svg, `microbe-${index + 1}`)
 
 	},
 
@@ -120,6 +103,9 @@ var app = {
 
 }
 
+
 app.init(7)
+
+
 
 
