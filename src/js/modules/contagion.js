@@ -264,7 +264,7 @@ export class Contagion {
 
     	var r0 = document.getElementById("r0"); 
 
-	    r0.innerHTML = `${self.settings.r0}, R<sub>e</sub>: ${self.settings.re}`
+	    r0.innerHTML = `${self.settings.r0}` //, R<sub>e</sub>: ${self.settings.re}
 
 	    var r1 = document.getElementById("r1"); 
 
@@ -387,7 +387,7 @@ export class Contagion {
 
     	var r0 = document.getElementById("r0"); 
 
-	    r0.innerHTML = `${self.settings.r0}, R<sub>e</sub>: ${self.settings.re}`
+	    r0.innerHTML = `${self.settings.r0}` //, R<sub>e</sub>: ${self.settings.re}
 
 	    var r1 = document.getElementById("r1"); 
 

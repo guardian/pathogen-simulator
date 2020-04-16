@@ -126,7 +126,7 @@ export default class Radial {
 			.attr("class", "radial-info")
 			.attr("x", width / 2)
 			.attr("y", 15)
-			.text(`${self.json.name}, R naught = ${self.json.r0}`)
+			.text(`${self.json.name}, R0 = ${self.json.r0}`)
 			.style("text-anchor","middle");
 
 		svg.append("text")

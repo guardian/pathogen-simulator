@@ -37,7 +37,7 @@ export default {
 
 		scrolly.addTrigger({num: 4, do: () => {
 
-		    reduction.loadCase(1.1, 0, 0.2, true, true, "R naught below one")
+		    reduction.loadCase(1.1, 0, 0.05, true, true, "R0 below one")
 
 		}});
 

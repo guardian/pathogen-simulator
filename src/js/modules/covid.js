@@ -151,7 +151,7 @@ export default class Covid {
 			.attr("class", "radial-info-big")
 			.attr("x", width / 2)
 			.attr("y", 30)
-			.text(`${self.json.name}, R naught = ${self.json.r0}`)
+			.text(`${self.json.name}, R0 = ${self.json.r0}`)
 			.style("text-anchor","middle");
 
 		var total = svg.append("text")
