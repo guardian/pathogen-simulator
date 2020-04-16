@@ -1,14 +1,16 @@
+@import "palette";
+
 .od-share__button {
 	height: 30px;
 	width: 30px;
 	border-radius: 20px;
 	float: left;
 	margin-right: 4px;
-	border: 1px solid #c70000;
+	border: 1px solid $primary;
 }
 
 .od-share__button:hover {
-	background-color: #c70000;
+	background-color: $primary;
 }
 
 .od-share__button:hover .od-share__icon {
@@ -16,7 +18,7 @@
 }
 
 .od-share__icon {
-	fill: #c70000;
+	fill: $primary;
 	width: 100%;
 	height: 100%;
 	margin: auto;

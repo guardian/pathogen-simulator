@@ -98,8 +98,8 @@ export default class Covid {
 					//isoball((width / 2) + d.x * 180 / Math.PI - 90, (width / 2) + d.y, 20)
 				}
 				
-				return (d.data.infected === true) ? "red" :
-					(d.data.infected === false) ? "lightgrey" : "blue"
+				return (d.data.infected === true) ? "#D73027" :
+					(d.data.infected === false) ? "lightgrey" : "#91BFDB"
 			})
 			.attr("r", 5);
 

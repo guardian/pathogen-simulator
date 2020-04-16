@@ -25,7 +25,7 @@ body,
 .interactive-atom {
     margin: 0 !important;
     a {
-		color: #c70000;
+		color: $primary;
 	}
 }
 
@@ -74,7 +74,7 @@ body,
 .radial-total {
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size: 12px;
-	fill: red;
+	fill: $primary;
 	font-weight: 600;
 }
 
@@ -88,7 +88,7 @@ body,
 .radial-total-big {
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size: 14px;
-	fill: red;
+	fill: $primary;
 	font-weight: 600;
 }
 
@@ -106,7 +106,7 @@ body,
 
 	.line {
 	    fill: none;
-	    stroke: red;
+	    stroke: $primary;
 	    stroke-width: 3;
 	}
 

@@ -82,7 +82,7 @@ export default class Radial {
 			.attr("class", "testing")
 			.style("display", "none")
 			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
-			.attr("fill", d => d.children ? "red" : "red")
+			.attr("fill", d => d.children ? "#D73027" : "#D73027")
 			.attr("r", 5);
 
 		svg.append("g")

@@ -6,7 +6,7 @@
 	.radial-total {
 		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		font-size: 12px;
-		fill: red;
+		fill: #D73027;
 		font-weight: 600;
 	}
 

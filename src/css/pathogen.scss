@@ -1,4 +1,5 @@
 @import "mq";
+@import "palette";
 
 #scrolly-3 {
 
@@ -168,7 +169,7 @@
 			margin-bottom: 5px;
 			box-sizing: border-box;
 			padding: 10px;
-			background-color: #00D0BC;
+			background-color: $tertiary;
 			color: black;
 			font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 			font-size: 11px;
