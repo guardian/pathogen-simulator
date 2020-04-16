@@ -40,6 +40,101 @@ body,
 	width: 100%;
 }
 
+.interactive-wrapper {
+
+.infected::after {
+
+   content: '';
+   display: inline-block;
+   width: 15px;
+   height: 15px;
+   -moz-border-radius: 7.5px;
+   -webkit-border-radius: 7.5px;
+   border-radius: 7.5px;
+   background-color:#d73027;
+   margin-left: 4px;
+
+}
+
+.infected {
+	display: inline-block;
+	/*border:1px solid #000;*/
+	background: #eaeaea;
+	padding-left:4px;
+	padding-right:4px;
+	/*font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+}
+
+.isolated::after {
+
+   content: '';
+   display: inline-block;
+   width: 15px;
+   height: 15px;
+   -moz-border-radius: 7.5px;
+   -webkit-border-radius: 7.5px;
+   border-radius: 7.5px;
+   background-color:#91bfdb;
+   margin-left: 4px;
+
+}
+
+.isolated {
+	display: inline-block;
+	/*border:1px solid #000;*/
+	background: #eaeaea;
+	padding-left:4px;
+	padding-right:4px;
+	/*font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+}
+
+.uninfected::after {
+
+   content: '';
+   display: inline-block;
+   width: 15px;
+   height: 15px;
+   -moz-border-radius: 7.5px;
+   -webkit-border-radius: 7.5px;
+   border-radius: 7.5px;
+   background-color:#fee090;
+   margin-left: 4px;
+
+}
+
+.uninfected {
+	display: inline-block;
+	/*border:1px solid #000;*/
+	background: #eaeaea;
+	padding-left:4px;
+	padding-right:4px;
+	/*font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+}
+
+.death::after {
+
+   content: '';
+   display: inline-block;
+   width: 15px;
+   height: 15px;
+   -moz-border-radius: 7.5px;
+   -webkit-border-radius: 7.5px;
+   border-radius: 7.5px;
+   background-color:#542788;
+   margin-left: 4px;
+
+}
+
+.death {
+	display: inline-block;
+	/*border:1px solid #000;*/
+	background: #eaeaea;
+	padding-left:4px;
+	padding-right:4px;
+	/*font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+}
+
+
 #chart-animation {
 	width: 100%;
 	height: 100vh;
@@ -57,19 +152,6 @@ body,
 	top: 50%;
 	transform: translateY(-50%);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .radial-total {
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
@@ -118,4 +200,6 @@ body,
 
 .x-axis {
 	font-size: 8px;
+}
+
 }
