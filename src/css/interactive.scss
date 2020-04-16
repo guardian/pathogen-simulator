@@ -1,4 +1,5 @@
 @import "mq";
+@import "palette";
 
 .editorial-wrapper {
 
@@ -36,7 +37,7 @@
 
 	.int-byline a {
 		font-weight: 700;
-		color: #c70000;
+		color: $primary;
 		font-style: normal;
 	}
 

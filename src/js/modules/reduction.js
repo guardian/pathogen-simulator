@@ -329,7 +329,7 @@ export class Reduction {
 
     getStatus(status) {
 
-      return (status==="dead") ? "black" : (status==="infected") ? "red" : "yellow"
+      return (status==="dead") ? "#542788" : (status==="infected") ? "#D73027" : "#FEE090"
       
     }
 

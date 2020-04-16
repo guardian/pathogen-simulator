@@ -475,7 +475,7 @@ export class Contagion {
 			.attr("x2", current)
 			.attr("y2", height)
 			.attr("stroke-width", 1)
-			.attr("stroke", "red")
+			.attr("stroke", "#D73027")
 			.attr("stroke-dasharray", "2 2")
 
 
@@ -580,7 +580,7 @@ export class Contagion {
 
     getStatus(status) {
 
-		return (status==="dead") ? "black" : (status==="infected") ? "red" : "yellow"
+		return (status==="dead") ? "#542788" : (status==="infected") ? "#D73027" : "#FEE090"
       
     }
 
