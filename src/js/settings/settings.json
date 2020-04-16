@@ -118,9 +118,9 @@
 
       "fatality_rate" : 30,
 
-      "susceptible" : 0.08,
+      "susceptible" : 0.8,
 
-      "score" : [40, 48],
+      "score" : [20, 80],
 
       "population" : 1000
 
