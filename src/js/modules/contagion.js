@@ -68,7 +68,7 @@ export class Contagion {
 
 	        slider.noUiSlider.on('slide', (values) => self.handle(index, values));
 
-	        slider.noUiSlider.on('change', () => self.trigger());
+	       	slider.noUiSlider.on('change', () => self.trigger());
 
 		});
 
@@ -122,6 +122,12 @@ export class Contagion {
 
 		susceptibleslider.noUiSlider.set([cases.susceptible * 100])
 
+		self.settings.immunity = cases.immunity
+
+		var immunityslider = document.querySelectorAll('.filter_slider')[3]
+
+		immunityslider.noUiSlider.set([cases.immunity * 100])
+
 		this.trigger()
 
     }
@@ -130,18 +136,22 @@ export class Contagion {
 
     	var self = this
 
+    	var number = +values[0]
+
+    	console.log(number)
+
 		switch(id) {
 		  case 0:
-		   self.settings.r0 = (values[0] / 10).toFixed(1);
+		   self.settings.r0 = (number / 10).toFixed(2)
 		    break;
 		  case 1:
-		    self.settings.fatality_rate = parseInt(values[0])
+		    self.settings.fatality_rate = number
 		    break;
 		  case 2:
-           	self.settings.susceptible = parseInt(values[0]) / 100
+           	self.settings.susceptible = number / 100
 		    break;
 		  case 3:
-		    self.settings.population = parseInt(values[0])
+		    self.settings.immunity = number / 100
 		    break;
 		  default:
 		}
@@ -178,7 +188,31 @@ export class Contagion {
 
     		self.nodes = data
 
-    		self.propagate() 
+    		if (self.settings.r0 >= 1) {
+
+    			self.propagate()
+
+    		} else {
+
+    			console.log("Infect one person")
+
+    			self.simulation.stop()
+
+				var origin = Math.floor(Math.random() * self.settings.population) + 1  
+
+				self.settings.infected = 1
+
+				self.settings.deaths = 0
+
+				self.nodes[origin].status = "infected"
+
+				self.nodes[origin].exposed = true
+
+				self.simulation.restart()
+
+				self.templatize(false, false)
+
+    		}
 
     	})
 
@@ -194,11 +228,27 @@ export class Contagion {
 
 			node.exposed = false 
 
+			node.isolated = false
+
 			node.susceptible = (index < self.settings.population * self.settings.susceptible) ? true : false ;
 
 		});
 
+		var susceptible = nodes.filter(item => item.susceptible)
+
 		var atomized = await shuffle(nodes)
+
+		await atomized.forEach(function(node, index) {
+
+			node.isolated = (index < self.settings.population * self.settings.immunity) ? true : false ;
+
+		});
+
+		atomized = await shuffle(atomized)
+
+		var vulnerable = atomized.filter( (item) => { return item.susceptible && !item.isolated })
+
+		self.settings.vulnerable = vulnerable.length
 
 		return atomized
 
@@ -267,6 +317,10 @@ export class Contagion {
 
 	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
 
+	    var r3 = document.getElementById("r3"); 
+
+	    r3.innerHTML = `${parseInt(self.settings.immunity * 100)}% of population`
+
     }
 
     propagate() {
@@ -297,9 +351,7 @@ export class Contagion {
 
 		this.next()
 
-
     }
-
 
     getRadius() {
 
@@ -355,7 +407,7 @@ export class Contagion {
 
 			if (self.settings.infected < self.settings.population * self.settings.susceptible) {
 
-				nearest[i][0].status = 'infected'
+				nearest[i][0].status = (nearest[i][0].isolated) ? "isolated" : 'infected' ;
 
 				nearest[i][0].exposed = true
 
@@ -372,7 +424,7 @@ export class Contagion {
 
     }
 
-    templatize(chart=true) {
+    templatize(chart=true, noted=true) {
 
     	var self = this
 
@@ -390,9 +442,17 @@ export class Contagion {
 
 	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
 
+	    var r3 = document.getElementById("r3"); 
+
+	    r3.innerHTML = `${parseInt(self.settings.immunity * 100)}% of population`
+
 		var target = document.getElementById("info"); 
 
-		var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative :self.settings.cumulative.precise.toFixed(2), totality : self.settings.population * self.settings.susceptible  })
+		var notes = (noted) ? "The phase period for the covid-19 virus is between 5 and 6 days." : "With an R0 below 1 the infection may not get passed one to another individual. The probability is..." ;
+
+		var cumulative = (self.settings.cumulative) ? self.settings.cumulative.precise.toFixed(2) : false ;
+
+		var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative : cumulative, totality : self.settings.population * self.settings.susceptible , notes : notes })
 
 		target.innerHTML = html
 
@@ -501,7 +561,31 @@ export class Contagion {
 
     	var self = this
 
-		self.settings.deaths = Math.floor( ( self.settings.population / 100 *  self.settings.susceptible) * self.settings.fatality_rate ) 
+		self.settings.deaths = Math.floor( ( self.settings.population / 100 *  (self.settings.vulnerable / self.settings.population)) * self.settings.fatality_rate ) 
+
+		self.settings.unchecked = Math.floor( ( self.settings.population / 100 *  self.settings.susceptible) * self.settings.fatality_rate ) 
+
+		console.log(`Death toll: ${self.settings.deaths}`)
+
+		console.log(`Unchecked: ${self.settings.unchecked}`)
+
+		if (self.settings.deaths < self.settings.unchecked) {
+
+			var saved = self.settings.unchecked - self.settings.deaths
+
+			console.log(`In this scenario ${saved} lives in every 1000 were saved.`)
+
+		}
+
+		self.nodes.forEach(item => {
+
+			if (item.isolated) {
+
+				item.status = "isolated"
+
+			}
+
+		})
 
 		var deathlist = self.nodes.filter(item => item.status != "healthy")
 
@@ -523,9 +607,9 @@ export class Contagion {
 
     	var exposed = self.nodes.filter(item => item.status === "infected" || item.status === "dead")
 
-    	// console.log(`Infected: ${exposed.length}, Risk: ${self.settings.population * self.settings.susceptible}`)
+    	//console.log(`Infected: ${exposed.length}, Risk: ${self.settings.population * self.settings.susceptible}`)
 
-		if (exposed.length < (self.settings.population * self.settings.susceptible)) {
+		if (exposed.length < (self.settings.vulnerable)) {
 
 			self.timeout = setTimeout(function(){ self.calculate(); }, 1000);
 
@@ -573,7 +657,9 @@ export class Contagion {
 
     getStatus(status) {
 
-		return (status==="dead") ? "#542788" : (status==="infected") ? "#D73027" : "#FEE090"
+		return (status==="dead") ? "#542788" : 
+		(status==="infected") ? "#D73027"  :
+		(status==="isolated") ? "#91BFDB" : "#FEE090"
       
     }
 
