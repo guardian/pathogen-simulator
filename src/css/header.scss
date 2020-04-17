@@ -5,6 +5,7 @@
 
 	.header-wrapper {
 		height: 100vh;
+		box-sizing: border-box;
 		position: relative;
 		width: 100%;	
 	}
@@ -59,8 +60,8 @@
 		box-shadow: 6px 0 0 #121212, -12px 0 0 #121212;
 
 		@include mq($until: mobileLandscape) {
-			font-size: 40px;
-			line-height: 50px;
+			font-size: 35px;
+			line-height: 45px;
 		}
 
 		@include mq($from: mobileLandscape, $until: tablet) {
@@ -126,13 +127,20 @@
 	.interactive-header-wrapper {
 
 		position: relative;
-		top: 0px;
-		left: 0px;
+		box-sizing: border-box;
 
-
-		@include mq($until: tablet) {
-			padding-top: 20vh;
+		@include mq($until: mobile) {
+			padding-top: 5vh;
+			width: calc(100% - 60px);
 		}
+
+		@include mq($from: mobile, $until: mobileLandscape) {
+			padding-top: 5vh;
+			width: calc(100% - 60px);		}
+
+		@include mq($from: mobileLandscape, $until: tablet) {
+			padding-top: 15vh;
+			width: calc(100% - 60px);		}
 
 		@include mq($from: tablet) {
 			padding-top: 30vh;
