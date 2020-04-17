@@ -37,7 +37,7 @@ export default {
 
 		scrolly.addTrigger({num: 4, do: () => {
 
-		    reduction.loadCase(1.1, 0, 0.05, true, true, "R0 below one")
+		    reduction.loadCase(1.1, 0, 0.05, true, true, "R0 to oblivion")
 
 		}});
 
@@ -46,7 +46,6 @@ export default {
 		    reduction.loadCase(1.5, 50, 0.1, true, true, "Ebola")
 
 		}});
-
 
 	    scrolly.watchScroll();
 
