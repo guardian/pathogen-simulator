@@ -1,5 +1,21 @@
 import * as d3 from "d3"
 
+d3.selection.prototype.moveToFront = function() {  
+  return this.each(function(){
+    this.parentNode.appendChild(this);
+  });
+};
+
+d3.selection.prototype.moveToBack = function() {  
+    return this.each(function() { 
+        var firstChild = this.parentNode.firstChild; 
+        if (firstChild) { 
+            this.parentNode.insertBefore(this, firstChild); 
+        } 
+    });
+};
+
+
 export default class Covid {
 
     constructor(json, id, unit, rings=3) {
@@ -74,7 +90,7 @@ export default class Covid {
 			.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
 			.attr("fill", "none")
 			.attr("stroke", "#555")
-			.attr("stroke-opacity", 0.4)
+			.attr("stroke-opacity", 1)
 			.attr("stroke-width", 1.5)
 			.selectAll("path")
 				.data(temp)
@@ -84,12 +100,13 @@ export default class Covid {
 					.radius(d => d.y));
 
 		svg.append("g")
+		.attr("id", "petridish")
 		.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
 		.selectAll("circle")
 			.data(root.descendants())
 			.join("circle")
-			.attr("class", "testing")
-			.style("display", "none")
+			.attr("class", "covid")
+			.style("display", "block")
 			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
 			.attr("fill", d => {
 
@@ -101,7 +118,10 @@ export default class Covid {
 				return (d.data.infected === true) ? "#D73027" :
 					(d.data.infected === false) ? "lightgrey" : "#91BFDB"
 			})
-			.attr("r", 5);
+			.attr("r", 5)
+
+
+			
 
 		svg.append("g")
 		.attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
@@ -112,7 +132,7 @@ export default class Covid {
 		.selectAll("text")
 			.data(root.descendants())
 			.join("text")
-			.attr("class", "testing")
+			.attr("class", "covid")
 			.style("display", "none")
 			.attr("transform", d => `
 			rotate(${d.x * 180 / Math.PI - 90}) 
@@ -141,11 +161,13 @@ export default class Covid {
 
 		}
 
-	    d3.select(`#${self.id}`).selectAll(".testing").style("display", d => {
+	    d3.select(`#${self.id}`).selectAll(".covid").style("display", d => {
 
 	      return (d.depth > self.counter) ? "none" : "block" ;
 
 	    })
+
+
 
 		svg.append("text")
 			.attr("class", "radial-info-big")
@@ -159,22 +181,6 @@ export default class Covid {
 			.attr("x", width / 2)
 			.attr("y", height - 20)
 			.style("text-anchor","middle");
-
-		function isoball(x,y,r) {
-
-			svg.append("g")
-				.append("circle")
-				.attr("cx", x)
-				.attr("cy", y)
-				.attr("r", r)
-				.attr("stroke", "#555")
-				.attr("stroke-opacity", 0.4)
-				.attr("stroke-width", 1.5)
-				.attr("fill", "none")
-				.style("stroke-dasharray", ("3, 3"))
-
-
-		}
 
 		function render() {
 
@@ -191,9 +197,9 @@ export default class Covid {
 			.join("path")
 			.attr("d", d3.linkRadial()
 			.angle(d => d.x)
-			.radius(d => d.y));
+			.radius(d => d.y))
 
-		    d3.select(`#${self.id}`).selectAll(".testing").style("display", d => {
+		    d3.select(`#${self.id}`).selectAll(".covid").style("display", d => {
 		      return (d.depth > self.counter) ? "none" : "block" ;
 		    })
 
@@ -208,6 +214,7 @@ export default class Covid {
 		    }
 
 
+
 		    next()
 
 		}
@@ -220,11 +227,19 @@ export default class Covid {
 		  	
 		    render(); 
 
+		  } else {
+
+		  	d3.select("#petridish").moveToFront()
+
 		  }
 
 		}
 
 		render()
+
+		d3.select("#petridish").moveToFront()
+
+		
 
     }
 
