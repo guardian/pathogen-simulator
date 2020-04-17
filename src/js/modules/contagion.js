@@ -104,7 +104,7 @@ export class Contagion {
 
     	var cases = self.cases[id]
 
-		self.settings.r0 = cases.r0
+		self.settings.r0 = +cases.r0
 
 		var r0slider = document.querySelectorAll('.filter_slider')[0]
 
@@ -138,11 +138,9 @@ export class Contagion {
 
     	var number = +values[0]
 
-    	console.log(number)
-
 		switch(id) {
 		  case 0:
-		   self.settings.r0 = (number / 10).toFixed(2)
+		   self.settings.r0 = +(number / 10).toFixed(2)
 		    break;
 		  case 1:
 		    self.settings.fatality_rate = number
@@ -157,6 +155,8 @@ export class Contagion {
 		}
 
 		if (this.timeout!=null) {
+
+			clearTimeout(self.timeout)
 
 			this.timeout=null
 
@@ -194,10 +194,6 @@ export class Contagion {
 
     		} else {
 
-    			console.log("Infect one person")
-
-    			self.simulation.stop()
-
 				var origin = Math.floor(Math.random() * self.settings.population) + 1  
 
 				self.settings.infected = 1
@@ -208,15 +204,93 @@ export class Contagion {
 
 				self.nodes[origin].exposed = true
 
-				self.simulation.restart()
+				self.settings.current = self.nodes[origin]
 
 				self.templatize(false, false)
+
+				setTimeout(function(){ self.roulette(); }, 1000);
 
     		}
 
     	})
 
     }
+
+    roulette() {
+
+    	var self = this
+
+    	var roulette = ( Math.floor(Math.random() * 100) + 1 ) / 100
+
+    	if (roulette < this.settings.r0) {
+
+    		this.contingency()
+
+    	}
+
+    }
+
+    contingency() {
+
+    	var self = this
+
+      	this.simulation.stop()
+
+      	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible)
+
+      	var tree = new kdTree(vulnerable, self.distance, ["x", "y"]);
+       
+      	var nearest = tree.nearest(self.settings.current, 1);
+
+      	var eliminated = (nearest[0][0].isolated) ? true : false ;
+
+      	if (nearest[0][0].isolated) {
+
+      		nearest[0][0].status = 'isolated'
+
+      		nearest[0][0].exposed = true
+
+      	} else {
+
+      		nearest[0][0].status = 'infected'
+
+      		nearest[0][0].exposed = true
+
+      		++self.settings.infected
+
+      	}
+
+      	this.templatize(false, false)
+
+      	this.simulation.restart()
+
+      	if (!eliminated) {
+
+      		setTimeout(function(){ self.roulette(); }, 1000);
+
+      	}
+
+      	//
+
+      	/*
+
+		for (var i = 0; i < nearest.length; i++) {
+
+			if (self.settings.infected < self.settings.population * self.settings.susceptible) {
+
+				nearest[i][0].status = (nearest[i][0].isolated) ? "isolated" : 'infected' ;
+
+				nearest[i][0].exposed = true
+
+				++self.settings.infected
+			}
+
+		}
+
+      	*/
+
+    }
+
 
     async updateNodes(nodes) {
 
@@ -327,9 +401,9 @@ export class Contagion {
 
 		var self = this
 
-		this.settings.steps.precise = self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible)
+		this.settings.steps.precise = (self.settings.r0 > 1) ? self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible) : (self.settings.population * self.settings.susceptible) - 1
 
-		this.settings.steps.total = Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible))
+		this.settings.steps.total = (self.settings.r0 > 1) ? Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible)) : (self.settings.population * self.settings.susceptible) - 1
 
 		this.settings.deaths = 0
 
@@ -448,7 +522,7 @@ export class Contagion {
 
 		var target = document.getElementById("info"); 
 
-		var notes = (noted) ? "The phase period for the covid-19 virus is between 5 and 6 days." : "With an R0 below 1 the infection may not get passed one to another individual. The probability is..." ;
+		var notes = (noted) ? "The phase period for the covid-19 virus is between 5 and 6 days." : `With an R0 of ${self.settings.r0} the infection only has a ${self.settings.r0 * 100}% probability of getting passed on from one individual to another. If the R0 remains below one it is only a matter of time before the virus stops spreading.` ;
 
 		var cumulative = (self.settings.cumulative) ? self.settings.cumulative.precise.toFixed(2) : false ;
 
@@ -564,10 +638,6 @@ export class Contagion {
 		self.settings.deaths = Math.floor( ( self.settings.population / 100 *  (self.settings.vulnerable / self.settings.population)) * self.settings.fatality_rate ) 
 
 		self.settings.unchecked = Math.floor( ( self.settings.population / 100 *  self.settings.susceptible) * self.settings.fatality_rate ) 
-
-		console.log(`Death toll: ${self.settings.deaths}`)
-
-		console.log(`Unchecked: ${self.settings.unchecked}`)
 
 		if (self.settings.deaths < self.settings.unchecked) {
 

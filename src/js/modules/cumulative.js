@@ -30,7 +30,7 @@ export default function cumulative(r0, population, steps) {
 
     var max = rt[cumulative]
 
-    var precise = intersection(min, max, population, cumulative - 1)
+    var precise = (r0 > 1) ? intersection(min, max, population, cumulative - 1) : population
 
     var dataset = rt.map(function(i) {
         return {
@@ -40,7 +40,7 @@ export default function cumulative(r0, population, steps) {
 
     var obj = {
 
-      value : max,
+      value : (r0 > 1) ? max : population,
 
       total : cumulative,
 

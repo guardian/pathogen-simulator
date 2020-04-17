@@ -167,6 +167,7 @@ export default class Recur {
 
 					})
 				}
+				
 			} else {
 
 				obj.infected = true
