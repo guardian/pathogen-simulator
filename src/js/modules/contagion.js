@@ -24,6 +24,8 @@ export class Contagion {
 
     	this.nodes = this.getNodes()
 
+    	this.screenWidth = document.documentElement.clientWidth
+
 		this.canvas = document.createElement('canvas');
 
         this.div = document.getElementById(id);
@@ -31,12 +33,6 @@ export class Contagion {
 	    this.width = this.div.clientWidth || this.div.getBoundingClientRect().width
 
 	    this.height = this.div.clientHeight || this.div.getBoundingClientRect().height
-
-	    if (this.width < 500) {
-
-	    	this.height = this.width * 1.2
-
-	    }
 
 	    this.context = this.canvas.getContext("2d")
 
@@ -74,15 +70,58 @@ export class Contagion {
 
 		document.querySelectorAll('.case').forEach(function(cases) {
 
-			var info = cases.getAttribute('data-id');
+			var cid = cases.getAttribute('data-id');
 
-			cases.addEventListener('click',() => self.loadCase(info));
+			cases.addEventListener('click',() => self.loadCase(cid));
 
 		});
 
-		var info = document.querySelector('#close')
+		var settings = document.querySelector('#settings')
+
+		settings.addEventListener('click',() => {
+
+			document.querySelectorAll('.boom').forEach(function(element) {
+
+				element.classList.toggle("hide");
+
+				//self.trigger()
+
+			});
+
+		});
+
+		var info = document.querySelector('#info')
 
 		info.addEventListener('click',() => {
+
+			document.querySelectorAll('.infoid').forEach(function(element) {
+
+				element.classList.toggle("hide");
+
+				//self.trigger()
+
+			});
+
+		});
+
+
+		var closeinfo = document.querySelector('#info-close')
+
+		closeinfo.addEventListener('click',() => {
+
+			document.querySelectorAll('.infoid').forEach(function(element) {
+
+				element.classList.toggle("hide");
+
+				self.trigger()
+
+			});
+
+		});
+
+		var closesettings = document.querySelector('#settings-close')
+
+		closesettings.addEventListener('click',() => {
 
 			document.querySelectorAll('.boom').forEach(function(element) {
 
@@ -378,11 +417,11 @@ export class Contagion {
 
 	    var r2 = document.getElementById("r2"); 
 
-	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
+	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}%`
 
 	    var r3 = document.getElementById("r3"); 
 
-	    r3.innerHTML = `${parseInt(self.settings.immunity * 100)}% of population`
+	    r3.innerHTML = `${parseInt(self.settings.immunity * 100)}%`
 
     }
 
@@ -559,13 +598,13 @@ export class Contagion {
 
 	    var r2 = document.getElementById("r2"); 
 
-	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}% of population`
+	    r2.innerHTML = `${parseInt(self.settings.susceptible * 100)}%`
 
 	    var r3 = document.getElementById("r3"); 
 
-	    r3.innerHTML = `${parseInt(self.settings.immunity * 100)}% of population`
+	    r3.innerHTML = `${parseInt(self.settings.immunity * 100)}%`
 
-		var target = document.getElementById("info"); 
+		var target = document.getElementById("info-display"); 
 
 		var notes = (noted) ? "The phase period for the covid-19 virus is between 5 and 6 days." : `With an R0 of ${self.settings.r0} the infection only has a ${self.settings.r0 * 100}% probability of getting passed on from one individual to another. If the R0 remains below one it is only a matter of time before the virus stops spreading.` ;
 
@@ -587,9 +626,11 @@ export class Contagion {
 
     	var self = this
 
+    	var unit = (this.screenWidth < 741) ? this.screenWidth -40 : 150 ;
+
 		var margin = {top: 5, right: 5, bottom: 35, left: 5}
-		  , width = 150 - margin.left - margin.right // Use the window's width 
-		  , height = 125 - margin.top - margin.bottom; // Use the window's height
+		  , width = unit - margin.left - margin.right // Use the window's width 
+		  , height = unit - margin.top - margin.bottom; // Use the window's height
 
 		var xScale = d3.scaleLinear()
 		    .domain([0, self.settings.cumulative.total]) //console.log(self.settings.cumulative)
@@ -760,6 +801,8 @@ export class Contagion {
 			    self.width = self.div.clientWidth || self.div.getBoundingClientRect().width
 
 			    self.height = self.div.clientHeight || self.div.getBoundingClientRect().height
+
+			    self.screenWidth = document.documentElement.clientWidth
 
 			    self.context = self.canvas.getContext("2d")
 
