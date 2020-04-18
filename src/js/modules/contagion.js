@@ -176,6 +176,14 @@ export class Contagion {
 
     	var self = this
 
+		if (this.timeout!=null) {
+
+			clearTimeout(self.timeout)
+
+			this.timeout=null
+
+		}
+
     	if (this.simulation!=null) {
 
     		this.simulation.stop()
@@ -269,25 +277,6 @@ export class Contagion {
       		setTimeout(function(){ self.roulette(); }, 1000);
 
       	}
-
-      	//
-
-      	/*
-
-		for (var i = 0; i < nearest.length; i++) {
-
-			if (self.settings.infected < self.settings.population * self.settings.susceptible) {
-
-				nearest[i][0].status = (nearest[i][0].isolated) ? "isolated" : 'infected' ;
-
-				nearest[i][0].exposed = true
-
-				++self.settings.infected
-			}
-
-		}
-
-      	*/
 
     }
 
@@ -401,10 +390,6 @@ export class Contagion {
 
 		var self = this
 
-		this.settings.steps.precise = (self.settings.r0 > 1) ? self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible) : (self.settings.population * self.settings.susceptible) - 1
-
-		this.settings.steps.total = (self.settings.r0 > 1) ? Math.ceil(self.getBaseLog(self.settings.r0, self.settings.population * self.settings.susceptible)) : (self.settings.population * self.settings.susceptible) - 1
-
 		this.settings.deaths = 0
 
 		this.settings.steps.current = 0
@@ -413,7 +398,15 @@ export class Contagion {
 
 		this.settings.infected = 1
 
-		this.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible, self.settings.steps.total)
+		this.actual = [{y : 1}]
+
+		this.current = 1
+
+		this.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible)
+
+		this.settings.steps.precise = this.settings.cumulative.precise
+
+		this.settings.steps.total = this.settings.cumulative.total
 
 		var origin = Math.floor(Math.random() * self.settings.population) + 1  
 
@@ -469,7 +462,13 @@ export class Contagion {
 
       	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible)
 
+      	console.log(vulnerable.length)
+
       	++self.settings.steps.current
+
+      	//console.log(`Current step: ${self.settings.steps.current}`)
+
+      	//console.log(`Current term: ${self.settings.steps.term}`)
 
       	self.settings.steps.term = self.settings.steps.term * self.settings.r0
 
@@ -477,24 +476,70 @@ export class Contagion {
        
       	var nearest = tree.nearest(self.settings.current, self.settings.steps.term);
 
+      	var actual = 0
+
 		for (var i = 0; i < nearest.length; i++) {
 
 			if (self.settings.infected < self.settings.population * self.settings.susceptible) {
 
 				nearest[i][0].status = (nearest[i][0].isolated) ? "isolated" : 'infected' ;
 
+				if (!nearest[i][0].isolated) {
+					++actual
+					++self.settings.infected
+				}
+
 				nearest[i][0].exposed = true
 
-				++self.settings.infected
+				
 			}
 
 		}
 
-		this.templatize()
+		if (self.settings.steps.current > self.settings.cumulative.total) {
 
-      	this.simulation.restart()
+			self.settings.cumulative.total = self.settings.steps.current
 
-      	this.next()
+		}
+
+		console.log(`Current: ${self.settings.steps.current}, Actual: ${actual}, Term: ${self.settings.steps.term}`)
+
+		if (actual > 0) {
+
+			if (actual != Math.floor(self.settings.steps.term)) {
+
+				self.settings.steps.term = actual
+
+			}
+
+			var total  = this.actual.reduce((acc, phase) => acc + phase.y, 0);
+
+			this.current = this.current + actual
+
+			this.actual.push({ y : this.current })
+
+			this.templatize()
+
+	      	this.simulation.restart()
+
+	      	this.next()
+
+
+		} else {
+
+			this.simulation.restart()
+
+			this.termination()
+
+		}
+
+    }
+
+    termination() {
+
+    	var self = this
+
+    	console.log("No more nodes to infect")
 
     }
 
@@ -620,6 +665,15 @@ export class Contagion {
 			    .attr("class", "line")
 			    .attr("d", line);
 
+			if (self.settings.immunity > 0) {
+
+				svg.append("path")
+				    .datum(self.actual)
+				    .attr("class", "blueline")
+				    .attr("d", line);
+
+			}
+
 			svg.append("text")   
 				.attr("class", "phase")          
 				.attr("transform",
@@ -679,7 +733,9 @@ export class Contagion {
 
     	//console.log(`Infected: ${exposed.length}, Risk: ${self.settings.population * self.settings.susceptible}`)
 
-		if (exposed.length < (self.settings.vulnerable)) {
+    	//this.settings.steps.current < this.settings.steps.total
+
+		if (exposed.length < (self.settings.vulnerable)) {  //
 
 			self.timeout = setTimeout(function(){ self.calculate(); }, 1000);
 

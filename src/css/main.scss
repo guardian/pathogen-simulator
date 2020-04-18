@@ -192,6 +192,13 @@ body,
 	    stroke-width: 3;
 	}
 
+	.blueline {
+	    fill: none;
+	    stroke: $secondary;
+	    stroke-width: 3;
+	}
+
+
 	svg {
 		overflow: hidden;
 	}

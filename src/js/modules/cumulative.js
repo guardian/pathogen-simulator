@@ -1,62 +1,66 @@
-export default function cumulative(r0, population, steps) {
+export default function cumulative(r0, population) {
 
-    var array = []
+  var array = [1]
 
-    var rt = [1]
+  var current = 1
 
-    var total = 0
+  var steps =  (r0 > 1 ) ? Math.ceil(getBaseLog(r0, population)) : population ;
 
-    var current = 1
+  for (var i = 0; i < steps; i++) {
 
-    for (var i = 0; i < steps; i++) {
+    array.push(current * r0)
 
-      array.push(current * r0)
+    current = current * r0
 
-      current = current * r0
+  }
 
-      total += current
+  var cumulative = [];
 
-      rt.push(total)
+  array.reduce(function(a,b,i) { return cumulative[i] = a+b; },0);
 
-    }
+  var closest = getClosest(cumulative, population)
 
-    var closest = getClosest(rt, population)
+  var index = cumulative.findIndex( step =>  step === closest);
 
-    var index = rt.findIndex( step =>  step === closest);
+  var marked = (closest < population) ? index + 1 : index ;
 
-    var cumulative = (closest < population) ? index + 1 : index ;
+  var min = cumulative[marked - 1]
 
-    var min = rt[cumulative - 1]
+  var max = cumulative[marked]
 
-    var max = rt[cumulative]
+  var precise = (r0 > 1) ?  intersection(min, max, population, marked - 1) : population
 
-    var precise = (r0 > 1) ? intersection(min, max, population, cumulative - 1) : population
+  var dataset = cumulative.map(function(i) {
+      return {
+        y: i
+      }
+    });
 
-    var dataset = rt.map(function(i) {
-        return {
-          y: i
-        }
-      });
+  var obj = {
 
-    var obj = {
+    value : (r0 > 1) ? max : population,
 
-      value : (r0 > 1) ? max : population,
+    total : marked,
 
-      total : cumulative,
+    data :  dataset,
 
-      data :  dataset,
+    precise : precise
 
-      precise : precise
+  }
 
-    }
-
-    return obj
+  return obj
 
 }
 
 function intersection(min, max, pop, left) {
 
   return left + ( pop - min ) * ( 100 / ( max - min ) ) / 100
+
+}
+
+function getBaseLog(r0, total) {
+
+  return Math.log(total) / Math.log(r0);
 
 }
 
