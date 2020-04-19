@@ -58,6 +58,10 @@
 
     "cases" : [{
 
+      "casename" : "Diamond Princess",
+
+      "description" : "",
+
       "r0" : 2,
 
       "fatality_rate" : 1,
@@ -71,6 +75,10 @@
       "population" : 3700
 
     },{
+
+      "casename" : "Wuhan",
+
+      "description" : "",
 
       "r0" : 2,
 
@@ -86,6 +94,10 @@
 
     },{
 
+      "casename" : "Korean cluster",
+
+      "description" : "",
+
       "r0" : 2,
 
       "fatality_rate" : 1.2,
@@ -99,6 +111,10 @@
       "population" : 1000
 
     },{
+
+      "casename" : "Measles",
+
+      "description" : "",
 
       "r0" : 9,
 
@@ -114,6 +130,10 @@
 
     },{
 
+      "casename" : "Ebola",
+
+      "description" : "",
+
       "r0" : 1.3,
 
       "fatality_rate" : 50,
@@ -128,9 +148,13 @@
 
     },{
 
+      "casename" : "Contagion",
+
+      "description" : "Contagion is a 2011 American film about the global spread of a respiratory virus that surfaces in Hong Kong. <span>The film introduced terms such as social distancing and the concept of the R0 to a wider audience before most of us were worrying about such things. Public health officials in the film give the virus an R0 of 4 and the fatailty rate of between 25–30%. As Dr. Erin Mears says in the film: 'Somewhere in the world, the wrong pig met up with the wrong bat.<span>'",
+
       "r0" : 4,
 
-      "fatality_rate" : 30,
+      "fatality_rate" : 28,
 
       "susceptible" : 0.8,
 

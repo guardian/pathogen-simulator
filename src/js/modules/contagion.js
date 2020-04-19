@@ -30,11 +30,13 @@ export class Contagion {
 
         this.div = document.getElementById(id);
 
+        this.context = document.getElementById("context");
+
 	    this.width = this.div.clientWidth || this.div.getBoundingClientRect().width
 
 	    this.height = this.div.clientHeight || this.div.getBoundingClientRect().height
 
-	    this.context = this.canvas.getContext("2d")
+	    this.contextual = this.canvas.getContext("2d")
 
 	    this.canvas.width = this.width
 	       
@@ -64,7 +66,13 @@ export class Contagion {
 
 	        slider.noUiSlider.on('slide', (values) => self.handle(index, values));
 
-	       	slider.noUiSlider.on('change', () => self.trigger());
+	       	slider.noUiSlider.on('change', () => {
+
+	       		self.context.innerHTML = ""
+
+	       		self.trigger()
+
+	       	});
 
 		});
 
@@ -133,6 +141,15 @@ export class Contagion {
 
 		});
 
+		var mobile = document.querySelector('#cases-dropdown')
+
+		mobile.addEventListener('change',() => {
+
+			self.loadCase(+mobile.value)
+
+		});
+
+
 		this.resizer()
 
     }
@@ -142,6 +159,8 @@ export class Contagion {
     	var self = this
 
     	var cases = self.cases[id]
+
+    	this.context.innerHTML = `<h2>${cases.casename}</h2><p>${cases.description}</p>`
 
 		self.settings.r0 = +cases.r0
 
@@ -253,7 +272,9 @@ export class Contagion {
 
 				self.settings.current = self.nodes[origin]
 
-				self.templatize(false, false)
+				self.templatize(false)
+
+				self.context.innerHTML = `<h2>R0 less than 1</h2><p>With an R0 of ${self.settings.r0} the infection only has a ${self.settings.r0 * 100}% probability of getting passed on from one individual to another. If the R0 remains below one it is only a matter of time before the virus stops spreading.<p>`
 
 				setTimeout(function(){ self.roulette(); }, 1000);
 
@@ -272,6 +293,10 @@ export class Contagion {
     	if (roulette < this.settings.r0) {
 
     		this.contingency()
+
+    	} else {
+
+    		self.addContext(`The virus has stopped spreading.`)
 
     	}
 
@@ -364,21 +389,21 @@ export class Contagion {
 
 			var self = this
 
-			self.context.clearRect(0, 0, self.width, self.height);
-			self.context.save();
-			self.context.translate(self.width / 2, self.height / 2);
+			self.contextual.clearRect(0, 0, self.width, self.height);
+			self.contextual.save();
+			self.contextual.translate(self.width / 2, self.height / 2);
 
 			self.nodes.forEach(function(d) {
-				self.context.beginPath();
-				self.context.moveTo(d.x + d.r, d.y);
-				self.context.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
-				self.context.strokeStyle = "#333";
-				self.context.fillStyle = self.getStatus(d.status)
-				self.context.fill();
-				self.context.stroke();
+				self.contextual.beginPath();
+				self.contextual.moveTo(d.x + d.r, d.y);
+				self.contextual.arc(d.x, d.y, d.r, 0, 2 * Math.PI);
+				self.contextual.strokeStyle = "#333";
+				self.contextual.fillStyle = self.getStatus(d.status)
+				self.contextual.fill();
+				self.contextual.stroke();
 			});
 
-			self.context.restore();
+			self.contextual.restore();
 
 		}
 
@@ -568,21 +593,25 @@ export class Contagion {
 
 			this.simulation.restart()
 
-			this.termination()
+			this.addContext("The virus has stopped spreading. ")
 
 		}
 
     }
 
-    termination() {
+    addContext(message) {
 
     	var self = this
 
-    	console.log("No more nodes to infect")
+		var p = document.createElement("p");
+
+		p.innerHTML = message
+
+    	this.context.appendChild(p); 
 
     }
 
-    templatize(chart=true, noted=true) {
+    templatize(chart=true, noted="") {
 
     	var self = this
 
@@ -606,11 +635,11 @@ export class Contagion {
 
 		var target = document.getElementById("info-display"); 
 
-		var notes = (noted) ? "The phase period for the covid-19 virus is between 5 and 6 days." : `With an R0 of ${self.settings.r0} the infection only has a ${self.settings.r0 * 100}% probability of getting passed on from one individual to another. If the R0 remains below one it is only a matter of time before the virus stops spreading.` ;
+		var notes = (noted!="") ? noted : "" ;
 
 		var cumulative = (self.settings.cumulative) ? self.settings.cumulative.precise.toFixed(2) : false ;
 
-		var html = mustache(info, { population : self.settings.population, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative : cumulative, totality : self.settings.population * self.settings.susceptible , notes : notes })
+		var html = mustache(info, { population : self.settings.population * self.settings.susceptible, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative : cumulative, totality : self.settings.population * self.settings.susceptible , notes : notes, cumulative : cumulative })
 
 		target.innerHTML = html
 
@@ -738,7 +767,7 @@ export class Contagion {
 
 			var saved = self.settings.unchecked - self.settings.deaths
 
-			console.log(`In this scenario ${saved} lives in every 1000 were saved.`)
+			self.addContext(`In this scenario ${saved} lives in every 1000 were saved.`)
 
 		}
 
@@ -804,7 +833,7 @@ export class Contagion {
 
 			    self.screenWidth = document.documentElement.clientWidth
 
-			    self.context = self.canvas.getContext("2d")
+			    self.contextual = self.canvas.getContext("2d")
 
 			    self.canvas.width = self.width
 			       

@@ -1,10 +1,11 @@
-<div>Total population: {{population}} <br/>
+<div>Susceptibile population: {{population}} <br/>
     Infected: {{infected}} <br/>
     Deaths: {{fatalities}} <br/>
     R<sub>0</sub>: {{r0}} <br/>
-    <!--div class="context">In this scenario it would take {{cumulative}} phases for every suspectible member of this group ({{totality}} people) to become infected.</div-->
+    {{#cumulative}}
+    <div class="context">Without an isolation strategy it would take {{cumulative}} phases for every suspectible member of this group ({{totality}} people) to become infected.</div>{{/cumulative}}
 </div>
 
 <div id="mini"></div>
 
-<div class="note">{{notes}}</div>
+<div class="note">The phase period for the covid-19 virus is between 5 and 6 days. {{notes}}</div>
