@@ -92,7 +92,7 @@ export class Contagion {
 
 				element.classList.toggle("hide");
 
-				//self.trigger()
+				self.trigger()
 
 			});
 
@@ -106,7 +106,7 @@ export class Contagion {
 
 				element.classList.toggle("hide");
 
-				//self.trigger()
+				self.trigger()
 
 			});
 
@@ -254,6 +254,8 @@ export class Contagion {
 
     		self.nodes = data
 
+    		console.log(self.settings.r0)
+
     		if (self.settings.r0 >= 1) {
 
     			self.propagate()
@@ -262,21 +264,25 @@ export class Contagion {
 
 				var origin = Math.floor(Math.random() * self.settings.population) + 1  
 
-				self.settings.infected = 1
-
-				self.settings.deaths = 0
-
 				self.nodes[origin].status = "infected"
 
 				self.nodes[origin].exposed = true
 
 				self.settings.current = self.nodes[origin]
 
+				self.settings.infected = 1
+
+				self.settings.deaths = 0
+
+				self.settings.current = { "current" : 0, "term" : 1, "total" : 0 }
+
+				self.settings.cumulative = false
+
 				self.templatize(false)
 
-				self.context.innerHTML = `<h2>R0 less than 1</h2><p>With an R0 of ${self.settings.r0} the infection only has a ${self.settings.r0 * 100}% probability of getting passed on from one individual to another. If the R0 remains below one it is only a matter of time before the virus stops spreading.<p>`
+				self.context.innerHTML = `<h2>R0 less than 1</h2><p>With an R0 of ${self.settings.r0} the infection only has a ${ (self.settings.r0 * 100).toFixed(1)}% probability of getting passed on from one individual to another. If the R0 remains below one it is only a matter of time before the virus stops spreading.<p>`
 
-				setTimeout(function(){ self.roulette(); }, 1000);
+				self.roulette()
 
     		}
 
@@ -288,6 +294,8 @@ export class Contagion {
 
     	var self = this
 
+    	this.simulation.stop()
+
     	var roulette = ( Math.floor(Math.random() * 100) + 1 ) / 100
 
     	if (roulette < this.settings.r0) {
@@ -295,6 +303,8 @@ export class Contagion {
     		this.contingency()
 
     	} else {
+
+    		this.simulation.restart()
 
     		self.addContext(`The virus has stopped spreading.`)
 
@@ -305,8 +315,6 @@ export class Contagion {
     contingency() {
 
     	var self = this
-
-      	this.simulation.stop()
 
       	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible)
 
@@ -339,6 +347,10 @@ export class Contagion {
       	if (!eliminated) {
 
       		setTimeout(function(){ self.roulette(); }, 1000);
+
+      	} else {
+
+      		self.addContext(`The virus has stopped spreading.`)
 
       	}
 
@@ -659,7 +671,7 @@ export class Contagion {
 
 		var margin = {top: 5, right: 5, bottom: 35, left: 5}
 		  , width = unit - margin.left - margin.right // Use the window's width 
-		  , height = unit - margin.top - margin.bottom; // Use the window's height
+		  , height = (unit * 0.8) - margin.top - margin.bottom; // Use the window's height
 
 		var xScale = d3.scaleLinear()
 		    .domain([0, self.settings.cumulative.total]) //console.log(self.settings.cumulative)

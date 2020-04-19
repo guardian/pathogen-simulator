@@ -101,6 +101,7 @@
 		font-size: 12px;
 		line-height: 15px;
 		z-index: 5;
+		margin-top: 10px;
 
 		h2 {
 			margin-bottom: 10px;
@@ -114,7 +115,7 @@
 		}
 
 		@include mq($from: tablet) {
-			width: 200px;
+			width: 250px;
 			display: inline-block;
 			left: 0px;
 			top: 160px;
@@ -278,8 +279,13 @@
 	#mini {
 		width: 100%;
 		display: inline-block;
+
+
+		@include mq($until: tablet) {
 		margin-bottom: 20px;
 		margin-top: 20px;
+		}
+
 	}
 
 	#info-panel {
@@ -288,6 +294,7 @@
 		position: absolute;
 		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		font-size: 12px;
+		line-height: 14px;
 		z-index: 12;
 
 		@include mq($until: tablet) {
@@ -300,7 +307,7 @@
 		@include mq($from: tablet) {
 			width: 150px;
 			left: 0px;
-			bottom: 20px;
+			bottom: 5px;
 			border: 1px solid black;
 			padding: 10px;
 		}
@@ -369,7 +376,7 @@
 		@include mq($from: tablet) {
 			position: absolute;
 			width: 150px;
-			bottom: 20px;
+			bottom: 5px;
 			right: 0px;
 			border: 1px solid black;
 			padding: 10px;
