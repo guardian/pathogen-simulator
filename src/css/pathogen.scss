@@ -108,7 +108,7 @@
 
 		@include mq($until: tablet) {
 			width: 100%;
-			bottom: 0px;
+			bottom: 60px;
 			box-sizing: border-box;
 			padding: 20px;
 		}
@@ -127,7 +127,7 @@
 
 			span {
 
-				@include mq($until: tablet) {
+				@include mq($until: mobileLandscape) {
 					display: none;
 				}
 
