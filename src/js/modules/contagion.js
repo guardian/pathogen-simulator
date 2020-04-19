@@ -112,7 +112,6 @@ export class Contagion {
 
 		});
 
-
 		var closeinfo = document.querySelector('#info-close')
 
 		closeinfo.addEventListener('click',() => {
@@ -148,7 +147,6 @@ export class Contagion {
 			self.loadCase(+mobile.value)
 
 		});
-
 
 		this.resizer()
 
@@ -538,13 +536,7 @@ export class Contagion {
 
       	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible)
 
-      	console.log(vulnerable.length)
-
       	++self.settings.steps.current
-
-      	//console.log(`Current step: ${self.settings.steps.current}`)
-
-      	//console.log(`Current term: ${self.settings.steps.term}`)
 
       	self.settings.steps.term = self.settings.steps.term * self.settings.r0
 
@@ -561,13 +553,15 @@ export class Contagion {
 				nearest[i][0].status = (nearest[i][0].isolated) ? "isolated" : 'infected' ;
 
 				if (!nearest[i][0].isolated) {
+
 					++actual
+
 					++self.settings.infected
+
 				}
 
 				nearest[i][0].exposed = true
 
-				
 			}
 
 		}
@@ -577,8 +571,6 @@ export class Contagion {
 			self.settings.cumulative.total = self.settings.steps.current
 
 		}
-
-		console.log(`Current: ${self.settings.steps.current}, Actual: ${actual}, Term: ${self.settings.steps.term}`)
 
 		if (actual > 0) {
 
@@ -773,16 +765,6 @@ export class Contagion {
 
 		self.settings.deaths = Math.floor( ( self.settings.population / 100 *  (self.settings.vulnerable / self.settings.population)) * self.settings.fatality_rate ) 
 
-		self.settings.unchecked = Math.floor( ( self.settings.population / 100 *  self.settings.susceptible) * self.settings.fatality_rate ) 
-
-		if (self.settings.deaths < self.settings.unchecked) {
-
-			var saved = self.settings.unchecked - self.settings.deaths
-
-			self.addContext(`In this scenario ${saved} lives in every 1000 were saved.`)
-
-		}
-
 		self.nodes.forEach(item => {
 
 			if (item.isolated) {
@@ -812,10 +794,6 @@ export class Contagion {
     	var self = this
 
     	var exposed = self.nodes.filter(item => item.status === "infected" || item.status === "dead")
-
-    	//console.log(`Infected: ${exposed.length}, Risk: ${self.settings.population * self.settings.susceptible}`)
-
-    	//this.settings.steps.current < this.settings.steps.total
 
 		if (exposed.length < (self.settings.vulnerable)) {  //
 

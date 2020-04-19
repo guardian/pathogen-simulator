@@ -109,11 +109,6 @@ export default class Covid {
 			.style("display", "block")
 			.attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
 			.attr("fill", d => {
-
-				if (d.data.infected==="isolated") {
-					console.log("isolated")
-					//isoball((width / 2) + d.x * 180 / Math.PI - 90, (width / 2) + d.y, 20)
-				}
 				
 				return (d.data.infected === true) ? "#D73027" :
 					(d.data.infected === false) ? "lightgrey" : "#91BFDB"
