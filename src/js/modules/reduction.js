@@ -132,11 +132,11 @@ export class Reduction {
 
 		var width = document.documentElement.clientWidth
 
-    	var strength = (width < 1000) ? 0.0004 * 20 : 0.0004  ;
+    	var strength = (width < 1500) ? 0.0004 * 20 : 0.0004  ;
 
-    	var velocityDecay = (width < 1000) ? 0.4 * 0.7 : 0.4 ; 
+    	var velocityDecay = (width < 1500) ? 0.4 * 0.7 : 0.4 ; 
 
-    	var iterations = (width < 1000) ?  4 * 0.7 : 4 ; 
+    	var iterations = (width < 1500) ?  4 * 0.7 : 4 ; 
 
 	    this.simulation = d3.forceSimulation(self.nodes)
 	        .velocityDecay(velocityDecay)

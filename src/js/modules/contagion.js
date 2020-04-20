@@ -39,7 +39,7 @@ export class Contagion {
 
 	    this.canvas.width = this.width
 	       
-	    this.canvas.height = this.height
+	    this.canvas.height = (this.screenWidth < 500) ? this.width : this.height
 
 	    this.div.appendChild(this.canvas)
 
@@ -410,9 +410,11 @@ export class Contagion {
 
 			var self = this
 
-			self.contextual.clearRect(0, 0, self.width, self.height);
+			var height = (self.screenWidth < 500) ? self.width : self.height
+
+			self.contextual.clearRect(0, 0, self.width, height);
 			self.contextual.save();
-			self.contextual.translate(self.width / 2, self.height / 2);
+			self.contextual.translate(self.width / 2, height / 2);
 
 			self.nodes.forEach(function(d) {
 				self.contextual.beginPath();
@@ -430,11 +432,11 @@ export class Contagion {
 
 		var width = document.documentElement.clientWidth
 
-    	var strength = (width < 1000) ? 0.0004 * 20 : 0.0004  ;
+    	var strength = (width < 1500) ? 0.0004 * 20 : 0.0004  ;
 
-    	var velocityDecay = (width < 1000) ? 0.4 * 0.7 : 0.4 ; 
+    	var velocityDecay = (width < 1500) ? 0.4 * 0.7 : 0.4 ; 
 
-    	var iterations = (width < 1000) ?  4 * 0.7 : 4 ; 
+    	var iterations = (width < 1500) ?  4 * 0.7 : 4 ; 
 
 	    this.simulation = d3.forceSimulation(self.nodes)
 	        .velocityDecay(velocityDecay)
@@ -878,7 +880,7 @@ export class Contagion {
 
 			    self.canvas.width = self.width
 			       
-			    self.canvas.height = self.height
+			    self.canvas.height = (self.screenWidth < 500) ? self.width : self.height
 
             	self.trigger()
 
