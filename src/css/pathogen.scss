@@ -1,11 +1,15 @@
 @import "mq";
 @import "palette";
 
+.site-message__inner, .js-site-message-inner {
+	display: none;
+}
+
 #scrolly-3 {
 
 	.close {
 
-		z-index: 15;
+		z-index: 115;
 
 		@include mq($until: tablet) {
 			width: 40px;
@@ -29,7 +33,7 @@
 
 	#settings {
 
-		z-index: 10;
+		z-index: 110;
 
 		@include mq($until: tablet) {
 			width: 40px;
@@ -53,7 +57,7 @@
 
 	#info {
 
-		z-index: 10;
+		z-index: 110;
 
 		@include mq($until: tablet) {
 			width: 40px;
@@ -78,7 +82,7 @@
 
 	#pathogen-simulator {
 		width: 100%;
-		z-index: 9;
+		z-index: 109;
 		
 		@include mq($until: mobileLandscape) {
 			height: 100vh;
@@ -100,7 +104,7 @@
 		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		font-size: 12px;
 		line-height: 15px;
-		z-index: 10;
+		z-index: 110;
 		margin-top: 10px;
 
 		h2 {
@@ -155,7 +159,7 @@
 			    height: 50px;
 			    display: inline-block;
 			    background-color: #333;
-			    z-index: 10;
+			    z-index: 110;
 			    font-family: 'Guardian Text Sans Web', 'Agate Sans', sans-serif;
 			    position: relative;
 			    margin: 10px 10px 10px 0;
@@ -236,11 +240,11 @@
 	}
 
 	#pathogen-panel.hide {
-		z-index: 6;
+		z-index: 16;
 	}
 
 	#pathogen-panel:not(.hide) {
-		z-index: 15;
+		z-index: 115;
 	}
 
 	.control-panel {
@@ -303,7 +307,7 @@
 		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		font-size: 12px;
 		line-height: 14px;
-		z-index: 12;
+		z-index: 112;
 
 		@include mq($until: tablet) {
 			width: 100%;
@@ -373,7 +377,7 @@
 	#cases {
 		
 		background-color: white;
-		z-index: 11;
+		z-index: 111;
 		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 		font-size: 12px;
 
