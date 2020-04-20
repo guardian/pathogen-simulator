@@ -6,7 +6,7 @@ import pathogen from './modules/pathogen'
 import config from './settings/settings'
 import { Preflight } from './modules/preflight'
 
-import { intro } from './modules/intro'
+//import { intro } from './modules/intro'
 
 import shareable from "./modules/shareable";
 
@@ -16,7 +16,7 @@ var share = new shareable(settings.social, settings.app).precheck()
 
 if (!settings.isMobile) {
 
-	intro.initialize();
+	//intro.initialize();
 
 }
 

@@ -5,6 +5,7 @@ import * as d3 from "d3"
 import { kdTree } from "kd-tree-javascript"
 import noUiSlider from 'nouislider'
 import info from '../../templates/results.html'
+import summarizer from "../modules/summarizer"
 
 export class Contagion {
 
@@ -13,8 +14,6 @@ export class Contagion {
     	var self = this
 
     	this.settings = settings
-
-    	this.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
 
     	this.sliders = sliders
 
@@ -40,7 +39,7 @@ export class Contagion {
 
 	    this.canvas.width = this.width
 	       
-	    this.canvas.height = this.height
+	    this.canvas.height = (this.screenWidth < 500) ? this.width : this.height
 
 	    this.div.appendChild(this.canvas)
 
@@ -252,7 +251,7 @@ export class Contagion {
 
     		self.nodes = data
 
-    		console.log(self.settings.r0)
+    		//console.log(self.settings.r0)
 
     		if (self.settings.r0 >= 1) {
 
@@ -383,9 +382,21 @@ export class Contagion {
 
 		atomized = await shuffle(atomized)
 
+		atomized.forEach(item => {
+
+			if (item.isolated) {
+
+				item.status = "isolated"
+
+			}
+
+		})
+
 		var vulnerable = atomized.filter( (item) => { return item.susceptible && !item.isolated })
 
-		self.settings.vulnerable = vulnerable.length
+		self.settings.vulnerable = Math.floor(vulnerable.length)
+
+		//console.log(`Vulnerable on init: ${self.settings.vulnerable}`)
 
 		return atomized
 
@@ -399,9 +410,11 @@ export class Contagion {
 
 			var self = this
 
-			self.contextual.clearRect(0, 0, self.width, self.height);
+			var height = (self.screenWidth < 500) ? self.width : self.height
+
+			self.contextual.clearRect(0, 0, self.width, height);
 			self.contextual.save();
-			self.contextual.translate(self.width / 2, self.height / 2);
+			self.contextual.translate(self.width / 2, height / 2);
 
 			self.nodes.forEach(function(d) {
 				self.contextual.beginPath();
@@ -419,11 +432,11 @@ export class Contagion {
 
 		var width = document.documentElement.clientWidth
 
-    	var strength = (width < 1000) ? 0.0004 * 20 : 0.0004  ;
+    	var strength = (width < 1500) ? 0.0004 * 20 : 0.0004  ;
 
-    	var velocityDecay = (width < 1000) ? 0.4 * 0.7 : 0.4 ; 
+    	var velocityDecay = (width < 1500) ? 0.4 * 0.7 : 0.4 ; 
 
-    	var iterations = (width < 1000) ?  4 * 0.7 : 4 ; 
+    	var iterations = (width < 1500) ?  4 * 0.7 : 4 ; 
 
 	    this.simulation = d3.forceSimulation(self.nodes)
 	        .velocityDecay(velocityDecay)
@@ -444,7 +457,7 @@ export class Contagion {
 
     	var r0 = document.getElementById("r0"); 
 
-	    r0.innerHTML = `${self.settings.r0}` //, R<sub>e</sub>: ${self.settings.re}
+	    r0.innerHTML = `${self.settings.r0}`
 
 	    var r1 = document.getElementById("r1"); 
 
@@ -464,6 +477,8 @@ export class Contagion {
 
 		var self = this
 
+		this.settings.strategy = {}
+
 		this.settings.deaths = 0
 
 		this.settings.steps.current = 0
@@ -476,11 +491,33 @@ export class Contagion {
 
 		this.current = 1
 
+		this.settings.rns = {}
+
+		this.settings.rns.r0 = self.settings.r0
+
+		////console.log(`R0: ${this.settings.r0 }`)
+
+		////console.log(`Susceptible: ${self.settings.susceptible}`)
+
+		this.settings.rns.re_susceptible = self.settings.r0 * self.settings.susceptible
+
+		////console.log(`RE susceptible: ${this.settings.rns.re_susceptible }`)
+
 		this.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible)
 
 		this.settings.steps.precise = this.settings.cumulative.precise
 
 		this.settings.steps.total = this.settings.cumulative.total
+
+		this.settings.rns.re_actual = this.settings.r0 * (100 / (self.settings.population * self.settings.susceptible) * self.settings.vulnerable ) / 100
+
+		//console.log(`RE actual: ${this.settings.rns.re_actual}`)
+
+		this.settings.effective = cumulative(self.settings.rns.re_actual, self.settings.vulnerable)
+
+		this.settings.strategy.precise = this.settings.effective.precise
+
+		this.settings.strategy.total = this.settings.effective.total
 
 		var origin = Math.floor(Math.random() * self.settings.population) + 1  
 
@@ -489,6 +526,12 @@ export class Contagion {
 		this.nodes[origin].exposed = true
 
 		this.settings.current = self.nodes[origin]
+
+		////console.log(this.settings.steps.precise)
+
+		////console.log(this.settings.steps.total)
+
+		//this.settings.steps.precise = this.settings.cumulative.precise
 
 		this.next()
 
@@ -534,33 +577,39 @@ export class Contagion {
 
       	this.simulation.stop()
 
-      	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible)
+      	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible && !item.isolated)
+
+      	//console.log(`Vulnerable in cycle: ${vulnerable.length}`)
 
       	++self.settings.steps.current
 
-      	self.settings.steps.term = self.settings.steps.term * self.settings.r0
+      	self.settings.steps.term = self.settings.steps.term * self.settings.rns.re_actual  //self.settings.r0
 
       	var tree = new kdTree(vulnerable, self.distance, ["x", "y"]);
        
-      	var nearest = tree.nearest(self.settings.current, self.settings.steps.term);
+      	var nearest = tree.nearest(self.settings.current, vulnerable.length); //self.settings.steps.term
+
+      	//console.log(`Nearest: ${nearest.length}`)
+
+      	//console.log(`Term: ${self.settings.steps.term}`)
 
       	var actual = 0
 
 		for (var i = 0; i < nearest.length; i++) {
 
-			if (self.settings.infected < self.settings.population * self.settings.susceptible) {
+			if (actual < self.settings.steps.term ) {
 
-				nearest[i][0].status = (nearest[i][0].isolated) ? "isolated" : 'infected' ;
+				if (self.settings.infected < self.settings.vulnerable) { //self.settings.population * self.settings.susceptible
 
-				if (!nearest[i][0].isolated) {
+					nearest[i][0].status = 'infected' 
 
 					++actual
 
 					++self.settings.infected
 
-				}
+					nearest[i][0].exposed = true
 
-				nearest[i][0].exposed = true
+				}
 
 			}
 
@@ -619,11 +668,9 @@ export class Contagion {
 
     	var self = this
 
-    	this.settings.re = (this.settings.r0 * this.settings.susceptible).toFixed(2);
-
     	var r0 = document.getElementById("r0"); 
 
-	    r0.innerHTML = `${self.settings.r0}` //, R<sub>e</sub>: ${self.settings.re}
+	    r0.innerHTML = `${self.settings.r0}`
 
 	    var r1 = document.getElementById("r1"); 
 
@@ -643,7 +690,7 @@ export class Contagion {
 
 		var cumulative = (self.settings.cumulative) ? self.settings.cumulative.precise.toFixed(2) : false ;
 
-		var html = mustache(info, { population : self.settings.population * self.settings.susceptible, r0 : self.settings.r0, re : self.settings.re, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative : cumulative, totality : self.settings.population * self.settings.susceptible , notes : notes, cumulative : cumulative })
+		var html = mustache(info, { population : parseInt(self.settings.population * self.settings.susceptible), r0 : self.settings.r0, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative : cumulative, totality : self.settings.population * self.settings.susceptible , notes : notes, cumulative : cumulative })
 
 		target.innerHTML = html
 
@@ -666,7 +713,7 @@ export class Contagion {
 		  , height = (unit * 0.8) - margin.top - margin.bottom; // Use the window's height
 
 		var xScale = d3.scaleLinear()
-		    .domain([0, self.settings.cumulative.total]) //console.log(self.settings.cumulative)
+		    .domain([0, self.settings.cumulative.total]) ////console.log(self.settings.cumulative)
 		    .range([0, width]);
 
 		var interesectionX = xScale(self.settings.cumulative.precise)
@@ -785,6 +832,12 @@ export class Contagion {
 
 		}
 
+		var summary = summarizer(self.settings)
+
+		self.addContext(summary)
+
+		// summarizer
+
 		this.templatize()
 
     }
@@ -827,7 +880,7 @@ export class Contagion {
 
 			    self.canvas.width = self.width
 			       
-			    self.canvas.height = self.height
+			    self.canvas.height = (self.screenWidth < 500) ? self.width : self.height
 
             	self.trigger()
 
