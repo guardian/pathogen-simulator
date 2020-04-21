@@ -42,6 +42,20 @@ body,
 
 .interactive-wrapper {
 
+ol {
+	margin-left:0;
+}
+
+li {
+	margin-bottom: 10px;
+}
+
+.notes {
+	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-size:14px;
+	color:grey;
+}
+
 .infected::after {
 
    content: '';

@@ -115,7 +115,7 @@
 
       "fatality_rate" : 0.8,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.9,
 
       "immunity" : 0,
 
@@ -127,11 +127,11 @@
 
       "description" : "",
 
-      "r0" : 1.3,
+      "r0" : 2,
 
       "fatality_rate" : 50,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.3,
 
       "immunity" : 0,
 
