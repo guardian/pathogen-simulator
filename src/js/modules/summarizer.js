@@ -2,7 +2,53 @@ export default function summarizer(payload) {
 
   var data = payload
 
-  console.log(data)
+  function guardianista(num) {
+
+    switch(num) {
+      case 0:
+       return 'Zero'
+        break;
+      case 1:
+        return 'One'
+        break;
+      case 2:
+         return 'Two'
+        break;
+      case 3:
+        return 'Three'
+        break;
+      case 4:
+        return 'Four'
+        break;
+      case 5:
+        return 'Five'
+        break;
+      case 6:
+        return 'Six'
+        break;
+      case 7:
+        return 'Seven'
+        break;
+      case 8:
+        return 'Eight'
+        break;
+      case 9:
+        return 'Nine'
+        break;
+      case 10:
+        return 'Ten'
+        break;
+      default:
+      return num
+    }
+
+  }
+
+  function pluralizer(num) {
+
+    return (num > 1) ? 'people' : 'person'
+
+  }
 
   var summary = ""
 
@@ -10,13 +56,29 @@ export default function summarizer(payload) {
 
     summary += `In this model ${(100 / data.population * data.infected).toFixed(0)}% of the group was infected compared with ${data.susceptible * 100}% of the population if no isolation strategy had been implemented.`
 
-    var unchecked = Math.floor( ( data.population / 100 *  data.susceptible) * data.fatality_rate ) 
+    var unchecked = Math.floor( (data.susceptible * data.population) / 100 * data.fatality_rate ) 
+
+    console.log(data.susceptible, unchecked)
 
     if (data.deaths < unchecked) {
 
       var saved = unchecked - data.deaths
 
-      // summary += ` In this scenario ${saved} lives in every 1000 were saved.`
+        if (data.deaths > 0 ) {
+
+          summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
+
+        }
+
+      //summary += ` In this scenario ${data.deaths} people died instead of ${unchecked}. <strong>${saved} lives were saved.</strong>`
+
+    } else {
+
+      if (data.deaths > 0 ) {
+
+        summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
+
+      }
 
     }
 
@@ -26,7 +88,7 @@ export default function summarizer(payload) {
 
     if (data.deaths > 0 ) {
 
-      summary += ` <strong>${data.deaths} people died</strong>.`
+      summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
 
     }
 
