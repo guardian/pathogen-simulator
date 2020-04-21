@@ -396,7 +396,9 @@ export class Contagion {
 
 		self.settings.vulnerable = Math.floor(vulnerable.length)
 
-		//console.log(`Vulnerable on init: ${self.settings.vulnerable}`)
+		console.log(`Vulnerable: ${self.settings.vulnerable}`)
+
+		console.log(`RE: ${ self.settings.r0 * ( 100 / 1000 * self.settings.vulnerable / 100 )}`)
 
 		return atomized
 
