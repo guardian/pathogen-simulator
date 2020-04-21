@@ -64,15 +64,13 @@
 
       "r0" : 2.2,
 
-      "fatality_rate" : 1,
+      "fatality_rate" : 1.8,
 
-      "susceptible" : 0.17,
+      "susceptible" : 0.19,
 
       "immunity" : 0,
 
-      "score" : [20, 80],
-
-      "population" : 3700
+      "population" : 3711
 
     },{
 
@@ -80,15 +78,13 @@
 
       "description" : "",
 
-      "r0" : 2.8,
+      "r0" : 2.7,
 
-      "fatality_rate" : 2.3,
+      "fatality_rate" : 1,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.7,
 
       "immunity" : 0,
-
-      "score" : [20, 80],
 
       "population" : 1000
 
@@ -98,15 +94,13 @@
 
       "description" : "",
 
-      "r0" : 2.8,
+      "r0" : 2.7,
 
-      "fatality_rate" : 1.2,
+      "fatality_rate" : 0.66,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.7,
 
-      "immunity" : 0,
-
-      "score" : [20, 80],
+      "immunity" : 0.4,
 
       "population" : 1000
 
@@ -118,13 +112,11 @@
 
       "r0" : 9,
 
-      "fatality_rate" : 0.8 ,
+      "fatality_rate" : 0.8,
 
       "susceptible" : 0.8,
 
       "immunity" : 0,
-
-      "score" : [20, 80],
 
       "population" : 1000
 
@@ -142,8 +134,6 @@
 
       "immunity" : 0,
 
-      "score" : [20, 80],
-
       "population" : 1000
 
     },{
@@ -159,8 +149,6 @@
       "susceptible" : 0.8,
 
       "immunity" : 0,
-
-      "score" : [20, 80],
 
       "population" : 1000
 
