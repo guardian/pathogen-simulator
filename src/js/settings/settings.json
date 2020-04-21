@@ -62,27 +62,28 @@
 
       "description" : "",
 
-      "r0" : 2,
+      "r0" : 2.2,
 
-      "fatality_rate" : 1,
+      "fatality_rate" : 1.8,
 
-      "susceptible" : 0.6,
+      "susceptible" : 0.19,
 
       "immunity" : 0,
 
-      "population" : 3700
+      "population" : 3711
+
 
     },{
 
-      "casename" : "Wuhan",
+      "casename" : "No intervention",
 
       "description" : "",
 
-      "r0" : 2,
+      "r0" : 2.7,
 
-      "fatality_rate" : 2.3,
+      "fatality_rate" : 1,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.7,
 
       "immunity" : 0,
 
@@ -90,17 +91,17 @@
 
     },{
 
-      "casename" : "Korean cluster",
+      "casename" : "Strong intervention",
 
       "description" : "",
 
-      "r0" : 2,
+      "r0" : 2.7,
 
-      "fatality_rate" : 1.2,
+      "fatality_rate" : 0.66,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.7,
 
-      "immunity" : 0,
+      "immunity" : 0.4,
 
       "population" : 1000
 
@@ -112,9 +113,9 @@
 
       "r0" : 9,
 
-      "fatality_rate" : 0.8 ,
+      "fatality_rate" : 0.8,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.9,
 
       "immunity" : 0,
 
@@ -126,11 +127,11 @@
 
       "description" : "",
 
-      "r0" : 1.3,
+      "r0" : 2,
 
       "fatality_rate" : 50,
 
-      "susceptible" : 0.8,
+      "susceptible" : 0.3,
 
       "immunity" : 0,
 
