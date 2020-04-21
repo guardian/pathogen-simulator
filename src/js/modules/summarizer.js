@@ -8,7 +8,7 @@ export default function summarizer(payload) {
 
   if (data.immunity > 0) {
 
-    summary += `In this model ${(100 / data.population * data.infected).toFixed(0)}% of the group was infected compared to ${data.susceptible * 100}% of the population if no isolation strategy had been implemented.`
+    summary += `In this model ${(100 / data.population * data.infected).toFixed(0)}% of the group was infected compared with ${data.susceptible * 100}% of the population if no isolation strategy had been implemented.`
 
     var unchecked = Math.floor( ( data.population / 100 *  data.susceptible) * data.fatality_rate ) 
 
