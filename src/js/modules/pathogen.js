@@ -1,5 +1,6 @@
 import ScrollyTeller from "../modules/scrollyteller"
 import { Contagion } from "../modules/contagion"
+import tippy from 'tippy.js'
 
 export default {
 
@@ -15,6 +16,8 @@ export default {
 		var contagion = new Contagion(config, "pathogen-simulator", sliders, cases)
 
 		contagion.init()
+
+		tippy('.tipper')
 
 		scrolly.addTrigger({num: 1, do: () => {
 

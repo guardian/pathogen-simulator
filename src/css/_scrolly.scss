@@ -1,6 +1,6 @@
 .scroll-wrapper {
     @include mq(tablet) {
-        width: 740px;
+        width: calc(100% - 40px);
     }
 
     @include mq(desktop) {

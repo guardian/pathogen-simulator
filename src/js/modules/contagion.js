@@ -708,7 +708,7 @@ export class Contagion {
 
     	var unit = (this.screenWidth < 741) ? this.screenWidth -40 : 150 ;
 
-		var margin = {top: 5, right: 5, bottom: 35, left: 5}
+		var margin = {top: 0, right: 5, bottom: 35, left: 5}
 		  , width = unit - margin.left - margin.right // Use the window's width 
 		  , height = (unit * 0.8) - margin.top - margin.bottom; // Use the window's height
 
