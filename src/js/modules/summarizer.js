@@ -22,7 +22,7 @@ export default function summarizer(payload) {
 
   } else {
 
-    summary += `In this model every suspectible member of the group (${data.susceptible * 100}% of the population) was infected after ${data.steps.precise.toFixed(1)} phases.`
+    summary += `In this model every susceptible member of the group (${data.susceptible * 100}% of the population) was infected after ${data.steps.precise.toFixed(1)} phases.`
 
     if (data.deaths > 0 ) {
 
