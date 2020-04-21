@@ -62,11 +62,11 @@
 
       "description" : "",
 
-      "r0" : 2,
+      "r0" : 2.2,
 
       "fatality_rate" : 1,
 
-      "susceptible" : 0.6,
+      "susceptible" : 0.17,
 
       "immunity" : 0,
 
@@ -76,11 +76,11 @@
 
     },{
 
-      "casename" : "Wuhan",
+      "casename" : "No intervention",
 
       "description" : "",
 
-      "r0" : 2,
+      "r0" : 2.8,
 
       "fatality_rate" : 2.3,
 
@@ -94,11 +94,11 @@
 
     },{
 
-      "casename" : "Korean cluster",
+      "casename" : "Strong intervention",
 
       "description" : "",
 
-      "r0" : 2,
+      "r0" : 2.8,
 
       "fatality_rate" : 1.2,
 
