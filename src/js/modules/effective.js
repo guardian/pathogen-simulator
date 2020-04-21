@@ -16,34 +16,36 @@ export default {
 
 		reduction.init()
 
+		// r0, fatality_rate, susceptible, isolation, spread, shuffle, id
+
 		scrolly.addTrigger({num: 1, do: () => {
 
-			reduction.loadCase(0, 0, 0, false, true, "Single infection")
+			reduction.loadCase(0, 0, 0, 0, false, true, "Single infection")
 
 		}});
 
 		scrolly.addTrigger({num: 2, do: () => {
 
-		    reduction.loadCase(3, 0, 1, true, false, "Infect 100%")
+		    reduction.loadCase(3, 0, 1, 0, true, false, "Infect 100%")
 
 		}});
 
 
 		scrolly.addTrigger({num: 3, do: () => {
 
-			reduction.loadCase(3, 0, 0.5, true, true, "Partial infection")
+			reduction.loadCase(3, 0, 0.5, 0.3, true, true, "Partial infection")
 
 		}});
 
 		scrolly.addTrigger({num: 4, do: () => {
 
-		    reduction.loadCase(1.1, 0, 0.05, true, true, "R0 to oblivion")
+		    reduction.loadCase(1.1, 0, 0.25, 0.2, true, true, "R0 to oblivion")
 
 		}});
 
 		scrolly.addTrigger({num: 5, do: () => {
 
-		    reduction.loadCase(1.5, 50, 0.1, true, true, "Ebola")
+		    reduction.loadCase(1.5, 50, 0.1, 0, true, true, "Ebola")
 
 		}});
 

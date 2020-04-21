@@ -497,13 +497,7 @@ export class Contagion {
 
 		this.settings.rns.r0 = self.settings.r0
 
-		////console.log(`R0: ${this.settings.r0 }`)
-
-		////console.log(`Susceptible: ${self.settings.susceptible}`)
-
 		this.settings.rns.re_susceptible = self.settings.r0 * self.settings.susceptible
-
-		////console.log(`RE susceptible: ${this.settings.rns.re_susceptible }`)
 
 		this.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible)
 
@@ -528,12 +522,6 @@ export class Contagion {
 		this.nodes[origin].exposed = true
 
 		this.settings.current = self.nodes[origin]
-
-		////console.log(this.settings.steps.precise)
-
-		////console.log(this.settings.steps.total)
-
-		//this.settings.steps.precise = this.settings.cumulative.precise
 
 		this.next()
 
@@ -581,19 +569,13 @@ export class Contagion {
 
       	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible && !item.isolated)
 
-      	//console.log(`Vulnerable in cycle: ${vulnerable.length}`)
-
       	++self.settings.steps.current
 
-      	self.settings.steps.term = self.settings.steps.term * self.settings.rns.re_actual  //self.settings.r0
+      	self.settings.steps.term = self.settings.steps.term * self.settings.rns.re_actual
 
       	var tree = new kdTree(vulnerable, self.distance, ["x", "y"]);
        
-      	var nearest = tree.nearest(self.settings.current, vulnerable.length); //self.settings.steps.term
-
-      	//console.log(`Nearest: ${nearest.length}`)
-
-      	//console.log(`Term: ${self.settings.steps.term}`)
+      	var nearest = tree.nearest(self.settings.current, vulnerable.length);
 
       	var actual = 0
 
@@ -601,7 +583,7 @@ export class Contagion {
 
 			if (actual < self.settings.steps.term ) {
 
-				if (self.settings.infected < self.settings.vulnerable) { //self.settings.population * self.settings.susceptible
+				if (self.settings.infected < self.settings.vulnerable) { 
 
 					nearest[i][0].status = 'infected' 
 

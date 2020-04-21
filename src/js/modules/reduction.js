@@ -42,7 +42,7 @@ export class Reduction {
 	    this.resizer()
     }
 
-    loadCase(r0, fatality_rate, susceptible, spread, shuffle, id) {
+    loadCase(r0, fatality_rate, susceptible, isolation, spread, shuffle, id) {
 
     	var self = this
 
@@ -56,7 +56,9 @@ export class Reduction {
 
 		self.settings.susceptible = susceptible
 
-		console.log(`Trigger: ${id}, R0: ${r0}, Fatality rate: ${fatality_rate}, susceptiblity: ${susceptible}, Spread: ${spread}, Shuffle: ${shuffle}`)
+		self.settings.isolated = isolation
+
+		console.log(`Trigger: ${id}, R0: ${r0}, Fatality rate: ${fatality_rate}, susceptiblity: ${susceptible}, isolation: ${isolation}, Spread: ${spread}, Shuffle: ${shuffle}`)
 
 		this.trigger()
 
@@ -90,17 +92,32 @@ export class Reduction {
 
 		await nodes.forEach(function(node, index) {
 
-			node.status = "healthy"
-
 			node.exposed = false 
 
 			node.susceptible = (index < self.settings.population * self.settings.susceptible) ? true : false ;
 
+			node.isolated = (index < self.settings.population * self.settings.isolated) ? true : false ;
+
+			node.status = (node.isolated) ? "isolated" : "healthy"
+
 		});
 
-		var updated = await (self.shuffle) ? shuffle(nodes) : nodes ;
+		if (self.shuffle) {
 
-		return updated
+			nodes = await shuffle(nodes)
+
+		}
+
+		var vulnerable = nodes.filter( (item) => { return item.susceptible && !item.isolated })
+
+		self.settings.vulnerable = Math.floor(vulnerable.length)
+
+		console.log(`Vulnerable: ${self.settings.vulnerable}`)
+
+		console.log(`RE: ${ self.settings.r0 * ( 100 / 1000 * self.settings.vulnerable / 100 )}`)
+
+
+		return nodes
 
     }
 
@@ -221,7 +238,7 @@ export class Reduction {
 
       	this.simulation.stop()
 
-      	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible)
+      	var vulnerable = self.nodes.filter(item => !item.exposed && item.susceptible && !item.isolated)
 
       	++self.settings.steps.current
 
@@ -229,24 +246,41 @@ export class Reduction {
 
       	var tree = new kdTree(vulnerable, self.distance, ["x", "y"]);
        
-      	var nearest = tree.nearest(self.settings.current, self.settings.steps.term);
+      	var nearest = tree.nearest(self.settings.current, vulnerable.length);
+
+      	var actual = 0
 
 		for (var i = 0; i < nearest.length; i++) {
 
-			if (self.settings.infected < self.settings.population * self.settings.susceptible) {
+			if (actual < self.settings.steps.term ) {
 
-				nearest[i][0].status = 'infected'
+				if (self.settings.infected < self.settings.vulnerable) { 
 
-				nearest[i][0].exposed = true
+					nearest[i][0].status = 'infected' 
 
-				++self.settings.infected
+					++actual
+
+					++self.settings.infected
+
+					nearest[i][0].exposed = true
+
+				}
+
 			}
 
 		}
 
-      	this.simulation.restart()
+		if (actual > 0) {
 
-      	this.next()
+			this.next()
+
+		} else {
+
+			console.log("The virus has stopped spreading. ")
+
+		}
+
+      	this.simulation.restart()
 
     }
 
@@ -274,7 +308,7 @@ export class Reduction {
 
     	var exposed = self.nodes.filter(item => item.exposed)
 
-		if (exposed.length < self.settings.population * self.settings.susceptible) {
+		if (exposed.length < self.settings.vulnerable) {
 
 			setTimeout(function(){ self.calculate(); }, 1000);
 
@@ -323,7 +357,9 @@ export class Reduction {
 
     getStatus(status) {
 
-      return (status==="dead") ? "#542788" : (status==="infected") ? "#D73027" : "#FEE090"
+		return (status==="dead") ? "#542788" : 
+		(status==="infected") ? "#D73027"  :
+		(status==="isolated") ? "#91BFDB" : "#FEE090"
       
     }
 
