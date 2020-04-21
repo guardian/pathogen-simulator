@@ -44,7 +44,7 @@ export default function summarizer(payload) {
 
   }
 
-  function pulralizer(num) {
+  function pluralizer(num) {
 
     return (num > 1) ? 'people' : 'person'
 
@@ -66,7 +66,7 @@ export default function summarizer(payload) {
 
         if (data.deaths > 0 ) {
 
-          summary += ` <strong>${guardianista(data.deaths)} ${pulralizer(data.deaths)} died</strong>.`
+          summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
 
         }
 
@@ -76,7 +76,7 @@ export default function summarizer(payload) {
 
       if (data.deaths > 0 ) {
 
-        summary += ` <strong>${guardianista(data.deaths)} ${pulralizer(data.deaths)} died</strong>.`
+        summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
 
       }
 
@@ -88,7 +88,7 @@ export default function summarizer(payload) {
 
     if (data.deaths > 0 ) {
 
-      summary += ` <strong>${guardianista(data.deaths)} ${pulralizer(data.deaths)} died</strong>.`
+      summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
 
     }
 
