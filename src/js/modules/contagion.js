@@ -692,7 +692,7 @@ export class Contagion {
 
 		var cumulative = (self.settings.cumulative) ? self.settings.cumulative.precise.toFixed(2) : false ;
 
-		var html = mustache(info, { population : parseInt(self.settings.population * self.settings.susceptible), r0 : self.settings.r0, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative : cumulative, totality : self.settings.population * self.settings.susceptible , notes : notes, cumulative : cumulative })
+		var html = mustache(info, { population : parseInt(self.settings.population * self.settings.susceptible), r0 : self.settings.r0, susceptible: self.settings.susceptible * 100, infected : Math.floor(self.settings.infected), fatalities : self.settings.deaths, cumulative : cumulative, totality : parseInt(self.settings.population * self.settings.susceptible) , notes : notes, cumulative : cumulative })
 
 		target.innerHTML = html
 
