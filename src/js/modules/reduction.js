@@ -58,7 +58,7 @@ export class Reduction {
 
 		self.settings.isolated = isolation
 
-		console.log(`Trigger: ${id}, R0: ${r0}, Fatality rate: ${fatality_rate}, susceptiblity: ${susceptible}, isolation: ${isolation}, Spread: ${spread}, Shuffle: ${shuffle}`)
+		//console.log(`Trigger: ${id}, R0: ${r0}, Fatality rate: ${fatality_rate}, susceptiblity: ${susceptible}, isolation: ${isolation}, Spread: ${spread}, Shuffle: ${shuffle}`)
 
 		this.trigger()
 
@@ -112,9 +112,9 @@ export class Reduction {
 
 		self.settings.vulnerable = Math.floor(vulnerable.length)
 
-		console.log(`Vulnerable: ${self.settings.vulnerable}`)
+		//console.log(`Vulnerable: ${self.settings.vulnerable}`)
 
-		console.log(`RE: ${ self.settings.r0 * ( 100 / 1000 * self.settings.vulnerable / 100 )}`)
+		//console.log(`RE: ${ self.settings.r0 * ( 100 / 1000 * self.settings.vulnerable / 100 )}`)
 
 
 		return nodes
@@ -276,7 +276,7 @@ export class Reduction {
 
 		} else {
 
-			console.log("The virus has stopped spreading. ")
+			//console.log("The virus has stopped spreading. ")
 
 		}
 

@@ -67,8 +67,6 @@ export default function summarizer(payload, plusOne=true) {
 
       var unchecked = Math.floor( (data.susceptible * data.population) / 100 * data.fatality_rate ) 
 
-      console.log(data.susceptible, unchecked)
-
       if (data.deaths < unchecked) {
 
         var saved = unchecked - data.deaths
