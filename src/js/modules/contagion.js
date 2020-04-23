@@ -251,8 +251,6 @@ export class Contagion {
 
     		self.nodes = data
 
-    		//console.log(self.settings.r0)
-
     		if (self.settings.r0 >= 1) {
 
     			self.propagate()
@@ -303,7 +301,7 @@ export class Contagion {
 
     		this.simulation.restart()
 
-    		self.addContext(`The virus has stopped spreading.`)
+    		self.oneBelowDeadzone()
 
     	}
 
@@ -347,12 +345,47 @@ export class Contagion {
 
       	} else {
 
-      		self.addContext(`The virus has stopped spreading.`)
+      		self.oneBelowDeadzone()
 
       	}
 
     }
 
+    oneBelowDeadzone() {
+
+    	var self = this
+
+    	var data = {}
+
+    	data.infected = self.settings.infected
+
+    	data.deaths = Math.floor(self.settings.infected / 100 * self.settings.fatality_rate)
+
+    	this.settings.deaths = data.deaths 
+
+    	if (data.deaths > 0) {
+
+			var deathlist = self.nodes.filter(item => item.status === "infected")
+
+			var departed = deathlist.splice(0, data.deaths)
+
+			for (var i = 0; i < self.settings.deaths; i++) {
+
+				departed[i].status = "dead"
+
+			}
+
+    	}
+
+    	this.templatize(false, false)
+
+		var summary = summarizer(data, false)
+
+    	self.addContext(summary)
+
+    	
+
+    }
 
     async updateNodes(nodes) {
 
@@ -396,9 +429,9 @@ export class Contagion {
 
 		self.settings.vulnerable = Math.floor(vulnerable.length)
 
-		console.log(`Vulnerable: ${self.settings.vulnerable}`)
+		//console.log(`Vulnerable: ${self.settings.vulnerable}`)
 
-		console.log(`RE: ${ self.settings.r0 * ( 100 / 1000 * self.settings.vulnerable / 100 )}`)
+		//console.log(`RE: ${ self.settings.r0 * ( 100 / 1000 * self.settings.vulnerable / 100 )}`)
 
 		return atomized
 
@@ -499,6 +532,8 @@ export class Contagion {
 
 		this.settings.rns.re_susceptible = self.settings.r0 * self.settings.susceptible
 
+		//console.log(`R0: ${this.settings.r0}, RE: ${this.settings.rns.re_susceptible}`)
+
 		this.settings.cumulative = cumulative(self.settings.r0, self.settings.population * self.settings.susceptible)
 
 		this.settings.steps.precise = this.settings.cumulative.precise
@@ -506,8 +541,6 @@ export class Contagion {
 		this.settings.steps.total = this.settings.cumulative.total
 
 		this.settings.rns.re_actual = this.settings.r0 * (100 / (self.settings.population * self.settings.susceptible) * self.settings.vulnerable ) / 100
-
-		//console.log(`RE actual: ${this.settings.rns.re_actual}`)
 
 		this.settings.effective = cumulative(self.settings.rns.re_actual, self.settings.vulnerable)
 
@@ -640,11 +673,11 @@ export class Contagion {
 
     	var self = this
 
-		var p = document.createElement("p");
+		//var p = document.createElement("p");
 
-		p.innerHTML = message
+		//p.innerHTML = message
 
-    	this.context.appendChild(p); 
+    	this.context.innerHTML = message 
 
     }
 
@@ -697,7 +730,7 @@ export class Contagion {
 		  , height = (unit * 0.8) - margin.top - margin.bottom; // Use the window's height
 
 		var xScale = d3.scaleLinear()
-		    .domain([0, self.settings.cumulative.total]) ////console.log(self.settings.cumulative)
+		    .domain([0, self.settings.cumulative.total])
 		    .range([0, width]);
 
 		var interesectionX = xScale(self.settings.cumulative.precise)
@@ -726,7 +759,6 @@ export class Contagion {
 			.attr("transform", "translate(0," + height + ")")
 			.call(d3.axisBottom(xScale).ticks(self.settings.cumulative.total))
 
-
 		svg.append("line")
 			.attr("x1", interesectionX)
 			.attr("y1", 0)
@@ -745,7 +777,6 @@ export class Contagion {
 			.attr("stroke", "lightgrey")
 			.attr("stroke-dasharray", "2 2")
 
-
 		svg.append("line")
 			.attr("x1", current)
 			.attr("y1", 0)
@@ -755,7 +786,6 @@ export class Contagion {
 			.attr("stroke", "#D73027")
 			.attr("stroke-dasharray", "2 2")
 
-
 		  svg.append("line")
 		      .attr("x1", 0)
 		      .attr("y1", 0)
@@ -763,7 +793,6 @@ export class Contagion {
 		      .attr("y2", height)
 		      .attr("stroke-width", 1)
 		      .attr("stroke", "black");
-
  
 			svg.append("path")
 			    .datum(self.settings.cumulative.data)
@@ -787,7 +816,6 @@ export class Contagion {
 				.style("text-anchor", "middle")
 				.text("Phases");
 
-
     }
 
     finale() {
@@ -806,7 +834,7 @@ export class Contagion {
 
 		})
 
-		var deathlist = self.nodes.filter(item => item.status != "healthy")
+		var deathlist = self.nodes.filter(item => item.status === "infected")
 
 		var departed = deathlist.splice(0, self.settings.deaths)
 

@@ -1,4 +1,4 @@
-export default function summarizer(payload) {
+export default function summarizer(payload, plusOne=true) {
 
   var data = payload
 
@@ -50,19 +50,38 @@ export default function summarizer(payload) {
 
   }
 
+  function wasWere(num) {
+
+    return (num > 1) ? 'was' : 'were'
+
+  }
+
+
   var summary = ""
 
-  if (data.immunity > 0) {
+  if (plusOne) {
 
-    summary += `In this model ${(100 / data.population * data.infected).toFixed(0)}% of the group was infected compared with ${data.susceptible * 100}% of the population if no isolation strategy had been implemented.`
+    if (data.immunity > 0) {
 
-    var unchecked = Math.floor( (data.susceptible * data.population) / 100 * data.fatality_rate ) 
+      summary += `In this model ${(100 / data.population * data.infected).toFixed(0)}% of the group was infected compared with ${data.susceptible * 100}% of the population if no isolation strategy had been implemented.`
 
-    console.log(data.susceptible, unchecked)
+      var unchecked = Math.floor( (data.susceptible * data.population) / 100 * data.fatality_rate ) 
 
-    if (data.deaths < unchecked) {
+      console.log(data.susceptible, unchecked)
 
-      var saved = unchecked - data.deaths
+      if (data.deaths < unchecked) {
+
+        var saved = unchecked - data.deaths
+
+          if (data.deaths > 0 ) {
+
+            summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
+
+          }
+
+        //summary += ` In this scenario ${data.deaths} people died instead of ${unchecked}. <strong>${saved} lives were saved.</strong>`
+
+      } else {
 
         if (data.deaths > 0 ) {
 
@@ -70,9 +89,11 @@ export default function summarizer(payload) {
 
         }
 
-      //summary += ` In this scenario ${data.deaths} people died instead of ${unchecked}. <strong>${saved} lives were saved.</strong>`
+      }
 
     } else {
+
+      summary += `In this model every susceptible member of the group (${data.susceptible * 100}% of the population) was infected after ${data.steps.precise.toFixed(1)} phases.`
 
       if (data.deaths > 0 ) {
 
@@ -84,13 +105,21 @@ export default function summarizer(payload) {
 
   } else {
 
-    summary += `In this model every susceptible member of the group (${data.susceptible * 100}% of the population) was infected after ${data.steps.precise.toFixed(1)} phases.`
+      if (data.infected > 1) {
 
-    if (data.deaths > 0 ) {
+        summary += ` ${guardianista(data.infected)} ${pluralizer(data.infected)} were infected with the virus before it stopped spreading.`
 
-      summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
+      } else {
 
-    }
+        summary += `Patient zero was the only infected person in this scenario. The virus was not transmitted to anybody else.`
+
+      }
+
+      if (data.deaths > 0) {
+
+        summary += ` <strong>${guardianista(data.deaths)} ${pluralizer(data.deaths)} died</strong>.`
+
+      }
 
   }
 
