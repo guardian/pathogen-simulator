@@ -35,6 +35,8 @@
                 </ul>
             </div>
         </div>
+
+        <p><strong>This interactive feature was originally published in April 2020, it was updated on 27 August 2021 to compare the infectiousness of the Delta coronavirus variant.</strong></p>
         
         <p>One important characteristic of viruses and other pathogens is how contagious they are.</p>
 
@@ -115,6 +117,10 @@
         </div>
 
         <div class="virology">
+            <img src="<%= path %>/assets/virology/microbe-6.svg" alt="">
+        </div>
+
+        <div class="virology">
             <img src="<%= path %>/assets/virology/microbe-3.svg" alt="">
         </div>
 
@@ -124,10 +130,6 @@
 
         <div class="virology">
             <img src="<%= path %>/assets/virology/microbe-5.svg" alt="">
-        </div>
-
-        <div class="virology">
-            <img src="<%= path %>/assets/virology/microbe-6.svg" alt="">
         </div>
 
         <div class="virology">
@@ -311,22 +313,24 @@
                 <div id="cases">
 
                     <strong>Case studies (Covid-19)</strong>
+
+                    <div class="case" data-id="0">Delta variant<sup>1</sup></div>
                     
-                    <div class="case" data-id="0">Diamond Princess<sup>1</sup></div>
+                    <div class="case" data-id="1">Diamond Princess<sup>2</sup></div>
 
-                    <div class="case" data-id="1">No intervention<sup>2</sup></div>
+                    <div class="case" data-id="2">No intervention<sup>3</sup></div>
 
-                    <div class="case" data-id="2">Strong intervention<sup>3</sup></div>
+                    <div class="case" data-id="3">Strong intervention<sup>4</sup></div>
 
                     <strong>Other diseases</strong>
 
-                    <div class="case" data-id="3">Measles<sup>4</sup></div>
+                    <div class="case" data-id="4">Measles<sup>5</sup></div>
 
-                    <div class="case" data-id="4">Ebola<sup>5</sup></div>
+                    <div class="case" data-id="5">Ebola<sup>6</sup></div>
 
                     <strong>Pandemics in the movies</strong>
 
-                    <div class="case" data-id="5">Contagion<sup>6</sup></div>
+                    <div class="case" data-id="6">Contagion<sup>7</sup></div>
 
                 </div>
 
@@ -355,6 +359,7 @@
             <p>The isolation value is not used for most of the case studies as isolation data is not usually available.</p>
         
             <ol>
+                <li>The Delta variant case study is intended to show a hypothetical scenario where no isolation measures were in place.</li>
                 <li>The Diamond Princess case study is intended to visualise the proportional outcome of Covid-19 infections onboard the Diamond Princess. The susceptible proportion of the population to 18% based on an attack rate of 18% (696 cases / 3711 total passengers) and is not indicative of the true susceptibility figure (which might be closer to 100%). Isolation is not used as there is no data available. The death rate is set at 1.8% based on the current total of deaths (13) over cases (696). The R0 used is from <a href="https://www.ijidonline.com/article/S1201-9712(20)30091-6/fulltext#%20">Zhang et al. 2020</a>.</li>
                 <li>The no intervention case study is an example that uses figures from various sources to show a hypothetical scenario with no isolation measures. The susceptible proportion of the population is set to 70% based on <a href="https://www.theguardian.com/world/2020/feb/11/coronavirus-expert-warns-infection-could-reach-60-of-worlds-population">comments here</a> and is not indicative of the true susceptibility figure (which might be closer to 100%). The death rate is set at 1% based on various estimates of the case fataliy ratio from cases in China (<a href="https://www.imperial.ac.uk/news/195217/coronavirus-fatality-rate-estimated-imperial-scientists/">Verity et al. 2020</a>, <a href="https://www.imperial.ac.uk/news/195217/coronavirus-fatality-rate-estimated-imperial-scientists/">Wighton et al. 2020</a>). The R0 used is 2.7.</li>
                 <li>The strong intervention case study is an example that uses figures from various sources to show a hypothetical scenario with social distancing and isolation measures covering 40% of the population. The susceptible proportion of the population is set to 70% based on <a href="https://www.theguardian.com/world/2020/feb/11/coronavirus-expert-warns-infection-could-reach-60-of-worlds-population">comments here</a> and is not indicative of the true susceptibility figure (which might be closer to 100%). The death rate is set at 0.66%, lower than the no intervention scenario as it assumes health care would cope better with reduced case load. The R0 used is 2.7.</li>

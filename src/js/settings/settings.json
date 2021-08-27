@@ -58,6 +58,23 @@
 
     "cases" : [{
 
+      "casename" : "Delta variant",
+
+      "description" : "",
+
+      "r0" : 6,
+
+      "fatality_rate" : 1,
+
+      "susceptible" : 0.7,
+
+      "immunity" : 0,
+
+      "population" : 3711
+
+
+    }, {
+
       "casename" : "Diamond Princess",
 
       "description" : "",
