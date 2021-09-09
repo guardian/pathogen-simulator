@@ -6,7 +6,7 @@ var app = {
 
 	init: (index) => {
 
-				var microbiology = [{
+		var microbiology = [{
 
 			"disease" : "Covid-19 (low)",
 
@@ -48,11 +48,11 @@ var app = {
 
 		},{
 
-			"disease" : "Smallpox (high)",
+			"disease" : "Delta",
 
 			"r0" : 6,
 
-			"fatality" : 1
+			"fatality" : 0.1
 
 		},{
 
@@ -96,14 +96,14 @@ var app = {
 		        return console.log(err);
 		    }
 
-		    return console.log(`An SVG called ${filename} was created`);
+		    return console.log(`Un SVG s'appelle ${filename} a été créé`);
 		}); 
 
 	}
 
 }
 
-
+// Change to the index - between 0 and 8
 app.init(7)
 
 

@@ -8,6 +8,23 @@
 	.st2{font-family:'LucidaGrande-Bold';}
 	.st3{font-size:12px;}
 	.st4{fill:#D73027;}
+
+<style type="text/css">
+	.radial-total {
+		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-size: 12px;
+		fill: #D73027;
+		font-weight: 600;
+	}
+
+	.radial-info {
+		font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-size: 12px;
+		fill: black;
+		font-weight: 600;
+	}
+</style>
+
 </style>
 <g transform="translate(150,150)">
 	<path class="st0" d="M0,0c0,17.2,8.6-14.9,17.2-29.9"/>
@@ -280,8 +297,8 @@
 <g>
 	<circle class="st1" cx="150" cy="150" r="34.5"/>
 </g>
-<text transform="matrix(1 0 0 1 47.5137 15)" class="st2 st3">Covid-19 (Delta variant), R0 = 6</text>
-<text transform="matrix(1 0 0 1 91.7959 285)" class="st4 st2 st3">Total infected: 259</text>
+<text transform="matrix(1 0 0 1 47.5137 15)" class="radial-info">Covid-19 (Delta variant), R0 = 6</text>
+<text transform="matrix(1 0 0 1 91.7959 285)" class="radial-total">Total infected: 259</text>
 <g transform="translate(150,150)">
 	<path class="st0" d="M0,0c0,17.2,8.6-14.9,17.2-29.9"/>
 	<path class="st0" d="M0,0c0,17.2,17.2,0,34.5,0"/>
