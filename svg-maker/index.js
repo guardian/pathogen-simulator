@@ -104,7 +104,7 @@ var app = {
 }
 
 // Change to the index - between 0 and 8
-app.init(7)
+app.init(9)
 
 
 
