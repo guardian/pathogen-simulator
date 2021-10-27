@@ -49,12 +49,22 @@ ol {
 
 li {
 	margin-bottom: 10px;
+	line-height: 150%;
 }
 
 .notes {
 	font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
 	font-size:14px;
 	color:grey;
+}
+
+h2 {
+    font-size: 20px;
+    line-height: 1.1em;
+    font-weight: 600;
+    -webkit-font-smoothing: antialiased;
+    color: #121212;
+    font-family: "Guardian Titlepiece", "GH Guardian Headline","Guardian Text Egyptian Web", Georgia,serif;
 }
 
 .infected::after {
@@ -196,6 +206,18 @@ li {
 	font-weight: 600;
 }
 
+.interactive-wrapper .notes {
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 14px;
+    color: grey;
+
+    ol {
+		list-style-position: inside;
+		list-style-type: decimal;
+
+	}
+}
+
 
 
 
@@ -226,7 +248,22 @@ li {
 
 }
 
-
 .l-footer__secondary, .footer__primary {
 	display:none
+}
+
+
+@include mq($from: mobileLandscape) {
+	#info-panel {
+	    min-width: 170px;
+	}
+}
+
+.control-panel {
+	strong {
+		font-family: "Guardian Text Egyptian Web",Georgia,serif;
+		font-weight: bold;
+		line-height: 1.5;
+    	color: #121212;
+	}
 }

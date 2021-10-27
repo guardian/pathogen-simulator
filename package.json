@@ -54,7 +54,7 @@
     "d3": "^5.15.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^4.1.1",
     "kd-tree-javascript": "^1.0.3",
     "lodash": "^4.17.15",
     "mustache": "^2.3.0",
